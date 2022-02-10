@@ -30,8 +30,8 @@ enum HttpManagerErrorType {
 class HttpManager {
   static final bool _debug = kDebugMode;
 
-  static String baseUrl = !_debug
-      ? "https://54.179.9.188:9001/api/v1/"
+  static String baseUrl = _debug
+      ? "https://192.168.1.13:9001/api/v1/"
       : "https://api.resiklos.app/api/v1/";
 
   static final Dio _dio = Dio();

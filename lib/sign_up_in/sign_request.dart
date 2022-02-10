@@ -32,6 +32,7 @@ class SignRequest {
     var params = {
       "email": email,
       "password": password,
+      'loginDevice':1,// 1 login by model
     };
     var result = await HttpManager.post(url: "user/login", params: params);
     log("login result $result");

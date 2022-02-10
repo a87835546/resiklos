@@ -149,10 +149,10 @@ class _SignUpPageState extends State<SignUpPage> {
                             placeholder: e.placeholder,
                             inputValue: (value) {
                               log("${e.placeholder} value $value");
+                              e.value = value;
                               if (e.placeholder != "Referral Code") {
                                 checkInput();
                               }
-                              e.value = value;
                             },
                           ),
                         ),
@@ -202,7 +202,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 SignButton(
@@ -341,9 +341,6 @@ class _SignUpPageState extends State<SignUpPage> {
     });
     if (_list[3].value != _list[4].value) {
       tag = false;
-    }
-    if(_list[3].value!.length >= 6 && _list[4].value!.length > 0){
-
     }
     setState(() {
       _fullValue = tag;

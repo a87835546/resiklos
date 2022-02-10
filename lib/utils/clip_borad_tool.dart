@@ -13,7 +13,7 @@ class ClipboardTool {
   static setDataToast(String data) {
     if (data != null && data != '') {
       Clipboard.setData(ClipboardData(text: data));
-      showToast("copied");
+      showToast("Copied");
     }
   }
 

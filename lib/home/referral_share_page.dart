@@ -28,7 +28,7 @@ class _ReferralPageState extends BaseStatefulState<ReferralPage> {
   }
 
   var url =
-      "www.resiklos.app?code=${AppSingleton.userInfoModel?.inviteCode ?? "x3yd76cv"}";
+      "https://resiklos.app/?code=${AppSingleton.userInfoModel?.inviteCode ?? "x3yd76cv"}";
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +119,7 @@ class _ReferralPageState extends BaseStatefulState<ReferralPage> {
                                     url,
                                     style: const TextStyle(
                                         color: Color(0xff00A6BE),
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -187,7 +187,7 @@ class _ReferralPageState extends BaseStatefulState<ReferralPage> {
       log("get invite code error ---->>> $e");
     }
     setState(() {
-      url = "www.resiklos.app?code=${code}";
+      url = "https://resiklos.app/?code=${code}";
     });
     return Future.value(code);
   }
