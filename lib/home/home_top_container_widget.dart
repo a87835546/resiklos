@@ -25,7 +25,7 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
     _list = [
       HomeButtonModel(Icons.qr_code, "QR", () async {}),
       HomeButtonModel(Icons.send_sharp, "Send", () async {}),
-      HomeButtonModel(Icons.group_sharp, "Refer", () async {}),
+      HomeButtonModel(Icons.group_sharp, "Referrals", () async {}),
       HomeButtonModel(Icons.import_export, "Exchange", () async {}),
     ];
   }
@@ -94,7 +94,7 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                       width: 100,
                       alignment: Alignment.centerLeft,
                       child: const Text(
-                        "RSGP",
+                        "RSG",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -105,7 +105,7 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                       width: 100,
                       alignment: Alignment.centerLeft,
                       child: const Text(
-                        "Resiklos Gem Points",
+                        "Resiklos Gems",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 10,
@@ -118,8 +118,8 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                     Container(
                       width: 100,
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        "0 Referrals",
+                      child:  Text(
+                        "",// "0 Referrals",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 12,

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:resiklos/utils/navigator_util.dart';
+import 'package:resiklos/utils/web_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeArticlesView extends StatefulWidget {
@@ -13,12 +15,12 @@ class HomeArticlesView extends StatefulWidget {
 class _HomeArticlesViewState extends State<HomeArticlesView> {
   @override
   Widget build(BuildContext context) {
-    var url = widget.isResiklos ? "http://www.resiklos.com/what-is-resiklos" :"http://www.resiklos.com/importance-of-resiklos";
+    var url = widget.isResiklos ? "https://resiklos.com/what-is-resiklos" :"https://resiklos.com/importance-of-resiklos";
     var title = widget.isResiklos ? "What is Resiklos?" :"Importance of Resiklos";
     var image_url = widget.isResiklos ? "imgs/what-is-resiklos.png" : "imgs/importance-of-resiklos.png";
     return GestureDetector(
       onTap: () async {
-        _launchInBrowser(url);
+        NavigatorUtil.push(context, CWebView(title: title, url: url));
       },
       behavior: HitTestBehavior.translucent,
       child: Container(

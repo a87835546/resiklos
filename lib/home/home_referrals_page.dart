@@ -14,10 +14,8 @@ import 'home_referrals_transaction_item.dart';
 class HomeReferrals extends BaseStatefulWidget {
   const HomeReferrals({Key? key}) : super(key: key);
 
-
   @override
   BaseStatefulState<BaseStatefulWidget> getState() => _HomeReferralsState();
-
 }
 
 class _HomeReferralsState extends BaseStatefulState<HomeReferrals> {
@@ -42,20 +40,32 @@ class _HomeReferralsState extends BaseStatefulState<HomeReferrals> {
           FutureBuilder(
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasError || snapshot.data == null) {
-                return Container(
-                  child: null,
-                );
+                return Text("");
               } else {
                 List temp = snapshot.data[0] as List<TransactionModel>;
-                return Container(
-                  color: Colors.white,
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: temp.map((e) {
-                      return HomeReferralsTransactionItem(e);
-                    }).toList(),
-                  ),
-                );
+                return temp.length == 0
+                    ? Center(
+                        child: Container(
+                          height: 200,
+                          alignment: Alignment.center,
+                          child: const Text(
+                            "No referrals yet",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(
+                        color: Colors.white,
+                        child: ListView(
+                          shrinkWrap: true,
+                          children: temp.map((e) {
+                            return HomeReferralsTransactionItem(e);
+                          }).toList(),
+                        ),
+                      );
               }
             },
             future: fetchData(),
@@ -64,10 +74,11 @@ class _HomeReferralsState extends BaseStatefulState<HomeReferrals> {
       )),
     );
   }
-  Future fetchData() async{
+
+  Future fetchData() async {
     return Future.wait([getData()]);
   }
-  
+
   Future<List<TransactionModel>> getData() async {
     var result = await TransactionRequest.queryReferral(1);
     return result;

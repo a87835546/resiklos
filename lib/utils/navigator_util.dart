@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:resiklos/sign_up_in/sign_in.dart';
@@ -14,10 +15,14 @@ class NavigatorUtil {
   static pushLogin() {
     var context = AppSingleton.currentPage ?? AppSingleton.queue?.last;
     if (context != null) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-        AppSingleton.queue = Queue();
-        return SignInPage();
-      }));
+      try{
+        Navigator.push(context, MaterialPageRoute(builder: (_) {
+          AppSingleton.queue = Queue();
+          return SignInPage();
+        }));
+      }catch(e){
+        log("push login page has error");
+      }
     }
   }
 

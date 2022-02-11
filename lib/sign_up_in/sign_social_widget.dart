@@ -34,8 +34,8 @@ class _SocialSignPageState extends State<SocialSignPage> {
             ),
           ),
         ),
-        SizedBox(
-          height: 30,
+        const SizedBox(
+          height: 20,
         ),
         Container(
           alignment: Alignment.center,

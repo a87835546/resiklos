@@ -14,7 +14,6 @@ import 'package:resiklos/utils/http_manager.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/utils/toast.dart';
 
-
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: <String>[
     'email',
@@ -32,7 +31,7 @@ class SignRequest {
     var params = {
       "email": email,
       "password": password,
-      'loginDevice':1,// 1 login by model
+      'loginDevice': 1, // 1 login by mobile
     };
     var result = await HttpManager.post(url: "user/login", params: params);
     log("login result $result");
@@ -42,7 +41,7 @@ class SignRequest {
         model = UserInfoModel.jsonToObject(result["data"]);
         AppSingleton.setUserInfoModel(model);
       } else {
-        showWarnToast(result["message"] ?? "sign in fail");
+        showWarnToast(result["message"] ?? "Sign In Fail");
       }
     } catch (err) {
       log("parser user info model fail ${err.toString()}");
@@ -71,7 +70,7 @@ class SignRequest {
         model = UserInfoModel.jsonToObject(result["data"]);
         AppSingleton.setUserInfoModel(model);
       } else {
-        EasyLoading.showError(result["message"] ?? "register error");
+        EasyLoading.showError(result["message"] ?? "Register User Error");
       }
     } catch (err) {
       log("parser user info model fail ${err.toString()}");
@@ -145,11 +144,15 @@ class SignRequest {
   /// facebook login
 
   static Future<bool> onPressedLogInButton() async {
-    await plugin.logIn(permissions: [
+    var loginResult = await plugin.logIn(permissions: [
       FacebookPermission.publicProfile,
       FacebookPermission.email,
     ]);
-    return await updateLoginInfo();
+    if (loginResult.status == FacebookLoginStatus.cancel) {
+      return Future.value(false);
+    } else {
+      return await updateLoginInfo();
+    }
   }
 
   static Future<void> onPressedExpressLogInButton(BuildContext context) async {
@@ -218,51 +221,19 @@ class SignRequest {
         await HttpManager.post(url: "user/registerBySocial", params: params);
     try {
       var temp = result["data"];
-      log("type ${temp.runtimeType}");
       UserInfoModel object = UserInfoModel.jsonToObject(temp);
       AppSingleton.setUserInfoModel(object);
       log("user model $object");
       if (null != object) {
-        // NavigatorUtil.push(context, CustomBottomNavigationBar());
         return Future.value(true);
       } else {
-        showWarnToast("login error");
+        showWarnToast("Login Error");
         return Future.value(false);
       }
     } catch (err) {
-      log("parser user info error ${err}");
+      showErrorText('Parser User Info Error ${err}');
       return Future.value(false);
     }
-  }
-
-  static void loginByMobile() async {
-    var params = {
-      "deviceType": Platform.isIOS ? 1 : 0,
-      "email": "",
-      "inviteCode": "",
-      "loginType": 2,
-      "mobile": "",
-      "password": "",
-      "userId": "",
-      "username": "",
-      "avatar": ""
-    };
-    HttpManager.post(url: "user/register", params: params).then((result) {
-      log("login result --- >>>> ${result}");
-      try {
-        var temp = result["data"];
-        log("type ${temp.runtimeType}");
-        UserInfoModel object = UserInfoModel.jsonToObject(temp);
-        AppSingleton.setUserInfoModel(object);
-        log("user model $object");
-        if (null != object) {
-        } else {
-          showWarnToast("login error");
-        }
-      } catch (err) {
-        log("parser user info error ${err}");
-      }
-    });
   }
 
   static void logout(context) async {
@@ -273,6 +244,8 @@ class SignRequest {
       try {
         AppSingleton.clearUserInfo();
         NavigatorUtil.push(context, SignInPage());
+        handleSignOut();
+        onPressedLogOutButton();
       } catch (err) {
         log("parser user info error ${err}");
       }

@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,8 @@ import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/sign_up_in/sign_up_input_widget.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/utils/toast.dart';
+import 'package:resiklos/utils/web_view.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -33,10 +37,14 @@ class _SignUpPageState extends State<SignUpPage> {
   int _loginType = 0;
   List<InputModel> _list = [];
   bool _fullValue = false;
+  WebViewController? controller;
 
   @override
   void initState() {
     super.initState();
+    if (Platform.isAndroid) {
+      WebView.platform = SurfaceAndroidWebView();
+    }
     // _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
     //   setState(() {
     //     _currentUser = account;
@@ -193,7 +201,20 @@ class _SignUpPageState extends State<SignUpPage> {
                                     text: " Terms and Conditions",
                                     style: TextStyle(color: Color(0xffFF9D00)),
                                     recognizer: TapGestureRecognizer()
-                                      ..onTap = () {}),
+                                      ..onTap = () {
+                                        log("click url");
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                fullscreenDialog: true,
+                                                builder: (_) {
+                                                  return const CWebView(
+                                                    title: "Terms and Conditions",
+                                                    url:
+                                                        'https://resiklos.com/terms-and-conditions',
+                                                  );
+                                                }));
+                                      }),
                               ])),
                             )
                           ],
@@ -210,7 +231,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   title: "SIGN UP",
                   click: () async {
                     if (_fullValue) {
-                      String name = _list.first.value! + _list[1].value!;
+                      String name = "${ _list.first.value} ${_list[1].value}";
                       String email = _list[2].value!;
                       String password = _list[3].value!;
                       if (name == null) {
@@ -250,6 +271,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ])),
                   ),
                 ),
+                const SizedBox(height: 20,),
               ],
             ),
           ),
@@ -345,6 +367,12 @@ class _SignUpPageState extends State<SignUpPage> {
     setState(() {
       _fullValue = tag;
     });
+  }
+
+  Future<void> _onLoadHtmlStringExample(
+      WebViewController controller, BuildContext context) async {
+    await controller
+        .loadHtmlString("https://resiklos.com/terms-and-conditions");
   }
 }
 

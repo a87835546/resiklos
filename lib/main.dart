@@ -11,12 +11,17 @@ import 'package:provider/provider.dart';
 import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/sign_up_in/onboarding_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
+import 'package:resiklos/utils/size_fit.dart';
 import 'package:resiklos/utils/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bottom_navigationbar.dart';
+final bool _debug = kDebugMode;
 
 void main() async{
+
+  log("debug mode ---->>>>>${_debug}");
+  TLSizeFit.initialize();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UserLoginProviderModel()),
   ], child: const MyApp()));

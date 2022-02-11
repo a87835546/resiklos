@@ -88,7 +88,7 @@ class _ReferralPageState extends BaseStatefulState<ReferralPage> {
                         width: 300,
                         alignment: Alignment.center,
                         child: const Text(
-                          "Share with your friends and earn +50 RSGP on every successful invite",
+                          "Share with your friends and earn +5 RSG on every successful invite",
                           style: TextStyle(
                               color: Colors.grey,
                               fontSize: 14,

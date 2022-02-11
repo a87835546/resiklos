@@ -1,12 +1,12 @@
+
+
 import 'dart:developer';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/transactions/transaction_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
-import 'package:resiklos/utils/toast.dart';
 
 class HomeNaviView extends StatefulWidget {
   final double top;
@@ -18,8 +18,10 @@ class HomeNaviView extends StatefulWidget {
 }
 
 class _HomeNaviViewState extends State<HomeNaviView> {
+
   @override
   Widget build(BuildContext context) {
+    log("url---->>>>>${AppSingleton.userInfoModel?.avatar}");
     return Container(
       padding: EdgeInsets.only(left: 15, right: 15, top: widget.top),
       height: (65.0 + widget.top),
@@ -62,13 +64,15 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                         padding: EdgeInsets.all(8),
                         child: AppSingleton.userInfoModel?.avatar == "" ||
                             AppSingleton.userInfoModel?.avatar == null
-                            ? Image.asset("imgs/default_avatar.png")
+                            ? Image.asset("imgs/placeholder_avatar.png")
                             : ClipRRect(
                           borderRadius: BorderRadius.circular(36),
                           child: FadeInImage.assetNetwork(
-                              placeholder: "imgs/default_avatar.png",
+                              placeholder: "imgs/placeholder_avatar.png",
                               image:
-                              AppSingleton.userInfoModel?.avatar ?? ""),
+                              AppSingleton.userInfoModel?.avatar ?? "",
+                              fit: BoxFit.fill,
+                          ),
                         ),
                       )),
                 )),

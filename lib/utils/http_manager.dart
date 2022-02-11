@@ -151,16 +151,16 @@ class HttpInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    // EasyLoading.dismiss();
+    EasyLoading.dismiss();
     // log("http interceptor request  response : ${response.toString()}");
     if(response.data["code"] == 511){
       log("token has expired");
-      showWarnToast("login has expired");
+      // showWarnToast("login has expired");
       // SignRequest.logout(context);
       NavigatorUtil.pushLogin();
       // showWarnToast("token has expired");
     }else if(response.data["code"] != 200){
-      showWarnToast("login has expired");
+      // showWarnToast("login has expired");
     }
     super.onResponse(response, handler);
   }

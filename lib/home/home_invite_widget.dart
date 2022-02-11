@@ -56,7 +56,7 @@ class _HomeInviteViewState extends State<HomeInviteView> {
                         Container(
                           alignment: Alignment.centerLeft,
                           child:const Text(
-                            "GET +50 RSG Points",
+                            "GET +5 RSG",
                             style: TextStyle(
                                 color: Color(0xff00DE97),
                                 fontSize: 18,
