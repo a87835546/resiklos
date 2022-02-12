@@ -244,10 +244,10 @@ class SignInPageState extends State<SignInPage> {
                               }
                             }
                           }),
-                      // const Padding(
-                      //   padding: EdgeInsets.only(top: 20),
-                      //   child: SocialSignPage(),
-                      // ),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: SocialSignPage(),
+                      ),
                       Padding(
                         padding: EdgeInsets.only(top: 30),
                         child: Container(
