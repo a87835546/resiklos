@@ -1,5 +1,3 @@
-
-
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -18,7 +16,6 @@ class HomeNaviView extends StatefulWidget {
 }
 
 class _HomeNaviViewState extends State<HomeNaviView> {
-
   @override
   Widget build(BuildContext context) {
     log("url---->>>>>${AppSingleton.userInfoModel?.avatar}");
@@ -47,34 +44,34 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                 child: Padding(
                   padding: EdgeInsets.only(top: 20),
                   child: Container(
-                      height: 72,
-                      width: 72,
-                      decoration: BoxDecoration(
+                    height: 72,
+                    width: 72,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(36),
+                      color: Colors.white,
+                      // boxShadow: [
+                      //   BoxShadow(
+                      //       color: Colors.grey.withAlpha(130),
+                      //       blurRadius: 5.0,
+                      //       offset: Offset(0, 4),
+                      //       spreadRadius: 3)
+                      // ],
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      child: ClipRRect(
                         borderRadius: BorderRadius.circular(36),
-                        color: Colors.white,
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //       color: Colors.grey.withAlpha(130),
-                        //       blurRadius: 5.0,
-                        //       offset: Offset(0, 4),
-                        //       spreadRadius: 3)
-                        // ],
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.all(8),
                         child: AppSingleton.userInfoModel?.avatar == "" ||
-                            AppSingleton.userInfoModel?.avatar == null
+                                AppSingleton.userInfoModel?.avatar == null
                             ? Image.asset("imgs/placeholder_avatar.png")
-                            : ClipRRect(
-                          borderRadius: BorderRadius.circular(36),
-                          child: FadeInImage.assetNetwork(
-                              placeholder: "imgs/placeholder_avatar.png",
-                              image:
-                              AppSingleton.userInfoModel?.avatar ?? "",
-                              fit: BoxFit.fill,
-                          ),
-                        ),
-                      )),
+                            : FadeInImage.assetNetwork(
+                                placeholder: "imgs/placeholder_avatar.png",
+                                image: AppSingleton.userInfoModel?.avatar ?? "",
+                                fit: BoxFit.fill,
+                              ),
+                      ),
+                    ),
+                  ),
                 )),
           ),
           Expanded(
