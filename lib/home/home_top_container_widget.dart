@@ -10,7 +10,9 @@ import 'home_button_widget.dart';
 import 'home_referrals_page.dart';
 
 class HomeTopContainerView extends StatefulWidget {
-  const HomeTopContainerView({Key? key}) : super(key: key);
+  final num count;
+  final num points;
+  const HomeTopContainerView({Key? key,required this.count,required this.points}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HomeTopContainerViewState();
@@ -83,7 +85,7 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                       width: 100,
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "${AppSingleton.userInfoModel?.gems ?? 50}",
+                        "${widget.points}",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 38,
@@ -119,7 +121,7 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                       width: 100,
                       alignment: Alignment.centerLeft,
                       child:  Text(
-                        "",// "0 Referrals",
+                         "${widget.count} Referrals",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 12,
