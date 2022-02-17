@@ -55,7 +55,7 @@ class SignRequest {
   static Future<UserInfoModel?> registerByName(
       name, email, password, inviteCode) async {
     var params = {
-      "deviceType": Platform.isIOS ? 1 : 0,
+      "deviceType": Platform.isIOS ? 0 : 1,
       "inviteCode": inviteCode,
       "loginType": 2,
       "email": email,
@@ -208,7 +208,7 @@ class SignRequest {
   static Future<bool> loginBySocialMedia(
       userId, username, _email, _loginType, _imageUrl) async {
     var params = {
-      "deviceType": Platform.isIOS ? 1 : 0,
+      "deviceType": Platform.isIOS ? 0 : 1,
       "email": _email,
       "inviteCode": "",
       "loginType": _loginType, // fb 0 google 1

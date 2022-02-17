@@ -13,6 +13,7 @@ import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/sign_up_in/sign_up_input_widget.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/utils/toast.dart';
+import 'package:resiklos/utils/verify_util.dart';
 import 'package:resiklos/utils/web_view.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -193,29 +194,34 @@ class _SignUpPageState extends State<SignUpPage> {
                             Padding(
                               padding: EdgeInsets.only(left: 5),
                               child: RichText(
-                                  text: TextSpan(children: [
-                                const TextSpan(
-                                    text: "I agree with the ",
-                                    style: TextStyle(color: Color(0xff707070))),
-                                TextSpan(
-                                    text: " Terms and Conditions",
-                                    style: TextStyle(color: Color(0xffFF9D00)),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        log("click url");
-                                        Navigator.push(
+                                text: TextSpan(children: [
+                                  const TextSpan(
+                                      text: "I agree with the ",
+                                      style:
+                                          TextStyle(color: Color(0xff707070))),
+                                  TextSpan(
+                                      text: " Terms and Conditions",
+                                      style:
+                                          TextStyle(color: Color(0xffFF9D00)),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          log("click url");
+                                          Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 fullscreenDialog: true,
                                                 builder: (_) {
                                                   return const CWebView(
-                                                    title: "Terms and Conditions",
+                                                    title:
+                                                        "Terms and Conditions",
                                                     url:
                                                         'https://resiklos.com/terms-and-conditions',
                                                   );
-                                                }));
-                                      }),
-                              ])),
+                                                }),
+                                          );
+                                        }),
+                                ]),
+                              ),
                             )
                           ],
                         ),
@@ -231,23 +237,24 @@ class _SignUpPageState extends State<SignUpPage> {
                   title: "SIGN UP",
                   click: () async {
                     if (_fullValue) {
-                      String name = "${ _list.first.value} ${_list[1].value}";
+                      String name = "${_list.first.value} ${_list[1].value}";
                       String email = _list[2].value!;
                       String password = _list[3].value!;
                       if (name == null) {
                         showWarnToast("please input the correct name");
-                      } else if (email == null) {
+                      } else if (!VerifyUtil.isEmail(email)) {
                         showWarnToast("please input the correct email");
                       } else if (password == null) {
                         showWarnToast("please input the correct password");
                       } else if (password != _list[4].value) {
                         showWarnToast("password is different");
-                      }
-                      var model = await SignRequest.registerByName(
-                          name, email, password, _list.last.value);
-                      if (null != model) {
-                        NavigatorUtil.push(
-                            context, CustomBottomNavigationBar());
+                      } else {
+                        var model = await SignRequest.registerByName(
+                            name, email, password, _list.last.value);
+                        if (null != model) {
+                          NavigatorUtil.push(
+                              context, CustomBottomNavigationBar());
+                        }
                       }
                     }
                   },
@@ -271,7 +278,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     ])),
                   ),
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           ),
