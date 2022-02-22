@@ -57,19 +57,24 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                       //       spreadRadius: 3)
                       // ],
                     ),
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(36),
-                        child: AppSingleton.userInfoModel?.avatar == "" ||
-                                AppSingleton.userInfoModel?.avatar == null
-                            ? Image.asset("imgs/placeholder_avatar.png")
-                            : FadeInImage.assetNetwork(
-                                placeholder: "imgs/placeholder_avatar.png",
-                                image: AppSingleton.userInfoModel?.avatar ?? "",
-                                fit: BoxFit.fill,
-                              ),
+                    child: GestureDetector(
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(36),
+                          child: AppSingleton.userInfoModel?.avatar == "" ||
+                              AppSingleton.userInfoModel?.avatar == null
+                              ? Image.asset("imgs/placeholder_avatar.png")
+                              : FadeInImage.assetNetwork(
+                            placeholder: "imgs/placeholder_avatar.png",
+                            image: AppSingleton.userInfoModel?.avatar ?? "",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                       ),
+                      onTap: (){
+
+                      },
                     ),
                   ),
                 )),

@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:resiklos/bottom_navigationbar.dart';
+import 'package:resiklos/sign_up_in/authorize_request.dart';
 import 'package:resiklos/sign_up_in/sign_button.dart';
 import 'package:resiklos/sign_up_in/sign_logo_page.dart';
 import 'package:resiklos/sign_up_in/sign_request.dart';
@@ -202,9 +203,10 @@ class SignInPageState extends State<SignInPage> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {
+                              onTap: () async{
                                 log("forgot password");
                                 showToast("forgot password");
+                                // var r = await AuthorizeRequest.authenticate();
                               },
                               behavior: HitTestBehavior.translucent,
                               child: Container(

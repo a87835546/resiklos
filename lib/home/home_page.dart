@@ -30,6 +30,11 @@ class _HomePageState extends BaseStatefulState<HomePage> {
   num? _points =  AppSingleton.userInfoModel?.gems;
 
   @override
+  void initState() {
+    super.initState();
+    getReferralsCount();
+  }
+  @override
   Widget build(BuildContext context) {
     return _widget();
   }
@@ -131,7 +136,7 @@ class _HomePageState extends BaseStatefulState<HomePage> {
         params: {"referralCode": AppSingleton.userInfoModel?.inviteCode ?? ""});
     if(mounted && r["data"] != null){
       setState(() {
-        _points = r["data"]["point"]??50;
+        _referralCount = r["data"]["count"]??0;
       });
     }
   }
@@ -142,7 +147,7 @@ class _HomePageState extends BaseStatefulState<HomePage> {
         params: {"id": "${AppSingleton.userInfoModel?.id}"});
     if(mounted && r["data"] != null){
       setState(() {
-        _referralCount  = r["data"]["count"]??0;
+        _points  = r["data"]["point"]??50;
       });
     }
   }
