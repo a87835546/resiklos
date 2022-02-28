@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:resiklos/app_tab_bar.dart';
 import 'package:resiklos/game/game_page.dart';
 import 'package:resiklos/scan/scan_page.dart';
+import 'package:resiklos/shop/shop_page.dart';
 
 import 'home/home_page.dart';
 
@@ -26,6 +27,7 @@ class _Demo2PageState extends State<CustomBottomNavigationBar> {
             HomePage(
               model: null,
             ),
+            ShopPage(),
             GamePage(),
           ],
           controller: pageController,

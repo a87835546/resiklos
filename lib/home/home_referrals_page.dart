@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resiklos/base_class/base_page.dart';
-import 'package:resiklos/transactions/transaction_model.dart';
-import 'package:resiklos/transactions/transaction_request.dart';
+import 'package:resiklos/home/transactions/transaction_model.dart';
+import 'package:resiklos/home/transactions/transaction_request.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 
 import '../rk_app_bar.dart';

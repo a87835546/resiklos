@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:resiklos/transactions/transaction_model.dart';
-import 'package:resiklos/transactions/transaction_request.dart';
+import 'package:resiklos/home/transactions/transaction_model.dart';
+import 'package:resiklos/home/transactions/transaction_request.dart';
 
 /// 交易记录的类型
 enum WalletTransactionType {

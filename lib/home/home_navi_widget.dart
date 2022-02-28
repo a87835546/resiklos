@@ -2,9 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:resiklos/sign_up_in/sign_request.dart';
-import 'package:resiklos/transactions/transaction_page.dart';
+import 'package:resiklos/home/setting/setting_page.dart';
+import 'package:resiklos/home/transactions/transaction_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
+
+import 'notification/notification_page.dart';
 
 class HomeNaviView extends StatefulWidget {
   final double top;
@@ -63,18 +65,17 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(36),
                           child: AppSingleton.userInfoModel?.avatar == "" ||
-                              AppSingleton.userInfoModel?.avatar == null
+                                  AppSingleton.userInfoModel?.avatar == null
                               ? Image.asset("imgs/placeholder_avatar.png")
                               : FadeInImage.assetNetwork(
-                            placeholder: "imgs/placeholder_avatar.png",
-                            image: AppSingleton.userInfoModel?.avatar ?? "",
-                            fit: BoxFit.fill,
-                          ),
+                                  placeholder: "imgs/placeholder_avatar.png",
+                                  image:
+                                      AppSingleton.userInfoModel?.avatar ?? "",
+                                  fit: BoxFit.fill,
+                                ),
                         ),
                       ),
-                      onTap: (){
-
-                      },
+                      onTap: () {},
                     ),
                   ),
                 )),
@@ -115,33 +116,40 @@ class _HomeNaviViewState extends State<HomeNaviView> {
           Container(
             alignment: Alignment.centerRight,
             child: Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-              // Icons.history,
-              // Icons.notifications_active_rounded,
-              Icons.logout
-            ].map((e) {
-              return GestureDetector(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 20),
-                  child: Container(
-                      child: Icon(
-                    e,
-                    size: 22,
-                    color: Color(0xff00A6BE),
-                  )),
-                ),
-                onTap: () {
-                  if (e == Icons.logout) {
-                    SignRequest.logout(context);
-                  } else if (e == Icons.refresh) {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return const TransactionPage();
-                    }));
-                  }
-                },
-              );
-            }).toList()),
+                  Icons.history,
+                  Icons.notifications_active_rounded,
+                  Icons.settings
+                ].map((e) {
+                  return GestureDetector(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Container(
+                          child: Icon(
+                        e,
+                        size: 22,
+                        color: Color(0xff00A6BE),
+                      )),
+                    ),
+                    onTap: () {
+                      if (e == Icons.settings) {
+                        // SignRequest.logout(context);
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                          return const SettingPage();
+                        }));
+                      } else if (e == Icons.history) {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                          return const TransactionPage();
+                        }));
+                      } else if (e == Icons.notifications_active_rounded) {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                          return const NotificationPage();
+                        }));
+                      }
+                    },
+                  );
+                }).toList()),
           )
         ],
       ),

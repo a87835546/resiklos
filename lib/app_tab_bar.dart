@@ -8,7 +8,8 @@ class AppTabBar extends StatefulWidget {
   final Function(int) click;
   final double bottom;
 
-  const AppTabBar({Key? key, required this.bottom,required this.click}) : super(key: key);
+  const AppTabBar({Key? key, required this.bottom, required this.click})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _AppTabBar();
@@ -17,7 +18,7 @@ class AppTabBar extends StatefulWidget {
 class _AppTabBar extends State<AppTabBar> {
   int page = 1;
 
-  List<Icon> NomalImg = [
+  List<Icon> normalImage = const [
     Icon(
       Icons.qr_code_scanner,
       color: Color(0xffD4D4D4),
@@ -29,12 +30,17 @@ class _AppTabBar extends State<AppTabBar> {
       size: 22,
     ),
     Icon(
+      Icons.shopping_bag,
+      color: Color(0xffD4D4D4),
+      size: 22,
+    ),
+    Icon(
       Icons.videogame_asset,
       color: Color(0xffD4D4D4),
       size: 22,
     ),
   ];
-  List<Icon> SeletImg = [
+  List<Icon> selectImg = const [
     Icon(
       Icons.qr_code_scanner,
       color: Color(0xff00A6BE),
@@ -46,12 +52,17 @@ class _AppTabBar extends State<AppTabBar> {
       size: 22,
     ),
     Icon(
+      Icons.shopping_bag,
+      color: Color(0xff00A6BE),
+      size: 22,
+    ),
+    Icon(
       Icons.videogame_asset,
       color: Color(0xff00A6BE),
       size: 22,
     ),
   ];
-  List<String> _list = ["SCAN", "HOME", "PLAY"];
+  final List<String> _list = const ["SCAN", "HOME", "E-SHOP", "PLAY"];
 
   @override
   Widget build(BuildContext context) {
@@ -101,16 +112,16 @@ class _AppTabBar extends State<AppTabBar> {
   }
 
   Color getColor(int value) {
-    return this.page == value ? Color(0xFF00A6BE) : Color(0xffD4D4D4);
+    return page == value ? Color(0xFF00A6BE) : Color(0xffD4D4D4);
   }
 
   void onPageChanged(int page) {
     setState(() {
-      this.page = page;
+      page = page;
     });
   }
 
   Icon getImageStr(int value) {
-    return this.page == value ? SeletImg[value] : NomalImg[value];
+    return page == value ? selectImg[value] : normalImage[value];
   }
 }

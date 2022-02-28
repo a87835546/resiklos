@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:resiklos/transactions/transaction_model.dart';
+import 'package:resiklos/home/transactions/transaction_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/http_manager.dart';
 

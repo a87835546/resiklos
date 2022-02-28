@@ -2,11 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:resiklos/home/transactions/transaction_list.dart';
+import 'package:resiklos/home/transactions/transaction_request.dart';
+import 'package:resiklos/home/transactions/transaction_segment_view.dart';
 import 'package:resiklos/rk_app_bar.dart';
-import 'package:resiklos/transactions/transaction_request.dart';
-import 'package:resiklos/transactions/transaction_segment_view.dart';
-import 'package:resiklos/transactions/transaction_list.dart';
-import 'package:resiklos/utils/app_singleton.dart';
 
 class TransactionPage extends StatefulWidget {
   const TransactionPage({Key? key}) : super(key: key);
