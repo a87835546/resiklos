@@ -181,7 +181,7 @@ class HttpInterceptor extends Interceptor {
     }
     // log("http interceptor request  options headers: ${options.headers}");
     // log("http interceptor request  options queryParameters: ${options.queryParameters}");
-    log("http interceptor request  options path: ${options.path}");
+    // log("http interceptor request  options path: ${options.path}");
     handler.next(options);
   }
 }

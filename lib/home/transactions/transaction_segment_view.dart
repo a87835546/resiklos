@@ -9,7 +9,8 @@ typedef DepositTransactionSegmentViewClick = Function(int);
 class DepositTransactionSegmentView extends StatefulWidget {
   final DepositTransactionSegmentViewClick click;
   final int index;
-  const DepositTransactionSegmentView({Key? key, required this.click,required this.index})
+  final bool isShop;
+  const DepositTransactionSegmentView({Key? key, required this.click,required this.index,required this.isShop})
       : super(key: key);
 
   @override
@@ -19,11 +20,20 @@ class DepositTransactionSegmentView extends StatefulWidget {
 class _DepositTransactionSegmentViewState
     extends State<DepositTransactionSegmentView> {
   var select = "REWARDS";
- static const  List list = [
+ static   List list = [
    'REWARDS',
    'TRANSFER',
    'EXCHANGE',
  ];
+ double leftPadding = 14;
+ @override
+  void initState() {
+    super.initState();
+    if(widget.isShop){
+      list = ["MERCHANTS","VOUCHERS"];
+      leftPadding = 50;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     setState(() {
@@ -31,7 +41,7 @@ class _DepositTransactionSegmentViewState
     });
     return Container(
       height: 60,
-      padding: const EdgeInsets.only(left: 14, right: 14, top: 5, bottom: 5),
+      padding: EdgeInsets.only(left: leftPadding, right: leftPadding, top: 5, bottom: 5),
       color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

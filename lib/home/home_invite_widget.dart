@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:resiklos/home/referral_share_page.dart';
 import 'package:resiklos/utils/navigator_util.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'home_referrals_page.dart';
 
@@ -12,6 +15,10 @@ class HomeInviteView extends StatefulWidget {
 }
 
 class _HomeInviteViewState extends State<HomeInviteView> {
+  String text = 'title';
+  String subject = 'subtitle';
+  List<String> imagePaths = [];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -109,14 +116,15 @@ class _HomeInviteViewState extends State<HomeInviteView> {
                         )),
                     SizedBox(width: 10,),
                     Container(
-                      child: Icon(Icons.arrow_forward_ios,color: Colors.white,size: 16,),
+                      child:const Icon(Icons.arrow_forward_ios,color: Colors.white,size: 16,),
                     )
                   ],
                 ),
               ),
               behavior: HitTestBehavior.opaque,
               onTap: (){
-                NavigatorUtil.push(context, ReferralPage());
+                // NavigatorUtil.push(context, ReferralPage());
+                _onShare(context);
               },
             ),
           ),
@@ -138,5 +146,20 @@ class _HomeInviteViewState extends State<HomeInviteView> {
         ],
       ),
     );
+  }
+
+  void _onShare(BuildContext context) async {
+    final box = context.findRenderObject() as RenderBox?;
+    log("text ---->>>>>$text  subject ---->>>>>$subject");
+    if (imagePaths.isNotEmpty) {
+      await Share.shareFiles(imagePaths,
+          text: text,
+          subject: subject,
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+    } else {
+      await Share.share(text,
+          subject: subject,
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+    }
   }
 }

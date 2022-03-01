@@ -49,6 +49,7 @@ class _TransactionPageState extends State<TransactionPage> {
         children: [
           DepositTransactionSegmentView(
             index: _index,
+            isShop: false,
             click: (index) {
               log("$index");
               setState(() {

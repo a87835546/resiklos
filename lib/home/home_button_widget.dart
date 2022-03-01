@@ -27,7 +27,7 @@ class _HomeButtonWidgetState extends State<HomeButtonWidget> {
               child: Icon(
                widget.model?.url??Icons.send_sharp,
                 size: 40,
-                color:widget.model?.url == Icons.group_sharp ?  Color(0xff00A6BE):Color(0xffD4D4D4),
+                color:Color(0xff00A6BE),
               ),
             ),
             Padding(
@@ -35,7 +35,7 @@ class _HomeButtonWidgetState extends State<HomeButtonWidget> {
               child: Text(
                 widget.model?.title??"QR",
                 style: TextStyle(
-                    color: widget.model?.url == Icons.group_sharp ? Color(0xff00A6BE):Color(0xffD4D4D4),
+                    color: Color(0xff00A6BE),
                     fontWeight: FontWeight.bold,
                     fontSize: 12),
               ),

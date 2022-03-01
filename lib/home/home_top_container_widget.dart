@@ -122,7 +122,7 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                       alignment: Alignment.centerLeft,
                       child:  Text(
                          "${widget.count} Referrals",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                         ),

@@ -73,7 +73,7 @@ class _HomePageState extends BaseStatefulState<HomePage> {
                           controller: _controller,
                           shrinkWrap: true,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 15,
                             ),
                             HomeTopContainerView(
