@@ -118,9 +118,9 @@ class _HomeNaviViewState extends State<HomeNaviView> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Icons.history,
-                  Icons.notifications_active_rounded,
-                  Icons.settings
+                  // Icons.history,
+                  // Icons.notifications_active_rounded,
+                  // Icons.settings
                 ].map((e) {
                   return GestureDetector(
                     child: Padding(
