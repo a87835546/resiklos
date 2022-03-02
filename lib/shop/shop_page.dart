@@ -26,7 +26,13 @@ class _ShopPageState extends State<ShopPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
+        body: Center(
+      child: Text("Coming soon"),
+    ));
+  }
+
+  Widget _widget() {
+    return Column(
       children: [
         SizedBox(height: MediaQuery.of(context).padding.top),
         DepositTransactionSegmentView(
@@ -58,6 +64,6 @@ class _ShopPageState extends State<ShopPage> {
               }).toList()),
         )
       ],
-    ));
+    );
   }
 }

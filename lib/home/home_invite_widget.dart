@@ -123,8 +123,8 @@ class _HomeInviteViewState extends State<HomeInviteView> {
               ),
               behavior: HitTestBehavior.opaque,
               onTap: (){
-                // NavigatorUtil.push(context, ReferralPage());
-                _onShare(context);
+                NavigatorUtil.push(context, ReferralPage());
+                // _onShare(context);
               },
             ),
           ),
