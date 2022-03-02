@@ -27,13 +27,14 @@ class _HomePageState extends BaseStatefulState<HomePage> {
   var _controller = ScrollController();
   final RefreshController _refreshController = RefreshController();
   int _referralCount = 0;
-  num? _points =  AppSingleton.userInfoModel?.gems;
+  num? _points = AppSingleton.userInfoModel?.gems;
 
   @override
   void initState() {
     super.initState();
     getReferralsCount();
   }
+
   @override
   Widget build(BuildContext context) {
     return _widget();
@@ -77,7 +78,7 @@ class _HomePageState extends BaseStatefulState<HomePage> {
                               height: 15,
                             ),
                             HomeTopContainerView(
-                              points: _points??50,
+                              points: _points ?? 50,
                               count: _referralCount,
                             ),
                             const Padding(
@@ -124,7 +125,7 @@ class _HomePageState extends BaseStatefulState<HomePage> {
 
   void getData() async {
     showLoading();
-    Future.wait([getReferralsCount(), getPoints()]).whenComplete(() {
+    Future.wait([getReferralsCount(), getPoints(),getUser()]).whenComplete(() {
       _refreshController.refreshCompleted();
       EasyLoading.dismiss();
     });
@@ -134,9 +135,9 @@ class _HomePageState extends BaseStatefulState<HomePage> {
     var r = await HttpManager.get(
         url: "user/referralsCount",
         params: {"referralCode": AppSingleton.userInfoModel?.inviteCode ?? ""});
-    if(mounted && r["data"] != null){
+    if (mounted && r["data"] != null) {
       setState(() {
-        _referralCount = r["data"]["count"]??0;
+        _referralCount = r["data"]["count"] ?? 0;
       });
     }
   }
@@ -145,10 +146,22 @@ class _HomePageState extends BaseStatefulState<HomePage> {
     var r = await HttpManager.get(
         url: "user/points",
         params: {"id": "${AppSingleton.userInfoModel?.id}"});
-    if(mounted && r["data"] != null){
+    if (mounted && r["data"] != null) {
       setState(() {
-        _points  = r["data"]["point"]??50;
+        _points = r["data"]["point"] ?? 50;
       });
+    }
+  }
+
+  Future getUser() async {
+    var r = await HttpManager.get(
+        url: "user/getInfo",
+        params: {"userId": "${AppSingleton.userInfoModel?.id}"});
+    log("r------>>>>$r");
+    if (mounted && r["data"] != null) {
+      var temp = r["data"];
+      UserInfoModel object = UserInfoModel.jsonToObject(temp);
+      AppSingleton.setUserInfoModel(object);
     }
   }
 }

@@ -2,8 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 
 import 'home_button_widget.dart';
@@ -169,13 +167,13 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
     );
   }
 
-  _createQrCode() {
-    return QrImage(
-      data: "1234567890",
-      version: QrVersions.auto,
-      size: 200.0,
-    );
-  }
+  // _createQrCode() {
+  //   return QrImage(
+  //     data: "1234567890",
+  //     version: QrVersions.auto,
+  //     size: 200.0,
+  //   );
+  // }
 }
 
 class HomeButtonModel {

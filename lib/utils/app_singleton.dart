@@ -8,6 +8,7 @@ import 'package:resiklos/model/user_info_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'cache.dart';
+enum DevMode {local,staging,product}
 
 class AppSingleton {
   // static _instance，_instance会在编译期被初始化，保证了只被创建一次
@@ -18,7 +19,7 @@ class AppSingleton {
   static dynamic currentPage;
   static RememberMeModel? rememberMeModel;
   static SharedPreferences? _preference;
-
+  static DevMode? devMode;
   //提供了一个工厂方法来获取该类的实例
   factory AppSingleton() => getInstance();
 

@@ -31,7 +31,9 @@ class HttpManager {
   static final bool _debug = kDebugMode;
 
   static String baseUrl = _debug
-      ? "https://staging.resiklos.app/api/v1/"
+      ? (AppSingleton.devMode == DevMode.local
+          ? "https://192.168.1.13:9001/api/v1/"
+          : "https://staging.resiklos.app/api/v1/")
       : "https://api.resiklos.app/api/v1/";
 
   static final Dio _dio = Dio();
@@ -153,13 +155,13 @@ class HttpInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     EasyLoading.dismiss();
     // log("http interceptor request  response : ${response.toString()}");
-    if(response.data["code"] == 511){
+    if (response.data["code"] == 511) {
       log("token has expired");
       // showWarnToast("login has expired");
       // SignRequest.logout(context);
       NavigatorUtil.pushLogin();
       // showWarnToast("token has expired");
-    }else if(response.data["code"] != 200){
+    } else if (response.data["code"] != 200) {
       // showWarnToast("login has expired");
     }
     super.onResponse(response, handler);

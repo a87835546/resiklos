@@ -44,13 +44,13 @@ dependencies:
   flutter_login_facebook: ^1.2.0
   cached_network_image: ^3.2.0
   transparent_image: ^2.0.0
-  qr_flutter: ^4.0.0
-  qr_code_scanner: ^0.6.1
   flutter_easyloading: ^3.0.3
   share_plus: ^3.0.4
   url_launcher: ^6.0.18
   webview_flutter: ^3.0.0
   local_auth: ^1.1.11
+  image_picker: ^0.8.4+4
+  amazon_s3_cognito: ^0.7.4
 
 dev_dependencies:
   flutter_test:

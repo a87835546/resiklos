@@ -14,6 +14,7 @@ class NavigatorUtil {
 
   static pushLogin() {
     var context = AppSingleton.currentPage ?? AppSingleton.queue?.last;
+    log("log----->>>>>$context");
     if (context != null) {
       try{
         Navigator.push(context, MaterialPageRoute(builder: (_) {
