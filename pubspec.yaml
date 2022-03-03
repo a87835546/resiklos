@@ -53,6 +53,7 @@ dependencies:
   amazon_s3_cognito: ^0.7.4
   qr_code_scanner: ^0.7.0
   qr_flutter: ^4.0.0
+  badges: ^2.0.2
 
 dev_dependencies:
   flutter_test:

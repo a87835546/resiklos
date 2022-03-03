@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:resiklos/home/qr_code_dailog.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 
 import 'home_button_widget.dart';
@@ -10,7 +12,10 @@ import 'home_referrals_page.dart';
 class HomeTopContainerView extends StatefulWidget {
   final num count;
   final num points;
-  const HomeTopContainerView({Key? key,required this.count,required this.points}) : super(key: key);
+
+  const HomeTopContainerView(
+      {Key? key, required this.count, required this.points})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HomeTopContainerViewState();
@@ -54,29 +59,30 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
           Container(
             height: 156,
             decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(5),
-                  topRight: Radius.circular(20),
-                  bottomRight: Radius.circular(5),
-                  bottomLeft: Radius.circular(20)),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey.withAlpha(80),
-                    blurRadius: 5.0,
-                    offset: Offset(0, 4),
-                    spreadRadius: 1),
-              ],
-              // gradient: const LinearGradient(
-              //     colors: [Color(0xff00A6BE), Color(0xff00F5D9)],
-              // ),
-              image:const DecorationImage(image: AssetImage("imgs/summary-bg.png"),fit: BoxFit.fill)
-            ),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(5),
+                    topRight: Radius.circular(20),
+                    bottomRight: Radius.circular(5),
+                    bottomLeft: Radius.circular(20)),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.withAlpha(80),
+                      blurRadius: 5.0,
+                      offset: Offset(0, 4),
+                      spreadRadius: 1),
+                ],
+                // gradient: const LinearGradient(
+                //     colors: [Color(0xff00A6BE), Color(0xff00F5D9)],
+                // ),
+                image: const DecorationImage(
+                    image: AssetImage("imgs/summary-bg.png"),
+                    fit: BoxFit.fill)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
                     Container(
@@ -84,7 +90,7 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "${widget.points}",
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 38,
                             fontWeight: FontWeight.bold),
@@ -112,14 +118,14 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
                       width: 100,
                       alignment: Alignment.centerLeft,
-                      child:  Text(
-                         "${widget.count} Referrals",
+                      child: Text(
+                        "${widget.count} Referrals",
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
@@ -156,6 +162,8 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                         log("click index ${_list.indexOf(e)} value ${e.title}");
                         if (_list.indexOf(e) == 2) {
                           NavigatorUtil.push(context, HomeReferrals());
+                        } else if (_list.indexOf(e) == 0) {
+                          showCustomDialog(context);
                         }
                       },
                     );
@@ -166,14 +174,6 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
       ),
     );
   }
-
-  // _createQrCode() {
-  //   return QrImage(
-  //     data: "1234567890",
-  //     version: QrVersions.auto,
-  //     size: 200.0,
-  //   );
-  // }
 }
 
 class HomeButtonModel {
