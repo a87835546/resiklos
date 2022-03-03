@@ -44,3 +44,10 @@ class ColorUtil {
     return ColorUtil.hexColor('0x0CC9BE');
   }
 }
+
+Color mainTitleColor() {
+return ColorUtil.hexColor('0xffC1C2C4');
+}
+Color mainColor() {
+return ColorUtil.hexColor('0xff00A6BE');
+}

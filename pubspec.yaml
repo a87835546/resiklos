@@ -51,6 +51,8 @@ dependencies:
   local_auth: ^1.1.11
   image_picker: ^0.8.4+4
   amazon_s3_cognito: ^0.7.4
+  qr_code_scanner: ^0.7.0
+  qr_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_test:

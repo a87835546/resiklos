@@ -19,7 +19,7 @@ class _Demo2PageState extends State<CustomBottomNavigationBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.redAccent,
+        color: Colors.transparent,
         child: PageView(
           physics: const NeverScrollableScrollPhysics(),
           children: const [
