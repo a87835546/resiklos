@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resiklos/home/setting/setting_page.dart';
@@ -127,11 +128,22 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                     child: Padding(
                       padding: EdgeInsets.only(left: 20),
                       child: Container(
-                          child: Icon(
-                        e,
-                        size: 22,
-                        color: Color(0xff00A6BE),
-                      )),
+                          child: e != Icons.notifications_active_rounded
+                              ? Icon(
+                                  e,
+                                  size: 22,
+                                  color: Color(0xff00A6BE),
+                                )
+                              : Badge(
+                                  position:
+                                      BadgePosition.topEnd(top: -12, end: -8),
+                                  badgeContent: Text(""),
+                                  child: Icon(
+                                    e,
+                                    size: 22,
+                                    color: Color(0xff00A6BE),
+                                  ),
+                                )),
                     ),
                     onTap: () {
                       if (e == Icons.settings) {
@@ -146,7 +158,7 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                         Navigator.push(context, MaterialPageRoute(builder: (_) {
                           return const NotificationPage();
                         }));
-                      }else if(e == Icons.logout){
+                      } else if (e == Icons.logout) {
                         SignRequest.logout(context);
                       }
                     },

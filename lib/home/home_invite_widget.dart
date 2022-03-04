@@ -15,9 +15,6 @@ class HomeInviteView extends StatefulWidget {
 }
 
 class _HomeInviteViewState extends State<HomeInviteView> {
-  String text = 'title';
-  String subject = 'subtitle';
-  List<String> imagePaths = [];
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +121,6 @@ class _HomeInviteViewState extends State<HomeInviteView> {
               behavior: HitTestBehavior.opaque,
               onTap: (){
                 NavigatorUtil.push(context, ReferralPage());
-                // _onShare(context);
               },
             ),
           ),
@@ -146,20 +142,5 @@ class _HomeInviteViewState extends State<HomeInviteView> {
         ],
       ),
     );
-  }
-
-  void _onShare(BuildContext context) async {
-    final box = context.findRenderObject() as RenderBox?;
-    log("text ---->>>>>$text  subject ---->>>>>$subject");
-    if (imagePaths.isNotEmpty) {
-      await Share.shareFiles(imagePaths,
-          text: text,
-          subject: subject,
-          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
-    } else {
-      await Share.share(text,
-          subject: subject,
-          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
-    }
   }
 }

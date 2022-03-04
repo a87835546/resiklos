@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:resiklos/home/qr_code_dailog.dart';
 import 'package:resiklos/utils/navigator_util.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'home_button_widget.dart';
 import 'home_referrals_page.dart';
@@ -23,13 +24,16 @@ class HomeTopContainerView extends StatefulWidget {
 
 class _HomeTopContainerViewState extends State<HomeTopContainerView> {
   List<HomeButtonModel> _list = [];
-
+  String text = 'title';
+  String subject = 'subtitle';
+  List<String> imagePaths = [];
   @override
   void initState() {
     super.initState();
     _list = [
       HomeButtonModel(Icons.qr_code, "QR", () async {}),
       HomeButtonModel(Icons.send_sharp, "Send", () async {}),
+      HomeButtonModel(Icons.directions_rounded, "Receive", () async {}),
       HomeButtonModel(Icons.group_sharp, "Referrals", () async {}),
       HomeButtonModel(Icons.import_export, "Exchange", () async {}),
     ];
@@ -156,14 +160,17 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: _list.map((e) {
+                    int index = _list.indexOf(e);
                     return HomeButtonWidget(
                       model: e,
                       click: () {
                         log("click index ${_list.indexOf(e)} value ${e.title}");
-                        if (_list.indexOf(e) == 2) {
+                        if (index == 3) {
                           NavigatorUtil.push(context, HomeReferrals());
-                        } else if (_list.indexOf(e) == 0) {
+                        } else if (index == 0) {
                           showCustomDialog(context);
+                        }else if(index == 1){
+                          Share.share('check out our website https://resiklos.com', subject: 'Look what I made!');
                         }
                       },
                     );
@@ -173,6 +180,20 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
         ],
       ),
     );
+  }
+  void _onShare(BuildContext context) async {
+    final box = context.findRenderObject() as RenderBox?;
+    log("text ---->>>>>$text  subject ---->>>>>$subject");
+    if (imagePaths.isNotEmpty) {
+      await Share.shareFiles(imagePaths,
+          text: text,
+          subject: subject,
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+    } else {
+      await Share.share(text,
+          subject: subject,
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+    }
   }
 }
 
