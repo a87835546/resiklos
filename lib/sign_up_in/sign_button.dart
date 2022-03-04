@@ -16,7 +16,6 @@ class SignButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("disable ---- >>>> ${disable}");
     double w = width ?? 200;
     return Padding(
       padding: EdgeInsets.only(

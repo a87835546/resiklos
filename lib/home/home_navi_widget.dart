@@ -21,7 +21,6 @@ class HomeNaviView extends StatefulWidget {
 class _HomeNaviViewState extends State<HomeNaviView> {
   @override
   Widget build(BuildContext context) {
-    log("url---->>>>>${AppSingleton.userInfoModel?.avatar}");
     return Container(
       padding: EdgeInsets.only(left: 15, right: 15, top: widget.top),
       height: (65.0 + widget.top),

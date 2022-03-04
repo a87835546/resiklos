@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QRCodeDialog extends Dialog {
-  List<String> data = [
-    "补材料申请",
-    "面签申请",
-    "暂停申请",
-    "提醒",
-  ];
+  const QRCodeDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +12,19 @@ class QRCodeDialog extends Dialog {
       child: Center(
         //保证控件居中效果
         child: SizedBox(
-            width: 220.0,
-            height: 200.0,
+            width: 300.0,
+            height: 300.0,
             child: Container(
               alignment: Alignment.center,
               color: Colors.white,
-              child: _createQrCode(),
+              child: Column(
+                children: [
+                  Container(
+                    child: Text("this my wallet address"),
+                  ),
+                  _createQrCode()
+                ],
+              ),
             )),
       ),
     );
@@ -30,7 +32,7 @@ class QRCodeDialog extends Dialog {
 
   _createQrCode() {
     return QrImage(
-      data: "1234567890",
+      data: "12345678901111111111111111111",
       version: QrVersions.auto,
       size: 200.0,
     );

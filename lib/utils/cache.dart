@@ -29,7 +29,6 @@ class Cache {
   }
 
   static Cache getInstance() {
-    log("get instance");
      _instance ??= Cache._();
     return _instance!;
   }

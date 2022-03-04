@@ -5,7 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:resiklos/scan/transfer_page.dart';
 import 'package:resiklos/utils/color.dart';
+import 'package:resiklos/utils/navigator_util.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({Key? key}) : super(key: key);
@@ -19,9 +21,11 @@ class _ScanPageState extends State<ScanPage> {
 
   Barcode? result;
   QRViewController? controller;
+  bool _isCan = true;
 
   @override
   void reassemble() {
+    log("reassemble---->>>>>>>>");
     super.reassemble();
     if (Platform.isAndroid) {
       controller!.pauseCamera();
@@ -51,63 +55,75 @@ class _ScanPageState extends State<ScanPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         // crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Container(
-                            margin: const EdgeInsets.all(8),
-                            height: 80,
-                            width: 80,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  child: Icon(
-                                    Icons.qr_code_scanner_outlined,
-                                    size: 20,
-                                    color: mainColor(),
+                          GestureDetector(
+                            child: Container(
+                              margin: const EdgeInsets.all(8),
+                              height: 80,
+                              width: 80,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    child: Icon(
+                                      Icons.qr_code_scanner_outlined,
+                                      size: 20,
+                                      color: mainColor(),
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  'TRANSFER',
-                                  style: TextStyle(
-                                      color: mainTitleColor(),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 80,
-                            width: 80,
-                            margin: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  child: Icon(
-                                    Icons.qr_code_scanner_outlined,
-                                    size: 20,
-                                    color: mainColor(),
+                                  Text(
+                                    'TRANSFER',
+                                    style: TextStyle(
+                                        color: mainTitleColor(),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                ),
-                                Text(
-                                  'VERIFY',
-                                  style: TextStyle(
-                                      color: mainTitleColor(),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
+                            onTap: () {
+                              log("点击transfer");
+                              controller?.resumeCamera();
+                            },
                           ),
+                          GestureDetector(
+                            child: Container(
+                              height: 80,
+                              width: 80,
+                              margin: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    child: Icon(
+                                      Icons.qr_code_scanner_outlined,
+                                      size: 20,
+                                      color: mainColor(),
+                                    ),
+                                  ),
+                                  Text(
+                                    'VERIFY',
+                                    style: TextStyle(
+                                        color: mainTitleColor(),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            onTap: () {
+                              log("点击verify");
+                              controller?.stopCamera();
+                            },
+                          )
                         ],
                       ),
                       Container(
@@ -159,7 +175,6 @@ class _ScanPageState extends State<ScanPage> {
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(
       key: qrKey,
-
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
           borderColor: mainColor(),
@@ -176,17 +191,45 @@ class _ScanPageState extends State<ScanPage> {
     setState(() {
       this.controller = controller;
     });
-    controller.scannedDataStream.listen((Barcode scanData) {
-      setState(() {
+    controller.scannedDataStream.listen((Barcode scanData) async {
+      setState(() async {
         result = scanData;
-        if(result?.code != null){
+        log("result ------>>>>${result?.code}");
+        if (result?.code != null && _isCan) {
+          _isCan = false;
           controller.pauseCamera();
-        }else{
+          var r = await Navigator.push(context,
+              _createRoute(Tween(begin: Offset(1.0, 0), end: Offset.zero)));
+          if (r == true || r == "1") {
+            setState(() {
+              this.controller = controller;
+            });
+            controller.resumeCamera();
+          }
+          // 500 毫秒内 不能多次点击
+          Future.delayed(const Duration(milliseconds: 500), () {
+            _isCan = true;
+          });
+        } else {
           controller.resumeCamera();
         }
-        log("result ------>>>>${result?.code}");
       });
     });
+  }
+
+  Route _createRoute(Tween<Offset> tween) {
+    return PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return TransferPage();
+        },
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position:
+                animation.drive(tween.chain(CurveTween(curve: Curves.ease))),
+            child: child,
+          );
+        });
   }
 
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
