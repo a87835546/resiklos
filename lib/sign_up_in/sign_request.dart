@@ -80,6 +80,46 @@ class SignRequest {
     return Future.value(model);
   }
 
+  static Future<bool> getOtp(email) async {
+    var result =
+        await HttpManager.get(url: "user/sendPasswordOtp?email=${email}");
+    log("get reset password otp result $result");
+    try {
+      if (result["data"] != null && result["code"] == 200) {
+        return Future.value(true);
+      } else {
+        EasyLoading.showError(result["message"] ?? "Get Otp Error");
+        return Future.value(false);
+      }
+    } catch (err) {
+      log("parser reset password ot fail ${err.toString()}");
+    } finally {
+      EasyLoading.dismiss();
+    }
+    return Future.value(false);
+  }
+
+  static Future resetPassword(email, otp, password) async {
+    var result = await HttpManager.post(
+        url: "user/resetPasswd?email=${email}&otp=$otp&newPassword=$password",
+        params: {});
+    log("get reset password otp result $result");
+    try {
+      if (result["code"] == 200) {
+        EasyLoading.showSuccess("Reset Password Successful");
+        return Future.value(true);
+      } else {
+        EasyLoading.showError(result["message"] ?? "Reset Password Error");
+        return Future.value(false);
+      }
+    } catch (err) {
+      log("parser reset password ot fail ${err.toString()}");
+      return Future.value(false);
+    } finally {
+      EasyLoading.dismiss();
+    }
+  }
+
   // google disconnect
   static Future<void> handleSignOut() => _googleSignIn.disconnect();
 
