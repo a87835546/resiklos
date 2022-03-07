@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:resiklos/home/home_verify_email_result_page.dart';
 import 'package:resiklos/home/home_verify_state_icon.dart';
 import 'package:resiklos/home/kyc/kyc_start_page.dart';
+import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 
 import 'home_verify_emal_page.dart';
@@ -19,6 +20,8 @@ class HomeVerifyView extends StatefulWidget {
   State<StatefulWidget> createState() => _HomeVerifyViewState();
 }
 
+List<num> _progrcess = [5, 2, 1.2, 1];
+
 class _HomeVerifyViewState extends State<HomeVerifyView> {
   @override
   Widget build(BuildContext context) {
@@ -27,6 +30,9 @@ class _HomeVerifyViewState extends State<HomeVerifyView> {
 }
 
 Widget _widget(BuildContext context) {
+  int index = AppSingleton.userInfoModel?.verifiedEmail == true ? 1 : 0;
+  index = AppSingleton.userInfoModel?.verifyId == true ? 2 : index;
+  num index1 = _progrcess[index];
   return Stack(
     children: <Widget>[
       Container(
@@ -145,7 +151,7 @@ Widget _widget(BuildContext context) {
               color: const Color(0xfff4f4f4),
             ),
             Pinned.fromPins(
-              Pin(size: 360.0 / 1.2, start: 0.0),
+              Pin(size: 360.0 / index1, start: 0.0),
               Pin(start: 0.0, end: 0.0),
               child: Container(
                 color: const Color(0xff0d90a3),
@@ -191,7 +197,9 @@ Widget _widget(BuildContext context) {
                     width: 16.0,
                     height: 16.0,
                     child: HomeVerifyStateIcon(
-                      type: 2,
+                      type: (AppSingleton.userInfoModel?.verifiedEmail == true
+                          ? 3
+                          : 2),
                     )),
               ),
               Pinned.fromPins(
@@ -261,7 +269,7 @@ Widget _widget(BuildContext context) {
                   ),
                 ),
               ),
-              Align(
+              const Align(
                 alignment: Alignment(0.333, 0.318),
                 child: SizedBox(
                   width: 16.0,
@@ -323,13 +331,13 @@ Widget _widget(BuildContext context) {
                   textAlign: TextAlign.center,
                 ),
               ),
-              Align(
+              const Align(
                 alignment: Alignment(0.344, 0.333),
                 child: SizedBox(
                   width: 16.0,
                   height: 16.0,
                   child: HomeVerifyStateIcon(
-                    type: 3,
+                    type: 1,
                   ),
                 ),
               ),

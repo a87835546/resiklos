@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 
 class HomeVerifyStateIcon extends StatelessWidget {
-  final num type; // 1 incomplete 3 complete 2 pending
+  final int type; // 1 incomplete 3 complete 2 pending
   const HomeVerifyStateIcon({Key? key, required this.type}) : super(key: key);
 
   @override
