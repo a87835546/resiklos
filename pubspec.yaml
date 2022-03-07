@@ -54,6 +54,8 @@ dependencies:
   qr_code_scanner: ^0.7.0
   qr_flutter: ^4.0.0
   badges: ^2.0.2
+  adobe_xd: ^2.0.1
+  flutter_svg: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -100,3 +102,4 @@ flutter:
     - imgs/what-is-resiklos.png
     - imgs/importance-of-resiklos.png
     - imgs/placeholder_avatar.png
+    - imgs/verification_bg_image.png

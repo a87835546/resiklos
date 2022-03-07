@@ -31,11 +31,6 @@ class VerifySuccessfullyPage extends BaseStatefulWidget {
 
 class _VerifySuccessfullyPageState
     extends BaseStatefulState<VerifySuccessfullyPage> {
-  @override
-  void initState() {
-    super.initState();
-    getPrice();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -222,9 +217,5 @@ class _VerifySuccessfullyPageState
           Navigator.pop(context, "1");
           return true;
         });
-  }
-
-  void getPrice() async {
-    var r = await getPlasticPrice();
   }
 }

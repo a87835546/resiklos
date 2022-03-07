@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/home_articles_widget.dart';
+import 'package:resiklos/home/home_verify_widget.dart';
 import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/http_manager.dart';
@@ -81,6 +82,13 @@ class _HomePageState extends BaseStatefulState<HomePage> {
                               points: _points ?? 50,
                               count: _referralCount,
                             ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 30),
+                              child: Container(
+                                height: 156,
+                                child: HomeVerifyView(),
+                              ),
+                            ),
                             const Padding(
                               padding: EdgeInsets.only(top: 30),
                               child: HomeInviteView(),
@@ -125,7 +133,7 @@ class _HomePageState extends BaseStatefulState<HomePage> {
 
   void getData() async {
     showLoading();
-    Future.wait([getReferralsCount(), getPoints(),getUser()]).whenComplete(() {
+    Future.wait([getReferralsCount(), getPoints(), getUser()]).whenComplete(() {
       _refreshController.refreshCompleted();
       EasyLoading.dismiss();
     });
