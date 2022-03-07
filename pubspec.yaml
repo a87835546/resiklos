@@ -122,3 +122,5 @@ flutter:
     - imgs/importance-of-resiklos.png
     - imgs/placeholder_avatar.png
     - imgs/verification_bg_image.png
+    - imgs/verify_email_image.png
+    - imgs/verify_success_image.png

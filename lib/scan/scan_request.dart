@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/http_manager.dart';
 
 Future getPlasticPrice() async {

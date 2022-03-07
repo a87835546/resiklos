@@ -5,7 +5,12 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:resiklos/home/home_verify_email_result_page.dart';
 import 'package:resiklos/home/home_verify_state_icon.dart';
+import 'package:resiklos/home/kyc/kyc_start_page.dart';
+import 'package:resiklos/utils/navigator_util.dart';
+
+import 'home_verify_emal_page.dart';
 
 class HomeVerifyView extends StatefulWidget {
   const HomeVerifyView({Key? key}) : super(key: key);
@@ -17,11 +22,11 @@ class HomeVerifyView extends StatefulWidget {
 class _HomeVerifyViewState extends State<HomeVerifyView> {
   @override
   Widget build(BuildContext context) {
-    return _widget();
+    return _widget(context);
   }
 }
 
-Widget _widget() {
+Widget _widget(BuildContext context) {
   return Stack(
     children: <Widget>[
       Container(
@@ -140,7 +145,7 @@ Widget _widget() {
               color: const Color(0xfff4f4f4),
             ),
             Pinned.fromPins(
-              Pin(size: 360.0/1.2, start: 0.0),
+              Pin(size: 360.0 / 1.2, start: 0.0),
               Pin(start: 0.0, end: 0.0),
               child: Container(
                 color: const Color(0xff0d90a3),
@@ -163,9 +168,9 @@ Widget _widget() {
                   decoration: BoxDecoration(
                     color: const Color(0xff0d90a3),
                     borderRadius:
-                    BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                        BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     border:
-                    Border.all(width: 5.0, color: const Color(0xff00a6be)),
+                        Border.all(width: 5.0, color: const Color(0xff00a6be)),
                   ),
                 ),
               ),
@@ -185,8 +190,9 @@ Widget _widget() {
                 child: SizedBox(
                     width: 16.0,
                     height: 16.0,
-                    child: HomeVerifyStateIcon(type: 2,)
-                ),
+                    child: HomeVerifyStateIcon(
+                      type: 2,
+                    )),
               ),
               Pinned.fromPins(
                 Pin(start: 0.0, end: 0.0),
@@ -205,8 +211,9 @@ Widget _widget() {
             ],
           ),
         ),
-        onTap: (){
+        onTap: () {
           log("verify email");
+          NavigatorUtil.push(context, HomeVerifyEmail());
         },
       ),
       GestureDetector(
@@ -223,9 +230,9 @@ Widget _widget() {
                   decoration: BoxDecoration(
                     color: const Color(0xff2f8cc6),
                     borderRadius:
-                    BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                        BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     border:
-                    Border.all(width: 5.0, color: const Color(0xfffafafa)),
+                        Border.all(width: 5.0, color: const Color(0xfffafafa)),
                   ),
                 ),
               ),
@@ -259,13 +266,15 @@ Widget _widget() {
                 child: SizedBox(
                   width: 16.0,
                   height: 16.0,
-                  child: HomeVerifyStateIcon(type: 1,),
+                  child: HomeVerifyStateIcon(
+                    type: 1,
+                  ),
                 ),
               ),
             ],
           ),
         ),
-        onTap: (){
+        onTap: () {
           log("complete kyc");
         },
       ),
@@ -283,9 +292,9 @@ Widget _widget() {
                   decoration: BoxDecoration(
                     color: const Color(0xffffcc5a),
                     borderRadius:
-                    BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
+                        BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
                     border:
-                    Border.all(width: 5.0, color: const Color(0xfffafafa)),
+                        Border.all(width: 5.0, color: const Color(0xfffafafa)),
                   ),
                 ),
               ),
@@ -319,19 +328,24 @@ Widget _widget() {
                 child: SizedBox(
                   width: 16.0,
                   height: 16.0,
-                  child: HomeVerifyStateIcon(type: 3,),
+                  child: HomeVerifyStateIcon(
+                    type: 3,
+                  ),
                 ),
               ),
             ],
           ),
         ),
-        onTap: (){
+        onTap: () {
           log("set wallet");
         },
       ),
     ],
   );
 }
+
 enum VerifyState {
-  incomplete,pending,complete,
+  incomplete,
+  pending,
+  complete,
 }

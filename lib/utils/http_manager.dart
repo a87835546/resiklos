@@ -70,6 +70,8 @@ class HttpManager {
           return HttpManagerErrorType.internalServerError;
         } else if (response.data['code'] == 511) {
           return HttpManagerErrorType.tokenExpired;
+        }else {
+          return response.data;
         }
       }
     } catch (error) {

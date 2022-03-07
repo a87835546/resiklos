@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/http_manager.dart';
+import 'package:resiklos/utils/toast.dart';
 
 Future deleteAccount() async {
   var result = await HttpManager.get(
@@ -59,5 +60,27 @@ Future createRpWalletAddress() async {
     return Future.value(false);
   } finally {
     EasyLoading.dismiss();
+  }
+}
+
+Future getEmailOtp() async {
+  var result = await HttpManager.get(url: "/user/sendVerifyEmail?email=${AppSingleton.userInfoModel?.email}");
+  log("get email otp result ---->>>> $result");
+  if (null != result["code"] && result["code"] == 200) {
+    return Future.value(true);
+  } else {
+    showErrorText(result["message"]?? "get email otp fail");
+    return Future.value(false);
+  }
+}
+
+Future verifyEmail(otp) async {
+  var result = await HttpManager.get(url: "user/verifyEmail?email=${AppSingleton.userInfoModel?.email}&otp=$otp");
+  log("verify email result ---->>>> $result");
+  if (null != result["code"] && result["code"] == 200) {
+    return Future.value(true);
+  } else {
+    showErrorText(result["message"]?? "get email otp fail");
+    return Future.value(false);
   }
 }
