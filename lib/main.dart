@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
             child: MaterialApp(
               title: 'Resiklos',
               debugShowCheckedModeBanner: false,
-              theme: ThemeData(primarySwatch: Colors.blue),
+              theme: ThemeData(primarySwatch: Colors.blue,fontFamily: 'Montserrat',),
               home: model?.token != null
                   ? CustomBottomNavigationBar()
                   :OnboardingPage(),// SignInPage(),
