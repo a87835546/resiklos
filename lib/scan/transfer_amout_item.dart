@@ -32,7 +32,7 @@ class _TransferAmountItemState extends State<TransferAmountItem> {
           ),
           Container(
             child: Text(
-              "${widget.amount} RSG",
+              "${widget.amount}",
               style: widget.textStyle,
             ),
           ),

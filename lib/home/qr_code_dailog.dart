@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:resiklos/utils/app_singleton.dart';
 
 class QRCodeDialog extends Dialog {
   const QRCodeDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    log("rp address ----->>>>${AppSingleton.userInfoModel?.rpWalletAddress}");
     return Material(
       //创建透明层
       type: MaterialType.transparency, //透明类型
@@ -20,7 +24,8 @@ class QRCodeDialog extends Dialog {
               child: Column(
                 children: [
                   Container(
-                    child: Text("this my wallet address"),
+                    padding: EdgeInsets.only(top: 15,bottom: 15),
+                    child: Text("rp:${AppSingleton.userInfoModel?.rpWalletAddress}"),
                   ),
                   _createQrCode()
                 ],
@@ -32,7 +37,7 @@ class QRCodeDialog extends Dialog {
 
   _createQrCode() {
     return QrImage(
-      data: "12345678901111111111111111111",
+      data: AppSingleton.userInfoModel?.rpWalletAddress??"",
       version: QrVersions.auto,
       size: 200.0,
     );

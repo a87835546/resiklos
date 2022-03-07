@@ -6,8 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:resiklos/scan/transfer_page.dart';
+import 'package:resiklos/scan/verify_proceed_page.dart';
 import 'package:resiklos/utils/color.dart';
-import 'package:resiklos/utils/navigator_util.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({Key? key}) : super(key: key);
@@ -22,6 +22,7 @@ class _ScanPageState extends State<ScanPage> {
   Barcode? result;
   QRViewController? controller;
   bool _isCan = true;
+  bool _isVerify = false;
 
   @override
   void reassemble() {
@@ -87,6 +88,9 @@ class _ScanPageState extends State<ScanPage> {
                             ),
                             onTap: () {
                               log("点击transfer");
+                              setState(() {
+                                _isVerify = false;
+                              });
                               controller?.resumeCamera();
                             },
                           ),
@@ -121,7 +125,10 @@ class _ScanPageState extends State<ScanPage> {
                             ),
                             onTap: () {
                               log("点击verify");
-                              controller?.stopCamera();
+                              setState(() {
+                                _isVerify = true;
+                              });
+                              controller?.resumeCamera();
                             },
                           )
                         ],
@@ -221,7 +228,7 @@ class _ScanPageState extends State<ScanPage> {
     return PageRouteBuilder(
         opaque: false,
         pageBuilder: (context, animation, secondaryAnimation) {
-          return TransferPage();
+          return _isVerify ? VerifyProceedPage() : TransferPage();
         },
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(

@@ -17,7 +17,7 @@ class _TransferAmountListState extends State<TransferAmountList> {
         children: [
           TransferAmountItem(
             title: "Amount",
-            amount: "100.0",
+            amount: "100.0 RP",
             textStyle: TextStyle(
               color: Color(0xff707070),
               fontSize: 14,
@@ -25,7 +25,7 @@ class _TransferAmountListState extends State<TransferAmountList> {
           ),
           TransferAmountItem(
             title: "Fee",
-            amount: "100.0",
+            amount: "100.0 RP",
             textStyle: TextStyle(
               color: Color(0xffD4D4D4),
               fontSize: 14,
@@ -33,7 +33,7 @@ class _TransferAmountListState extends State<TransferAmountList> {
           ),
           TransferAmountItem(
             title: "Total",
-            amount: "100.0",
+            amount: "100.0 RP",
             textStyle: TextStyle(
               color: mainColor(),
               fontSize: 14,

@@ -15,6 +15,8 @@ class UserInfoModel {
    String? token;
    String? inviteCode;
    String? ipAddress;
+   String? rpWalletAddress;
+   String? walletAddress;
    dynamic createTime;
    dynamic lastLoginTime;
    num? deviceType;
@@ -42,6 +44,8 @@ class UserInfoModel {
     this.inviteCode,
     this.createTime,
     this.lastLoginTime,
+    this.rpWalletAddress,
+    this.walletAddress
   });
 
   static UserInfoModel jsonToObject(Map<String, dynamic> map) {
@@ -65,6 +69,8 @@ class UserInfoModel {
       inviteCode: map['inviteCode'],
       ipAddress: map['ipAddress'],
       lastLoginTime: map['lastLoginTime'],
+      rpWalletAddress: map['rpWalletAddress'],
+      walletAddress: map['walletAddress'],
     );
     log("model --- >>> $model");
     return model;
@@ -92,6 +98,8 @@ class UserInfoModel {
       inviteCode: map['inviteCode'],
       ipAddress: map['ipAddress'],
       lastLoginTime: map['lastLoginTime'],
+      rpWalletAddress: map['rpWalletAddress'],
+      walletAddress: map['walletAddress'],
     );
     return model;
   }
