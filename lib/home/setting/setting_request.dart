@@ -94,6 +94,7 @@ Future getEmailOtp() async {
       url: "/user/sendVerifyEmail?email=${AppSingleton.userInfoModel?.email}");
   log("get email otp result ---->>>> $result");
   if (null != result["code"] && result["code"] == 200) {
+    showSuccessLoading(title: "Send OTP success");
     return Future.value(true);
   } else {
     showErrorText(result["message"] ?? "get email otp fail");
@@ -130,6 +131,7 @@ Future uploadUserInfo(
       await HttpManager.post(url: "kyc/modifyUserInfo", params: params);
   log("upload user info result ---->>>> $result");
   if (null != result["code"] && result["code"] == 200) {
+    showSuccessLoading();
     return Future.value(true);
   } else {
     showErrorText(result["message"] ?? "upload user info fail");

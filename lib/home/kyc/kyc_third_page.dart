@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:resiklos/base_class/base_page.dart';
+import 'package:resiklos/home/kyc/kyc_finished_page.dart';
 import 'package:resiklos/home/kyc/kyc_progress_widget.dart';
 import 'package:resiklos/home/kyc/kyc_second_two_page.dart';
 import 'package:resiklos/home/setting/setting_request.dart';
@@ -12,6 +13,7 @@ import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/utils/request.dart';
+import 'package:resiklos/utils/toast.dart';
 
 /// @author :create by yicen
 /// date: ${DATE}$
@@ -68,7 +70,7 @@ class _KycThirdPageState extends BaseStatefulState<KycThirdPage> {
                 Container(
                   width: double.maxFinite,
                   child: const Text(
-                    "Facial Recognition",
+                    "Take a Selfie",
                     style: TextStyle(color: Color(0xff707070), fontSize: 14),
                   ),
                 ),
@@ -93,11 +95,22 @@ class _KycThirdPageState extends BaseStatefulState<KycThirdPage> {
                     borderType: BorderType.Circle,
                     child: Container(
                       width: 305,
-                      height: 166,
+                      height: 236,
                       child: _image != null
                           ? GestureDetector(
                               child: Container(
-                                child: Image.memory(_image),
+                                width: 236,
+                                height: 236,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(236 / 2)),
+                                ),
+                                child: CircleAvatar(
+                                  backgroundImage: Image.memory(
+                                    _image,
+                                    color: Colors.yellowAccent,
+                                  ).image,
+                                ),
                               ),
                               onTap: () => readData(0))
                           : GestureDetector(
@@ -105,13 +118,13 @@ class _KycThirdPageState extends BaseStatefulState<KycThirdPage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
-                                     Icon(Icons.camera_alt,
+                                    Icon(Icons.camera_alt,
                                         size: 33,
                                         color: Color(
                                           0xffD4D4D4,
                                         )),
                                     Text("Facial",
-                                        style:  TextStyle(
+                                        style: TextStyle(
                                             color: Color(0xffD4D4D4),
                                             fontSize: 12)),
                                   ],
@@ -141,9 +154,10 @@ class _KycThirdPageState extends BaseStatefulState<KycThirdPage> {
                   behavior: HitTestBehavior.translucent,
                   onTap: () async {
                     log("next");
+                    showLoading();
                     var s = await uploadFacial();
-                    if(s == true){
-                      
+                    if (s == true) {
+                      NavigatorUtil.push(context, KYCFinishedPage());
                     }
                   },
                 ),
@@ -170,7 +184,7 @@ class _KycThirdPageState extends BaseStatefulState<KycThirdPage> {
 
   Future uploadFacial() async {
     var uploadedImageUrl =
-    await upload(_path?.name, _path?.path, UploadType.avatar);
+        await upload(_path?.name, _path?.path, UploadType.avatar);
 
     log("upload image url --->>>>$uploadedImageUrl");
     if (uploadedImageUrl != null) {

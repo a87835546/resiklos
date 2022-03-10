@@ -39,9 +39,9 @@ void showLoading() {
   );
 }
 
-void showSuccessLoading() {
+void showSuccessLoading({String? title}) {
   EasyLoading.showSuccess(
-    "success...",
+    title??"success...",
     duration: time,
     maskType: EasyLoadingMaskType.black,
   );

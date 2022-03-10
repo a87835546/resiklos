@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/kyc/kyc_progress_widget.dart';
+import 'package:resiklos/home/kyc/kyc_second_page.dart';
 import 'package:resiklos/home/setting/setting_request.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:country_picker/src/utils.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/utils/toast.dart';
 
 class KycFirstPage extends BaseStatefulWidget {
@@ -107,7 +109,9 @@ class _KycFirstPageState extends BaseStatefulState<KycFirstPage> {
                     }
                     var result = await uploadUserInfo(_date.toString(),
                         _country, firstname, _isMale, lastname, mobile);
-                    if (result == true) {}
+                    if (result == true) {
+                      NavigatorUtil.push(context, const KycSecondPage());
+                    }
                     log("start verify kyc ----->>>>> country:$_country  firstname:$firstname lastname:$lastname birthday:$_date gender:$_isMale mobile:$mobile");
                   },
                 ),

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:resiklos/utils/app_singleton.dart';
 
 class HomeVerifyStateIcon extends StatelessWidget {
   final int type; // 1 incomplete 3 complete 2 pending
@@ -9,6 +10,7 @@ class HomeVerifyStateIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log("state ---->>>> $type   ----->>>${AppSingleton.userInfoModel?.verifiedEmail == true}");
     String name = type == 1
         ? _svg_incomplete
         : (type == 2 ? _svg_pending : _svg_complete);

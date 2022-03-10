@@ -223,7 +223,9 @@ Widget _widget(BuildContext context) {
         ),
         onTap: () {
           log("verify email");
-          NavigatorUtil.push(context, HomeVerifyEmail());
+          if (AppSingleton.userInfoModel?.verifiedEmail == false) {
+            NavigatorUtil.push(context, const HomeVerifyEmail());
+          }
         },
       ),
       GestureDetector(

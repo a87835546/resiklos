@@ -106,7 +106,7 @@ class _KYCFinishedPageState extends State<KYCFinishedPage> {
                             width: 232,
                             height: 50,
                             child: const Text(
-                              "CONTINUE",
+                              "BACK TO HOME",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
