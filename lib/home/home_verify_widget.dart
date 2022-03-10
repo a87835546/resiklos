@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:resiklos/home/home_verify_email_result_page.dart';
 import 'package:resiklos/home/home_verify_state_icon.dart';
+import 'package:resiklos/home/kyc/kyc_finished_page.dart';
+import 'package:resiklos/home/kyc/kyc_second_page.dart';
 import 'package:resiklos/home/kyc/kyc_start_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/navigator_util.dart';
@@ -284,6 +286,7 @@ Widget _widget(BuildContext context) {
         ),
         onTap: () {
           log("complete kyc");
+          NavigatorUtil.push(context, KycStartsPage());
         },
       ),
       GestureDetector(
@@ -346,6 +349,8 @@ Widget _widget(BuildContext context) {
         ),
         onTap: () {
           log("set wallet");
+
+          NavigatorUtil.push(context, KYCFinishedPage());
         },
       ),
     ],

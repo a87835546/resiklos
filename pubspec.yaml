@@ -56,6 +56,9 @@ dependencies:
   badges: ^2.0.2
   adobe_xd: ^2.0.1
   flutter_svg: ^1.0.3
+  country_picker: ^2.0.12
+  flutter_datetime_picker: ^1.5.1
+  dotted_border: ^2.0.0+2
 
 dev_dependencies:
   flutter_test:
@@ -124,3 +127,8 @@ flutter:
     - imgs/verification_bg_image.png
     - imgs/verify_email_image.png
     - imgs/verify_success_image.png
+    - imgs/verify_kyc_person.png
+    - imgs/verfiy_id.png
+    - imgs/verify_person.png
+    - imgs/verify_face_id.png
+    - imgs/img.png

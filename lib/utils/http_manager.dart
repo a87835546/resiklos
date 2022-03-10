@@ -100,7 +100,10 @@ class HttpManager {
         data: params, options: options, cancelToken: token);
 
     try {
+      log("response data---->>>>>${response.data}");
       if (response.statusCode == 200) {
+        return response.data;
+      }else{
         return response.data;
       }
     } catch (error) {
@@ -185,7 +188,7 @@ class HttpInterceptor extends Interceptor {
     }
     // log("http interceptor request  options headers: ${options.headers}");
     // log("http interceptor request  options queryParameters: ${options.queryParameters}");
-    log("http interceptor request  options path: ${options.path}");
+    // log("http interceptor request  options path: ${options.path}");
     handler.next(options);
   }
 }

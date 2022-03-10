@@ -119,7 +119,7 @@ class _SettingPageState extends BaseStatefulState<SettingPage> {
     var uploadedImageUrl = await upload(image?.name, path, UploadType.avatar);
     log("upload image url --->>>>$uploadedImageUrl");
     if (uploadedImageUrl != null) {
-      await uploadImage(uploadedImageUrl);
+      await uploadImage(uploadedImageUrl,false,0);
     }
   }
 }

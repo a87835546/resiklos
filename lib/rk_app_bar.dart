@@ -4,14 +4,16 @@ import 'package:resiklos/utils/navigator_util.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final Color? bgColor;
 
-  const CustomAppBar({Key? key, required this.title}) : super(key: key);
+  const CustomAppBar({Key? key, required this.title, this.bgColor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Container(
-        color: Colors.white,
+        color: bgColor ?? Colors.white,
         alignment: Alignment.center,
         height: kToolbarHeight,
         margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),

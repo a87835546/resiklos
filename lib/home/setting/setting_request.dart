@@ -26,11 +26,37 @@ Future deleteAccount() async {
   }
 }
 
-Future uploadImage(url) async {
-  var result = await HttpManager.post(
-      url: "/user/uploadAvatar",
-      params: {"id": AppSingleton.userInfoModel?.id, "url": url});
+/// type == 0 id 1 driver License 2 passport 3 other
+Future uploadImage(url, bool isFont, type) async {
+  var result = await HttpManager.post(url: "/kyc/uploadId", params: {
+    "id": AppSingleton.userInfoModel?.id,
+    "url": url,
+    "isFont": isFont,
+    "idType": type
+  });
   log("upload image result ---->>>> $result");
+  try {
+    return Future.value(200 == result["code"]);
+  } catch (e) {
+    log("upload image error ---->>>>$e");
+    return Future.value(false);
+  }
+}
+
+Future uploadFacialImage(url) async {
+  var result = await HttpManager.post(url: "/kyc/uploadSelfie", params: {
+    "id": AppSingleton.userInfoModel?.id,
+    "url": url,
+    "isFont": "",
+    "idType": ""
+  });
+  log("upload image result ---->>>> $result");
+  try {
+    return Future.value(200 == result["code"]);
+  } catch (e) {
+    log("upload image error ---->>>>$e");
+    return Future.value(false);
+  }
 }
 
 Future getUserProfile() async {
@@ -64,23 +90,49 @@ Future createRpWalletAddress() async {
 }
 
 Future getEmailOtp() async {
-  var result = await HttpManager.get(url: "/user/sendVerifyEmail?email=${AppSingleton.userInfoModel?.email}");
+  var result = await HttpManager.get(
+      url: "/user/sendVerifyEmail?email=${AppSingleton.userInfoModel?.email}");
   log("get email otp result ---->>>> $result");
   if (null != result["code"] && result["code"] == 200) {
     return Future.value(true);
   } else {
-    showErrorText(result["message"]?? "get email otp fail");
+    showErrorText(result["message"] ?? "get email otp fail");
     return Future.value(false);
   }
 }
 
 Future verifyEmail(otp) async {
-  var result = await HttpManager.get(url: "user/verifyEmail?email=${AppSingleton.userInfoModel?.email}&otp=$otp");
+  var result = await HttpManager.get(
+      url:
+          "user/verifyEmail?email=${AppSingleton.userInfoModel?.email}&otp=$otp");
   log("verify email result ---->>>> $result");
   if (null != result["code"] && result["code"] == 200) {
     return Future.value(true);
   } else {
-    showErrorText(result["message"]?? "get email otp fail");
+    showErrorText(result["message"] ?? "get email otp fail");
+    return Future.value(false);
+  }
+}
+
+Future uploadUserInfo(
+    birthday, country, firstname, gender, lastname, mobile) async {
+  log("123");
+  Map<String, dynamic> params = {
+    "birthday": birthday,
+    "country": country,
+    "firstname": firstname,
+    "gender": gender == true ? 1 : 0,
+    "id": AppSingleton.userInfoModel?.id,
+    "lastname": lastname,
+    "mobile": mobile
+  };
+  var result =
+      await HttpManager.post(url: "kyc/modifyUserInfo", params: params);
+  log("upload user info result ---->>>> $result");
+  if (null != result["code"] && result["code"] == 200) {
+    return Future.value(true);
+  } else {
+    showErrorText(result["message"] ?? "upload user info fail");
     return Future.value(false);
   }
 }
