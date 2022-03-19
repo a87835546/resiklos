@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:resiklos/home/kyc/kyc_model.dart';
 import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/http_manager.dart';
@@ -27,11 +28,11 @@ Future deleteAccount() async {
 }
 
 /// type == 0 id 1 driver License 2 passport 3 other
-Future uploadImage(url, bool isFont, type) async {
+Future uploadIDImage(String url, String backUrl, int type) async {
   var result = await HttpManager.post(url: "/kyc/uploadId", params: {
     "id": AppSingleton.userInfoModel?.id,
     "url": url,
-    "isFont": isFont,
+    "backUrl": backUrl,
     "idType": type
   });
   log("upload image result ---->>>> $result");
@@ -47,7 +48,7 @@ Future uploadFacialImage(url) async {
   var result = await HttpManager.post(url: "/kyc/uploadSelfie", params: {
     "id": AppSingleton.userInfoModel?.id,
     "url": url,
-    "isFont": "",
+    "backUrl": "",
     "idType": ""
   });
   log("upload image result ---->>>> $result");
@@ -68,6 +69,21 @@ Future getUserProfile() async {
     return Future.value(userInfoModel);
   } catch (err) {
     log("parser delete account fail ${err.toString()}");
+    return Future.value(false);
+  } finally {
+    EasyLoading.dismiss();
+  }
+}
+
+Future fetchKycByUserId() async {
+  var result = await HttpManager.get(
+      url: "kyc/queryKyc?userId=${AppSingleton.userInfoModel?.id}");
+  log("get kyc result ---->>>> $result");
+  try {
+    KycModel model = KycModel.fromJson(result["data"]);
+    return Future.value(model);
+  } catch (err) {
+    log("parser get kyc fail ${err.toString()}");
     return Future.value(false);
   } finally {
     EasyLoading.dismiss();
@@ -115,9 +131,22 @@ Future verifyEmail(otp) async {
   }
 }
 
+Future insertNotification() async {
+  var result = await HttpManager.post(
+      url:
+      "notification/addNews",params: {"content":"test1111","desc":"asdfkljsfklsdf","type":"3"});
+  log("verify email result ---->>>> $result");
+  if (null != result["code"] && result["code"] == 200) {
+    return Future.value(true);
+  } else {
+    showErrorText(result["message"] ?? "get email otp fail");
+    return Future.value(false);
+  }
+}
+
+
 Future uploadUserInfo(
     birthday, country, firstname, gender, lastname, mobile) async {
-  log("123");
   Map<String, dynamic> params = {
     "birthday": birthday,
     "country": country,

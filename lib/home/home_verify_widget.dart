@@ -12,6 +12,7 @@ import 'package:resiklos/home/kyc/kyc_second_page.dart';
 import 'package:resiklos/home/kyc/kyc_start_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/navigator_util.dart';
+import 'package:resiklos/utils/toast.dart';
 
 import 'home_verify_emal_page.dart';
 
@@ -33,7 +34,7 @@ class _HomeVerifyViewState extends State<HomeVerifyView> {
 
 Widget _widget(BuildContext context) {
   int index = AppSingleton.userInfoModel?.verifiedEmail == true ? 1 : 0;
-  index = AppSingleton.userInfoModel?.verifyId == true ? 2 : index;
+  index = AppSingleton.userInfoModel?.kycState == 1 ? 2 : index;
   num index1 = _progrcess[index];
   return Stack(
     children: <Widget>[
@@ -201,7 +202,7 @@ Widget _widget(BuildContext context) {
                     child: HomeVerifyStateIcon(
                       type: (AppSingleton.userInfoModel?.verifiedEmail == true
                           ? 3
-                          : 2),
+                          : 1),
                     )),
               ),
               Pinned.fromPins(
@@ -273,13 +274,15 @@ Widget _widget(BuildContext context) {
                   ),
                 ),
               ),
-              const Align(
+              Align(
                 alignment: Alignment(0.333, 0.318),
                 child: SizedBox(
                   width: 16.0,
                   height: 16.0,
                   child: HomeVerifyStateIcon(
-                    type: 1,
+                    type: AppSingleton.userInfoModel?.kycState == 1
+                        ? 2
+                        : (AppSingleton.userInfoModel?.kycState == 2 ? 3 : 1),
                   ),
                 ),
               ),
@@ -288,7 +291,12 @@ Widget _widget(BuildContext context) {
         ),
         onTap: () {
           log("complete kyc");
-          NavigatorUtil.push(context, KycStartsPage());
+          if (AppSingleton.userInfoModel?.verifiedEmail == true) {
+            NavigatorUtil.push(context, KycStartsPage());
+          } else {
+            // showToast("Please verify email first");
+            showErrorText("Please verify email first");
+          }
         },
       ),
       GestureDetector(
@@ -352,7 +360,11 @@ Widget _widget(BuildContext context) {
         onTap: () {
           log("set wallet");
 
-          NavigatorUtil.push(context, KYCFinishedPage());
+          if (AppSingleton.userInfoModel?.verifiedEmail == true) {
+            NavigatorUtil.push(context, KYCFinishedPage());
+          } else {
+            showToast("Please verify email first");
+          }
         },
       ),
     ],

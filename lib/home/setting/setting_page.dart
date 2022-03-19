@@ -62,6 +62,7 @@ class _SettingPageState extends BaseStatefulState<SettingPage> {
                   ),
                   onTap: () {
                     log("click setting index ---->>>>${e.title}");
+                    insertNotification();
                   },
                 );
               }).toList(),
@@ -119,7 +120,7 @@ class _SettingPageState extends BaseStatefulState<SettingPage> {
     var uploadedImageUrl = await upload(image?.name, path, UploadType.avatar);
     log("upload image url --->>>>$uploadedImageUrl");
     if (uploadedImageUrl != null) {
-      await uploadImage(uploadedImageUrl,false,0);
+      // await uploadImage(uploadedImageUrl,false,0);
     }
   }
 }

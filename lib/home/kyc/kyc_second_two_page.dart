@@ -161,13 +161,11 @@ class _KycSecond2PageState extends BaseStatefulState<KycSecond2Page> {
                   behavior: HitTestBehavior.translucent,
                   onTap: () async {
                     if (_image != null && _image1 != null) {
+                      showLoading();
                       log("next");
-                      List r = await Future.wait([
-                        uploadFontImage(widget.type ?? 0),
-                        uploadBackImage(widget.type ?? 0)
-                      ]);
+                      var r = await uploadImage(widget.type ?? 0);
                       log("upload pic state ----->>>>>>>$r");
-                      if (r.first == true && r.last == true) {
+                      if (r == true) {
                         NavigatorUtil.push(context, KycThirdPage());
                       } else {
                         showErrorText("upload id error");
@@ -186,25 +184,13 @@ class _KycSecond2PageState extends BaseStatefulState<KycSecond2Page> {
     );
   }
 
-  Future uploadFontImage(type) async {
-    var uploadedImageUrl =
-        await upload(_path?.name, _path?.path, UploadType.avatar);
+  Future uploadImage(type) async {
+    var font = await upload(_path?.name, _path?.path, UploadType.avatar);
+    var back = await upload(_path1?.name, _path1?.path, UploadType.avatar);
 
-    log("upload image url --->>>>$uploadedImageUrl");
-    if (uploadedImageUrl != null) {
-      return await uploadImage(uploadedImageUrl, true, type);
-    } else {
-      return false;
-    }
-  }
-
-  Future uploadBackImage(type) async {
-    var uploadedImageUrl =
-        await upload(_path1?.name, _path1?.path, UploadType.avatar);
-
-    log("upload image url --->>>>$uploadedImageUrl");
-    if (uploadedImageUrl != null) {
-      return await uploadImage(uploadedImageUrl, true, type);
+    log("upload image url --->>>>$font");
+    if (font != null && back != null) {
+      return await uploadIDImage(font, back, type);
     } else {
       return false;
     }

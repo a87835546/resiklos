@@ -3,9 +3,10 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resiklos/bottom_navigationbar.dart';
+import 'package:resiklos/home/kyc/kyc_model.dart';
+import 'package:resiklos/home/setting/setting_request.dart';
 import 'package:resiklos/sign_up_in/sign_logo_page.dart';
 import 'package:resiklos/utils/color.dart';
-import 'package:resiklos/utils/navigator_util.dart';
 
 class KYCFinishedPage extends StatefulWidget {
   const KYCFinishedPage({Key? key}) : super(key: key);
@@ -15,6 +16,12 @@ class KYCFinishedPage extends StatefulWidget {
 }
 
 class _KYCFinishedPageState extends State<KYCFinishedPage> {
+  KycModel? _model;
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,9 +82,9 @@ class _KYCFinishedPageState extends State<KYCFinishedPage> {
                         height: 30,
                       ),
                       Container(
-                        child: const Text(
-                            "KYC REQUEST \n REF. NO. 01234 567 890123",
-                            style: TextStyle(
+                        child:  Text(
+                            "KYC REQUEST \n REF. NO. ${_model?.id}",
+                            style:const TextStyle(
                                 color: Color(0xff707070),
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold),
@@ -85,9 +92,9 @@ class _KYCFinishedPageState extends State<KYCFinishedPage> {
                       ),
                       Container(
                         padding: EdgeInsets.only(top: 5),
-                        child: const Text(
-                          "March 03 2022, 10:42 PM",
-                          style: TextStyle(
+                        child:  Text(
+                          _model?.createTime?? "March 03 2022, 10:42 PM",
+                          style:const TextStyle(
                             color: Color(0xffd4d4d4),
                             fontSize: 10,
                           ),
@@ -147,5 +154,14 @@ class _KYCFinishedPageState extends State<KYCFinishedPage> {
         ),
       ),
     );
+  }
+
+  void getData() async {
+    KycModel model = await fetchKycByUserId();
+    if (model != null) {
+      setState(() {
+        _model = model;
+      });
+    }
   }
 }

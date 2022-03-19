@@ -22,7 +22,7 @@ void showWarnToast1(String text) {
 }
 
 
-var time = const Duration(seconds: 2);
+var time = const Duration(seconds: 1);
 ///普通提示样式的toast
 void showToast(String text) {
   Fluttertoast.showToast(
