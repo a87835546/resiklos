@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resiklos/home/setting/setting_page.dart';
 import 'package:resiklos/home/transactions/transaction_page.dart';
+import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 
 import 'notification/notification_page.dart';
@@ -118,9 +119,10 @@ class _HomeNaviViewState extends State<HomeNaviView> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Icons.history,
-                  Icons.notifications_active_rounded,
-                  Icons.settings
+                  // Icons.history,
+                  // Icons.notifications_active_rounded,
+                  // Icons.settings
+                  Icons.logout
                 ].map((e) {
                   return GestureDetector(
                     child: Padding(
@@ -134,7 +136,6 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                     ),
                     onTap: () {
                       if (e == Icons.settings) {
-                        // SignRequest.logout(context);
                         Navigator.push(context, MaterialPageRoute(builder: (_) {
                           return const SettingPage();
                         }));
@@ -146,6 +147,9 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                         Navigator.push(context, MaterialPageRoute(builder: (_) {
                           return const NotificationPage();
                         }));
+                      }else{
+                        SignRequest.logout(context);
+
                       }
                     },
                   );
