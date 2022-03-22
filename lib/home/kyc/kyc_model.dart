@@ -13,11 +13,13 @@ class KycModel {
   String? createTime;
   int? idType;
   int? verifierState;
+  num? kycId;
 
   KycModel(
       {this.id,
       this.userId,
       this.lastName,
+      this.kycId,
       this.firstName,
       this.birthday,
       this.mobile,
@@ -45,6 +47,7 @@ class KycModel {
     createTime = json['createTime'];
     idType = json['idType'];
     verifierState = json['verifierState'];
+    kycId = json['kycId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -63,11 +66,12 @@ class KycModel {
     data['createTime'] = this.createTime;
     data['idType'] = this.idType;
     data['verifierState'] = this.verifierState;
+    data['kycId'] = this.kycId;
     return data;
   }
 
   @override
   String toString() {
-    return 'KycModel{id: $id, userId: $userId, lastName: $lastName, firstName: $firstName, birthday: $birthday, mobile: $mobile, gender: $gender, country: $country, idFontUrl: $idFontUrl, idBackUrl: $idBackUrl, selfieUrl: $selfieUrl, createTime: $createTime, idType: $idType, verifierState: $verifierState}';
+    return 'KycModel{id: $id, userId: $userId, lastName: $lastName, firstName: $firstName, birthday: $birthday, mobile: $mobile, gender: $gender, country: $country, idFontUrl: $idFontUrl, idBackUrl: $idBackUrl, selfieUrl: $selfieUrl, createTime: $createTime, idType: $idType, verifierState: $verifierState, kycId: $kycId}';
   }
 }

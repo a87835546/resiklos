@@ -83,7 +83,7 @@ class _KYCFinishedPageState extends State<KYCFinishedPage> {
                       ),
                       Container(
                         child:  Text(
-                            "KYC REQUEST \n REF. NO. ${_model?.id}",
+                            "KYC REQUEST \n REF. NO. ${_model?.kycId}",
                             style:const TextStyle(
                                 color: Color(0xff707070),
                                 fontSize: 14,

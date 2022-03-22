@@ -43,6 +43,19 @@ Future uploadIDImage(String url, String backUrl, int type) async {
     return Future.value(false);
   }
 }
+Future uploadAvatarImage(String url) async {
+  var result = await HttpManager.post(url: "/user/uploadAvatar", params: {
+    "id": AppSingleton.userInfoModel?.id,
+    "url": url,
+  });
+  log("upload image result ---->>>> $result");
+  try {
+    return Future.value(200 == result["code"]);
+  } catch (e) {
+    log("upload image error ---->>>>$e");
+    return Future.value(false);
+  }
+}
 
 Future uploadFacialImage(url) async {
   var result = await HttpManager.post(url: "/kyc/uploadSelfie", params: {
@@ -154,10 +167,11 @@ Future uploadUserInfo(
     "gender": gender == true ? 1 : 0,
     "id": AppSingleton.userInfoModel?.id,
     "lastname": lastname,
-    "mobile": mobile
+    "mobile": mobile,
+    "email":AppSingleton.userInfoModel?.email
   };
   var result =
-      await HttpManager.post(url: "kyc/modifyUserInfo", params: params);
+      await HttpManager.post(url: "kyc/updateInfo", params: params);
   log("upload user info result ---->>>> $result");
   if (null != result["code"] && result["code"] == 200) {
     showSuccessLoading();

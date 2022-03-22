@@ -3,10 +3,12 @@ import 'dart:developer';
 import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:resiklos/home/kyc/personal_info.dart';
 import 'package:resiklos/home/setting/setting_page.dart';
 import 'package:resiklos/home/transactions/transaction_page.dart';
 import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/utils/app_singleton.dart';
+import 'package:resiklos/utils/navigator_util.dart';
 
 import 'notification/notification_page.dart';
 
@@ -76,7 +78,10 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                                 ),
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        NavigatorUtil.push(context, PersonalInfoPage());
+                      },
+                      behavior: HitTestBehavior.opaque,
                     ),
                   ),
                 )),
