@@ -37,6 +37,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             Expanded(
                 child: Container(
+              margin: const EdgeInsets.only(right: 40),
               alignment: Alignment.center,
               child: Text(
                 title,
