@@ -18,6 +18,9 @@ class _SetupWalletProgressWidgetState extends State<SetupWalletProgressWidget> {
   TextStyle unselected = TextStyle(
       color: mainTitleColor(), fontWeight: FontWeight.bold, fontSize: 18);
 
+  var s = BoxDecoration(
+      color: mainColor(), borderRadius: BorderRadius.circular(10));
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,20 +42,22 @@ class _SetupWalletProgressWidgetState extends State<SetupWalletProgressWidget> {
             padding: EdgeInsets.only(left: 5, right: 5),
             child: Divider(
               height: 1,
-              color: mainTitleColor(),
+              color: widget.step > 1 ? mainColor() : mainTitleColor(),
             ),
           )),
           Container(
             alignment: Alignment.center,
             height: 40,
             width: 40,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: mainTitleColor(), width: 1)),
+            decoration: widget.step > 1
+                ? s
+                : BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: mainTitleColor(), width: 1)),
             child: Text(
               "2",
-              style: unselected,
+              style: widget.step > 1 ? selected : unselected,
             ),
           ),
           Expanded(
@@ -60,20 +65,22 @@ class _SetupWalletProgressWidgetState extends State<SetupWalletProgressWidget> {
             padding: EdgeInsets.only(left: 5, right: 5),
             child: Divider(
               height: 1,
-              color: mainTitleColor(),
+              color: widget.step > 2 ? mainColor() : mainTitleColor(),
             ),
           )),
           Container(
             height: 40,
             width: 40,
             alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: mainTitleColor(), width: 1)),
+            decoration: widget.step > 2
+                ? s
+                : BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: mainTitleColor(), width: 1)),
             child: Text(
               "3",
-              style: unselected,
+              style: widget.step > 2 ? selected : unselected,
             ),
           ),
         ],
