@@ -28,7 +28,7 @@ class _SetupWalletStep1PageState
       ),
       body: Container(
         padding: EdgeInsets.only(left: 45, right: 45),
-        child: Center(
+        child: Container(
           child: ListView(
             shrinkWrap: true,
             children: [
@@ -72,95 +72,77 @@ class _SetupWalletStep1PageState
                 ),
               ),
               Container(
-                  padding: EdgeInsets.only(top: 10),
-                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(top: 10, left: 20, right: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      bullet(),
                       Container(
+                        height: 26,
+                        padding: EdgeInsets.only(right: 3),
+                        alignment: Alignment.topLeft,
+                        child: bullet(),
+                      ),
+                      Expanded(
+                          child: Container(
                         child: const Text(
-                          "Never share your 12-word key",
+                          "Never share your 12-word key (seedphrase) to anyone. ",
                           style: TextStyle(
                               color: Color(0xff707070),
                               fontSize: 13,
                               fontWeight: FontWeight.normal),
                           maxLines: 2,
                         ),
-                      ),
+                      )),
                     ],
                   )),
               Container(
-                alignment: Alignment.center,
-                child: const Text(
-                  "   (seedphrase) to anyone",
-                  style: TextStyle(
-                      color: Color(0xff707070),
-                      fontSize: 13,
-                      fontWeight: FontWeight.normal),
-                  maxLines: 2,
-                ),
-              ),
-              Container(
-                  padding: EdgeInsets.only(top: 10),
-                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(top: 10, left: 20, right: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      bullet(),
                       Container(
+                        height: 26,
+                        padding: EdgeInsets.only(right: 3),
+                        alignment: Alignment.topLeft,
+                        child: bullet(),
+                      ),
+                      Expanded(
+                          child: Container(
                         child: const Text(
-                          " Resiklos team will never ask for ",
+                          "Resiklos team will never ask for your seedphrase ",
                           style: TextStyle(
                               color: Color(0xff707070),
                               fontSize: 13,
                               fontWeight: FontWeight.normal),
                           maxLines: 2,
                         ),
-                      ),
+                      )),
                     ],
                   )),
               Container(
-                alignment: Alignment.center,
-                child: const Text(
-                  "your seedphrase.",
-                  style: TextStyle(
-                      color: Color(0xff707070),
-                      fontSize: 13,
-                      fontWeight: FontWeight.normal),
-                  maxLines: 2,
-                ),
-              ),
-              Container(
-                  padding: EdgeInsets.only(top: 10),
-                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(top: 10, left: 20, right: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      bullet(),
                       Container(
+                        height: 26,
+                        padding: EdgeInsets.only(right: 3),
+                        alignment: Alignment.topLeft,
+                        child: bullet(),
+                      ),
+                      Expanded(
+                          child: Container(
                         child: const Text(
-                          "You may write down your seedphrase",
+                          "You may write down your seedphrase in a piece of paper and keep it in a secure place.",
                           style: TextStyle(
                               color: Color(0xff707070),
                               fontSize: 13,
                               fontWeight: FontWeight.normal),
                           maxLines: 2,
                         ),
-                      ),
+                      )),
                     ],
                   )),
-              Container(
-                alignment: Alignment.center,
-                child: const Text(
-                  " in a piece of paper and keep it in a secure place.",
-                  style: TextStyle(
-                      color: Color(0xff707070),
-                      fontSize: 13,
-                      fontWeight: FontWeight.normal),
-                  maxLines: 2,
-                ),
-              ),
               Container(
                 padding: EdgeInsets.only(top: 20),
                 alignment: Alignment.center,

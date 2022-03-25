@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:resiklos/base_class/base_page.dart';
+import 'package:resiklos/bottom_navigationbar.dart';
 import 'package:resiklos/home/kyc/kyc_frist_page.dart';
 import 'package:resiklos/home/setup_wallet_progress_widget.dart';
 import 'package:resiklos/rk_app_bar.dart';
@@ -265,7 +266,12 @@ class _SetupWalletStep4PageState
                           fontSize: 18),
                     )),
                 behavior: HitTestBehavior.translucent,
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (ctx) {
+                    return CustomBottomNavigationBar();
+                  }), (route) => false);
+                },
               ),
             ],
           ),
