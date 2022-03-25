@@ -29,6 +29,7 @@ class _HomePageState extends BaseStatefulState<HomePage> {
   final RefreshController _refreshController = RefreshController();
   int _referralCount = 0;
   num? _points = AppSingleton.userInfoModel?.gems;
+  UserInfoModel? _model;
 
   @override
   void initState() {
@@ -86,7 +87,9 @@ class _HomePageState extends BaseStatefulState<HomePage> {
                               padding: EdgeInsets.only(top: 30),
                               child: Container(
                                 height: 156,
-                                child: HomeVerifyView(),
+                                child: HomeVerifyView(
+                                  model: _model,
+                                ),
                               ),
                             ),
                             const Padding(
@@ -169,6 +172,9 @@ class _HomePageState extends BaseStatefulState<HomePage> {
     if (mounted && r["data"] != null) {
       var temp = r["data"];
       UserInfoModel object = UserInfoModel.jsonToObject(temp);
+      setState(() {
+        _model = object;
+      });
       AppSingleton.setUserInfoModel(object);
     }
   }

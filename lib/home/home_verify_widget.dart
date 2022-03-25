@@ -10,6 +10,8 @@ import 'package:resiklos/home/home_verify_state_icon.dart';
 import 'package:resiklos/home/kyc/kyc_finished_page.dart';
 import 'package:resiklos/home/kyc/kyc_second_page.dart';
 import 'package:resiklos/home/kyc/kyc_start_page.dart';
+import 'package:resiklos/home/setup_wallet_step1_page.dart';
+import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/utils/toast.dart';
@@ -17,15 +19,37 @@ import 'package:resiklos/utils/toast.dart';
 import 'home_verify_emal_page.dart';
 
 class HomeVerifyView extends StatefulWidget {
-  const HomeVerifyView({Key? key}) : super(key: key);
+  final UserInfoModel? model;
+
+  HomeVerifyView({Key? key, this.model}) : super(key: key);
+
 
   @override
   State<StatefulWidget> createState() => _HomeVerifyViewState();
 }
 
-List<num> _progrcess = [5, 2, 1.2, 1];
+List<num> _progress = [5, 2, 1.2, 1];
+num index1 = _progress.first;
 
 class _HomeVerifyViewState extends State<HomeVerifyView> {
+  int index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      int index =
+          (widget.model ?? AppSingleton.userInfoModel)?.verifiedEmail == true
+              ? 1
+              : 0;
+      index = (widget.model ?? AppSingleton.userInfoModel)?.kycState == 1
+          ? 2
+          : index;
+      log("index---->>>$index");
+      index1 = _progress[index];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return _widget(context);
@@ -33,9 +57,6 @@ class _HomeVerifyViewState extends State<HomeVerifyView> {
 }
 
 Widget _widget(BuildContext context) {
-  int index = AppSingleton.userInfoModel?.verifiedEmail == true ? 1 : 0;
-  index = AppSingleton.userInfoModel?.kycState == 1 ? 2 : index;
-  num index1 = _progrcess[index];
   return Stack(
     children: <Widget>[
       Container(
@@ -361,7 +382,7 @@ Widget _widget(BuildContext context) {
           log("set wallet");
 
           if (AppSingleton.userInfoModel?.verifiedEmail == true) {
-            NavigatorUtil.push(context, KYCFinishedPage());
+            NavigatorUtil.push(context, SetupWalletStep1Page());
           } else {
             showToast("Please verify email first");
           }

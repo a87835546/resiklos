@@ -25,10 +25,6 @@ class _SettingPageState extends BaseStatefulState<SettingPage> {
   final ImagePicker _picker = ImagePicker();
   final List<SettingModel> _list = [
     SettingModel("About", TransferPage()),
-    SettingModel("About", TransferPage()),
-    SettingModel("About", TransferPage()),
-    SettingModel("About", TransferPage()),
-    SettingModel("About", TransferPage()),
     SettingModel("Version", TransferPage()),
     SettingModel("Notification", TransferPage()),
     SettingModel("About", TransferPage()),
@@ -41,7 +37,7 @@ class _SettingPageState extends BaseStatefulState<SettingPage> {
       appBar: const CustomAppBar(
         title: "Settings",
       ),
-      body: Center(
+      body: Container(
         child: ListView(
           shrinkWrap: true,
           children: [
@@ -77,37 +73,36 @@ class _SettingPageState extends BaseStatefulState<SettingPage> {
                 click: () async {
                   SignRequest.logout(context);
                 }),
-            const Text("Settings"),
-            ElevatedButton(
-                onPressed: () async {
-                  selectImage();
-                },
-                child: Text("测试上传图片")),
-            ElevatedButton(
-                onPressed: () async {
-                  deleteAccount();
-                },
-                child: Text("delete account")),
-            ElevatedButton(
-                onPressed: () async {
-                  getUserProfile();
-                },
-                child: Text("get users profiles")),
-            ElevatedButton(
-                onPressed: () async {
-                  getUserProfile();
-                },
-                child: Text("create inner wallet address")),
-            ElevatedButton(
-                onPressed: () async {
-                  getUserProfile();
-                },
-                child: Text("create wallet address")),
-            ElevatedButton(
-                onPressed: () async {
-                  getUserProfile();
-                },
-                child: Text("transfer rp")),
+            // ElevatedButton(
+            //     onPressed: () async {
+            //       selectImage();
+            //     },
+            //     child: Text("测试上传图片")),
+            // ElevatedButton(
+            //     onPressed: () async {
+            //       deleteAccount();
+            //     },
+            //     child: Text("delete account")),
+            // ElevatedButton(
+            //     onPressed: () async {
+            //       getUserProfile();
+            //     },
+            //     child: Text("get users profiles")),
+            // ElevatedButton(
+            //     onPressed: () async {
+            //       getUserProfile();
+            //     },
+            //     child: Text("create inner wallet address")),
+            // ElevatedButton(
+            //     onPressed: () async {
+            //       getUserProfile();
+            //     },
+            //     child: Text("create wallet address")),
+            // ElevatedButton(
+            //     onPressed: () async {
+            //       getUserProfile();
+            //     },
+            //     child: Text("transfer rp")),
           ],
         ),
       ),

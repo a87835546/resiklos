@@ -207,7 +207,6 @@ class SignInPageState extends State<SignInPage> {
                               onTap: () async{
                                 log("forgot password");
                                 NavigatorUtil.push(context,  SignResetPasswordPage());
-                                showToast("forgot password");
                                 // var r = await AuthorizeRequest.authenticate();
                               },
                               behavior: HitTestBehavior.translucent,

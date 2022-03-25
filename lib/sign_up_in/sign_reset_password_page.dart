@@ -57,6 +57,25 @@ class _SignResetPasswordState extends State<SignResetPasswordPage> {
         constraints: BoxConstraints.expand(),
         child: Stack(
           children: [
+            Positioned(
+              child: GestureDetector(
+                child: Container(
+                  width: 40,
+                  height: 30,
+                  child:const Icon(
+                    Icons.arrow_back_ios_outlined,
+                    color: Colors.white,
+                    size: 25,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                behavior: HitTestBehavior.opaque,
+              ),
+              left: 10,
+              top: 40,
+            ),
             Padding(
               padding: EdgeInsets.only(top: 140),
               child: Container(
@@ -182,7 +201,7 @@ class _SignResetPasswordState extends State<SignResetPasswordPage> {
                                         confirmPasswordController.text
                                     ? passwordController.text
                                     : "");
-                            if(s == true){
+                            if (s == true) {
                               NavigatorUtil.pop(context);
                             }
                           }

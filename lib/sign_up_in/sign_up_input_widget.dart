@@ -102,11 +102,11 @@ class SignUpInputWidgetState extends State<SignUpInputWidget> {
                 height: 30,
                 padding: EdgeInsets.only(left: 5, right: 5),
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: mainColor(), borderRadius: BorderRadius.circular(5)),
-                child: const Text(
+                // decoration: BoxDecoration(
+                //     color: mainColor(), borderRadius: BorderRadius.circular(5)),
+                child: Text(
                   "SEND OTP",
-                  style: TextStyle(color: Color(0xffD4D4D4)),
+                  style: TextStyle(color: mainColor()),
                 ),
               ),
               onTap: () {
