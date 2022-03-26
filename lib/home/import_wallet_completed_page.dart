@@ -1,19 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:resiklos/home/import_wallet_completed_page.dart';
 import 'package:resiklos/home/import_wallet_progress_widget.dart';
 import 'package:resiklos/home/setup_wallet_progress_widget.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/color.dart';
 
-class ImportWalletPage extends StatefulWidget {
-  const ImportWalletPage({Key? key}) : super(key: key);
+class ImportWalletCompletedPage extends StatefulWidget {
+  const ImportWalletCompletedPage({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ImportWalletPageState();
+  State<StatefulWidget> createState() => _ImportWalletCompletedPageState();
 }
 
-class _ImportWalletPageState extends State<ImportWalletPage> {
+class _ImportWalletCompletedPageState extends State<ImportWalletCompletedPage> {
   final TextEditingController _controller1 = TextEditingController();
 
   @override
@@ -60,7 +59,7 @@ class _ImportWalletPageState extends State<ImportWalletPage> {
                   padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
                   alignment: Alignment.center,
                   child: const ImportWalletProgressWidget(
-                    step: 1,
+                    step: 2,
                   )),
               Container(
                 padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
@@ -123,11 +122,7 @@ class _ImportWalletPageState extends State<ImportWalletPage> {
                           fontSize: 18),
                     )),
                 behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                    return const ImportWalletCompletedPage();
-                  }));
-                },
+                onTap: () {},
               ),
             ],
           ),

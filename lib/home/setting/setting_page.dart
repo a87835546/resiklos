@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/home_page.dart';
+import 'package:resiklos/home/import_wallet_page.dart';
 import 'package:resiklos/home/setting/setting_request.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/scan/transfer_page.dart';
@@ -73,36 +74,43 @@ class _SettingPageState extends BaseStatefulState<SettingPage> {
                 click: () async {
                   SignRequest.logout(context);
                 }),
-            // ElevatedButton(
-            //     onPressed: () async {
-            //       selectImage();
-            //     },
-            //     child: Text("测试上传图片")),
-            // ElevatedButton(
-            //     onPressed: () async {
-            //       deleteAccount();
-            //     },
-            //     child: Text("delete account")),
-            // ElevatedButton(
-            //     onPressed: () async {
-            //       getUserProfile();
-            //     },
-            //     child: Text("get users profiles")),
-            // ElevatedButton(
-            //     onPressed: () async {
-            //       getUserProfile();
-            //     },
-            //     child: Text("create inner wallet address")),
-            // ElevatedButton(
-            //     onPressed: () async {
-            //       getUserProfile();
-            //     },
-            //     child: Text("create wallet address")),
-            // ElevatedButton(
-            //     onPressed: () async {
-            //       getUserProfile();
-            //     },
-            //     child: Text("transfer rp")),
+            ElevatedButton(
+                onPressed: () async {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                    return ImportWalletPage();
+                  }));
+                },
+                child: Text("导入钱包")),
+            ElevatedButton(
+                onPressed: () async {
+                  selectImage();
+                },
+                child: Text("测试上传图片")),
+            ElevatedButton(
+                onPressed: () async {
+                  deleteAccount();
+                },
+                child: Text("delete account")),
+            ElevatedButton(
+                onPressed: () async {
+                  getUserProfile();
+                },
+                child: Text("get users profiles")),
+            ElevatedButton(
+                onPressed: () async {
+                  getUserProfile();
+                },
+                child: Text("create inner wallet address")),
+            ElevatedButton(
+                onPressed: () async {
+                  getUserProfile();
+                },
+                child: Text("create wallet address")),
+            ElevatedButton(
+                onPressed: () async {
+                  getUserProfile();
+                },
+                child: Text("transfer rp")),
           ],
         ),
       ),

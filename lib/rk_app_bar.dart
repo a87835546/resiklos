@@ -15,7 +15,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("padding top ----->>>>${MediaQuery.of(context).padding.top}");
     return MediaQuery.removePadding(
         context: context,
         removeTop: true,
