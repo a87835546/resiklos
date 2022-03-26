@@ -16,11 +16,13 @@ import 'package:resiklos/utils/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bottom_navigationbar.dart';
+
 final bool _debug = kDebugMode;
-void main() async{
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  AppSingleton.devMode = DevMode.local;
+  AppSingleton.devMode = DevMode.staging;
   log("debug mode ---->>>>>${_debug}");
   TLSizeFit.initialize();
   runApp(MultiProvider(providers: [
@@ -35,9 +37,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       builder: (BuildContext context, AsyncSnapshot<UserInfoModel> snapshot) {
-        if ((snapshot.hasError || snapshot.data == null) &&kIsWeb == false) {
+        if ((snapshot.hasError || snapshot.data == null) && kIsWeb == false) {
           log("loading local data error ${snapshot.error}");
-          return  MaterialApp(
+          return MaterialApp(
             home: Scaffold(
               body: Center(
                 child: Text("error ${snapshot.error}"),
@@ -51,10 +53,14 @@ class MyApp extends StatelessWidget {
             child: MaterialApp(
               title: 'Resiklos',
               debugShowCheckedModeBanner: false,
-              theme: ThemeData(primarySwatch: Colors.blue,fontFamily: 'Montserrat',),
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+                fontFamily: 'Montserrat',
+              ),
               home: model?.token != null
                   ? CustomBottomNavigationBar()
-                  :OnboardingPage(),// SignInPage(),
+                  : OnboardingPage(),
+              // SignInPage(),
               color: Colors.redAccent,
               builder: EasyLoading.init(),
             ),
@@ -80,14 +86,14 @@ class MyApp extends StatelessWidget {
       } else {
         return Future.value(UserInfoModel());
       }
-    } else if(Platform.isAndroid) {
+    } else if (Platform.isAndroid) {
       var re = await AppSingleton.getUserInfoModel();
       re ??= UserInfoModel();
       return Future.value(re);
-    }else if(kIsWeb){
+    } else if (kIsWeb) {
       log("web ---->>>>>");
       return Future.value(UserInfoModel());
-    }else {
+    } else {
       return Future.value(null);
     }
   }

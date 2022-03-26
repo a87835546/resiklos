@@ -28,12 +28,14 @@ enum HttpManagerErrorType {
 }
 
 class HttpManager {
-  static final bool _debug = kDebugMode;
+  static const bool _debug = kDebugMode;
 
   static String baseUrl = _debug
-      ? (AppSingleton.devMode == DevMode.staging
+      ? (AppSingleton.devMode == DevMode.local
           ? "https://192.168.1.13:9001/api/v1/"
-          : "https://staging.resiklos.app/api/v1/")
+          : (AppSingleton.devMode == DevMode.staging
+              ? "https://staging.resiklos.app/api/v1/"
+              : "https://api.resiklos.app/api/v1/"))
       : "https://api.resiklos.app/api/v1/";
 
   static final Dio _dio = Dio();
@@ -70,7 +72,7 @@ class HttpManager {
           return HttpManagerErrorType.internalServerError;
         } else if (response.data['code'] == 511) {
           return HttpManagerErrorType.tokenExpired;
-        }else {
+        } else {
           return response.data;
         }
       }
@@ -103,7 +105,7 @@ class HttpManager {
       log("response data---->>>>>${response.data}");
       if (response.statusCode == 200) {
         return response.data;
-      }else{
+      } else {
         return response.data;
       }
     } catch (error) {
