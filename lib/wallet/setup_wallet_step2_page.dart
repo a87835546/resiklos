@@ -207,16 +207,20 @@ class _SetupWalletStep2PageState
                           fontSize: 18),
                     )),
                 behavior: HitTestBehavior.translucent,
-                onTap: () {
+                onTap: () async {
                   log("start verify kyc");
                   if (_passwordController.text == _confirmController.text &&
                       _passwordController.text.length > 7) {
-                    createWallet(_passwordController.text);
+                    var res = await createWallet(_passwordController.text);
+                    AppSingleton.walletModel = res;
+                    if(null != res){
+                      NavigatorUtil.push(context, const SetupWalletStep3Page());
+                    }
                   } else {
                     showErrorText("Please input correct password");
                     return;
                   }
-                  // NavigatorUtil.push(context, SetupWalletStep3Page());
+
                 },
               ),
             ],

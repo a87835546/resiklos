@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:resiklos/utils/toast.dart';
 import 'package:resiklos/wallet/import_wallet_completed_page.dart';
 import 'package:resiklos/home/import_wallet_progress_widget.dart';
 import 'package:resiklos/wallet/setup_wallet_progress_widget.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/color.dart';
+import 'package:resiklos/wallet/wallet_request.dart';
 
 class ImportWalletPage extends StatefulWidget {
   const ImportWalletPage({Key? key}) : super(key: key);
@@ -123,10 +125,15 @@ class _ImportWalletPageState extends State<ImportWalletPage> {
                           fontSize: 18),
                     )),
                 behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                    return const ImportWalletCompletedPage();
-                  }));
+                onTap: () async{
+                  if (_controller1.text.length < 3) {
+                    showErrorText("Please input correct seedphrase");
+                  } else {
+                    var res = await importWalletFromSeedPhrase(_controller1.text);
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                      return const ImportWalletCompletedPage();
+                    }));
+                  }
                 },
               ),
             ],

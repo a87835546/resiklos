@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/kyc/kyc_frist_page.dart';
+import 'package:resiklos/wallet/import_wallet_page.dart';
 import 'package:resiklos/wallet/setup_wallet_step2_page.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/color.dart';
@@ -178,17 +179,23 @@ class _SetupWalletStep1PageState
                   NavigatorUtil.push(context, SetupWalletStep2Page());
                 },
               ),
-              Container(
-                padding: EdgeInsets.only(top: 20),
-                alignment: Alignment.center,
-                child: Text(
-                  "Import wallet using a seedphrase",
-                  style: TextStyle(
-                      color: mainColor(),
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold),
+              GestureDetector(
+                child: Container(
+                  padding: EdgeInsets.only(top: 20),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Import wallet using a seedphrase",
+                    style: TextStyle(
+                        color: mainColor(),
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  NavigatorUtil.push(context, ImportWalletPage());
+                },
+              )
             ],
           ),
         ),

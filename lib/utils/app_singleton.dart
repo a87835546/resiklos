@@ -5,6 +5,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:resiklos/model/user_info_model.dart';
+import 'package:resiklos/wallet/wallet_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../bottom_navigationbar.dart';
@@ -16,6 +17,7 @@ class AppSingleton {
   static AppSingleton get instance => AppSingleton.getInstance();
   static final AppSingleton _instance = AppSingleton.getInstance();
   static UserInfoModel? userInfoModel;
+  static WalletModel? walletModel;
   // bottom navigation bar controller
   static PageController? controller;
   static CustomBottomNavigationBarState? state;
