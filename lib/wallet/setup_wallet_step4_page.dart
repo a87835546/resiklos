@@ -84,7 +84,7 @@ class _SetupWalletStep4PageState
                       fontWeight: FontWeight.normal),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Container(
