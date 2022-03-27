@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/home_page.dart';
-import 'package:resiklos/home/import_wallet_page.dart';
+import 'package:resiklos/wallet/import_wallet_page.dart';
 import 'package:resiklos/home/setting/setting_request.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/scan/transfer_page.dart';

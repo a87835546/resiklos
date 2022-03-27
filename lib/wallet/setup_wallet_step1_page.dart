@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/kyc/kyc_frist_page.dart';
-import 'package:resiklos/home/setup_wallet_step2_page.dart';
+import 'package:resiklos/wallet/setup_wallet_step2_page.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/navigator_util.dart';

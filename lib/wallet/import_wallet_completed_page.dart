@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resiklos/home/import_wallet_progress_widget.dart';
-import 'package:resiklos/home/setup_wallet_progress_widget.dart';
+import 'package:resiklos/wallet/setup_wallet_progress_widget.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/color.dart';
 

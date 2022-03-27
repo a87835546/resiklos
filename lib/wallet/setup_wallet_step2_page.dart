@@ -5,11 +5,14 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/kyc/kyc_frist_page.dart';
-import 'package:resiklos/home/setup_wallet_progress_widget.dart';
-import 'package:resiklos/home/setup_wallet_step3_page.dart';
+import 'package:resiklos/utils/app_singleton.dart';
+import 'package:resiklos/utils/toast.dart';
+import 'package:resiklos/wallet/setup_wallet_progress_widget.dart';
+import 'package:resiklos/wallet/setup_wallet_step3_page.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/navigator_util.dart';
+import 'package:resiklos/wallet/wallet_request.dart';
 
 class SetupWalletStep2Page extends BaseStatefulWidget {
   const SetupWalletStep2Page({Key? key}) : super(key: key);
@@ -26,6 +29,7 @@ class _SetupWalletStep2PageState
 
   @override
   Widget build(BuildContext context) {
+    log("message---->>>>${AppSingleton.userInfoModel?.email}");
     return Scaffold(
       appBar: const CustomAppBar(
         title: "",
@@ -205,7 +209,14 @@ class _SetupWalletStep2PageState
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
                   log("start verify kyc");
-                  NavigatorUtil.push(context, SetupWalletStep3Page());
+                  if (_passwordController.text == _confirmController.text &&
+                      _passwordController.text.length > 7) {
+                    createWallet(_passwordController.text);
+                  } else {
+                    showErrorText("Please input correct password");
+                    return;
+                  }
+                  // NavigatorUtil.push(context, SetupWalletStep3Page());
                 },
               ),
             ],

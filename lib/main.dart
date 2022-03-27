@@ -22,7 +22,7 @@ final bool _debug = kDebugMode;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  AppSingleton.devMode = DevMode.staging;
+  AppSingleton.devMode = DevMode.local;
   log("debug mode ---->>>>>${_debug}");
   TLSizeFit.initialize();
   runApp(MultiProvider(providers: [

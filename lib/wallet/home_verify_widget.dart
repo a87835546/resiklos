@@ -10,13 +10,13 @@ import 'package:resiklos/home/home_verify_state_icon.dart';
 import 'package:resiklos/home/kyc/kyc_finished_page.dart';
 import 'package:resiklos/home/kyc/kyc_second_page.dart';
 import 'package:resiklos/home/kyc/kyc_start_page.dart';
-import 'package:resiklos/home/setup_wallet_step1_page.dart';
+import 'package:resiklos/wallet/setup_wallet_step1_page.dart';
 import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/utils/toast.dart';
 
-import 'home_verify_emal_page.dart';
+import '../home/home_verify_emal_page.dart';
 
 class HomeVerifyView extends StatefulWidget {
   final UserInfoModel? model;
