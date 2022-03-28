@@ -20,6 +20,7 @@ class AppSingleton {
   static WalletModel? walletModel;
   // bottom navigation bar controller
   static PageController? controller;
+  static PageController? navigatorKey;
   static CustomBottomNavigationBarState? state;
   static Queue? queue = Queue();
   static dynamic currentPage;

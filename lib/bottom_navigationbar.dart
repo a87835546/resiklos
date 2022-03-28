@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:resiklos/app_tab_bar.dart';
 import 'package:resiklos/game/game_page.dart';
+import 'package:resiklos/home/setting/setting_page.dart';
 import 'package:resiklos/scan/scan_page.dart';
 import 'package:resiklos/shop/shop_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
@@ -32,12 +33,12 @@ class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         child: PageView(
           physics: const NeverScrollableScrollPhysics(),
           children: const [
-            ScanPage(),
+            ShopPage(),
             HomePage(
               model: null,
             ),
             ShopPage(),
-            GamePage(),
+            SettingPage(),
           ],
           controller: pageController,
           onPageChanged: onPageChanged,

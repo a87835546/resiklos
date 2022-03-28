@@ -18,7 +18,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'bottom_navigationbar.dart';
 
 final bool _debug = kDebugMode;
-
+final GlobalKey<NavigatorState> navigatorKey =
+GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -48,9 +49,15 @@ class MyApp extends StatelessWidget {
           );
         } else {
           UserInfoModel? model = snapshot.data;
+
+          Future.delayed(Duration(seconds: 0)).then((onValue) {
+            BuildContext? context = navigatorKey.currentState?.overlay?.context;
+            AppSingleton.currentPage = context;
+          });
           return AnnotatedRegion<SystemUiOverlayStyle>(
             value: SystemUiOverlayStyle.dark,
             child: MaterialApp(
+              navigatorKey: navigatorKey,
               title: 'Resiklos',
               debugShowCheckedModeBanner: false,
               theme: ThemeData(

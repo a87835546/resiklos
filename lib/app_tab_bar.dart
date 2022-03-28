@@ -35,7 +35,7 @@ class _AppTabBar extends State<AppTabBar> {
       size: 22,
     ),
     Icon(
-      Icons.videogame_asset,
+      Icons.account_circle_rounded,
       color: Color(0xffD4D4D4),
       size: 22,
     ),
@@ -57,12 +57,12 @@ class _AppTabBar extends State<AppTabBar> {
       size: 22,
     ),
     Icon(
-      Icons.videogame_asset,
+      Icons.account_circle_rounded,
       color: Color(0xff00A6BE),
       size: 22,
     ),
   ];
-  final List<String> _list = const ["SCAN", "HOME", "E-SHOP", "PLAY"];
+  final List<String> _list = const ["MarketPlace", "Dashboard", "My Wallet", "Account"];
 
   @override
   Widget build(BuildContext context) {
