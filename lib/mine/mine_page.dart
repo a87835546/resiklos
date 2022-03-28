@@ -4,19 +4,10 @@ import 'package:adobe_xd/blend_mask.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:resiklos/base_class/base_page.dart';
-import 'package:resiklos/home/home_verify_emal_page.dart';
-import 'package:resiklos/home/home_verify_state_icon.dart';
-import 'package:resiklos/home/kyc/kyc_start_page.dart';
 import 'package:resiklos/mine/mine_list.dart';
-import 'package:resiklos/mine/mine_list_item.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/color.dart';
-import 'package:resiklos/utils/navigator_util.dart';
-import 'package:resiklos/utils/toast.dart';
-import 'package:resiklos/wallet/home_verify_widget.dart';
-import 'package:resiklos/wallet/setup_wallet_step1_page.dart';
 
 class MinePage extends BaseStatefulWidget {
   const MinePage({Key? key}) : super(key: key);
@@ -35,7 +26,7 @@ class _MinePageState extends BaseStatefulState<MinePage> {
           shrinkWrap: true,
           children: [
             Container(
-              height: 400,
+              height: 300,
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: const BorderRadius.only(
@@ -118,7 +109,7 @@ class _MinePageState extends BaseStatefulState<MinePage> {
                     child: Text(
                       "ID:${AppSingleton.userInfoModel?.userId}",
                       style: TextStyle(
-                          color: Color(0xffD4D4D4),
+                          color: color_d4d4d4(),
                           fontSize: 12,
                           fontWeight: FontWeight.bold),
                     ),
@@ -126,7 +117,7 @@ class _MinePageState extends BaseStatefulState<MinePage> {
                 ],
               ),
             ),
-            MineList(),
+            const MineList(),
             const SizedBox(
               height: 30,
             ),

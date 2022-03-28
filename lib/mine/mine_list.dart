@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -38,11 +40,11 @@ class _MineListState extends State<MineList> {
         ),
         ListView(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           children: [
             MineListItem(
                 title: "Email",
-                subTitle: AppSingleton?.userInfoModel?.email ?? ""),
+                subTitle: AppSingleton.userInfoModel?.email ?? ""),
             MineListItem(
               title: 'Full Name',
               subTitle: AppSingleton.userInfoModel?.nickName ?? "",
@@ -176,6 +178,7 @@ class _MineListState extends State<MineList> {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String version = packageInfo.version; //版本号
     String buildNumber = packageInfo.buildNumber; //版本构建号
+    log("version -->>> $version");
     setState(() {
       _version = version;
     });

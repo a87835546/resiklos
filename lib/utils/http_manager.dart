@@ -180,8 +180,8 @@ class HttpInterceptor extends Interceptor {
 
     String token = AppSingleton.userInfoModel?.token ?? "";
     options.headers.putIfAbsent("token", () => token);
-    options.receiveTimeout = 10 * 1000;
-    options.connectTimeout = 10 * 1000;
+    options.receiveTimeout = 15 * 1000;
+    options.connectTimeout = 15 * 1000;
 
     if (kIsWeb) {
       options.headers.putIfAbsent("Access-Control-Allow-Origin", () => "*");
