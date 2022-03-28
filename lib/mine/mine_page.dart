@@ -9,6 +9,8 @@ import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/home_verify_emal_page.dart';
 import 'package:resiklos/home/home_verify_state_icon.dart';
 import 'package:resiklos/home/kyc/kyc_start_page.dart';
+import 'package:resiklos/mine/mine_list.dart';
+import 'package:resiklos/mine/mine_list_item.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/navigator_util.dart';
@@ -121,17 +123,13 @@ class _MinePageState extends BaseStatefulState<MinePage> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-
                 ],
               ),
             ),
-            ListView(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-
-              ],
-            )
+            MineList(),
+            const SizedBox(
+              height: 30,
+            ),
           ],
         ),
       ),
