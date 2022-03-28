@@ -168,7 +168,7 @@ class _HomePageState extends BaseStatefulState<HomePage> {
     var r = await HttpManager.get(
         url: "user/getInfo",
         params: {"userId": "${AppSingleton.userInfoModel?.id}"});
-    log("r------>>>>$r");
+    log("user info res ------>>>>$r");
     if (mounted && r["data"] != null) {
       var temp = r["data"];
       UserInfoModel object = UserInfoModel.jsonToObject(temp);

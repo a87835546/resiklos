@@ -20,7 +20,7 @@ class _AppTabBar extends State<AppTabBar> {
 
   List<Icon> normalImage = const [
     Icon(
-      Icons.qr_code_scanner,
+      Icons.store_rounded,
       color: Color(0xffD4D4D4),
       size: 22,
     ),
@@ -30,19 +30,19 @@ class _AppTabBar extends State<AppTabBar> {
       size: 22,
     ),
     Icon(
-      Icons.shopping_bag,
+      Icons.account_balance_wallet,
       color: Color(0xffD4D4D4),
       size: 22,
     ),
     Icon(
-      Icons.account_circle_rounded,
+      Icons.account_circle,
       color: Color(0xffD4D4D4),
       size: 22,
     ),
   ];
   List<Icon> selectImg = const [
     Icon(
-      Icons.qr_code_scanner,
+      Icons.store_rounded,
       color: Color(0xff00A6BE),
       size: 22,
     ),
@@ -52,12 +52,12 @@ class _AppTabBar extends State<AppTabBar> {
       size: 22,
     ),
     Icon(
-      Icons.shopping_bag,
+      Icons.account_balance_wallet,
       color: Color(0xff00A6BE),
       size: 22,
     ),
     Icon(
-      Icons.account_circle_rounded,
+      Icons.account_circle,
       color: Color(0xff00A6BE),
       size: 22,
     ),

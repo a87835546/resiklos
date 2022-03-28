@@ -55,7 +55,7 @@ class UserInfoModel {
     UserInfoModel model = UserInfoModel(
       gender: map['gender'],
       id: map['id'],
-      userId: map['socialUserID'],
+      userId: map['userId'],
       nickName: map['userName'],
       realName: map['fullName'],
       createTime: map['createTime'],
@@ -85,7 +85,7 @@ class UserInfoModel {
     UserInfoModel model = UserInfoModel(
       gender: map['gender'],
       id: map['id'],
-      userId: map['socialUserID'],
+      userId: map['userId'],
       nickName: map['nickName'],
       realName: map['fullName'],
       createTime: map['createTime'],
