@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/mine/mine_list.dart';
+import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/color.dart';
 
@@ -42,7 +43,7 @@ class _MinePageState extends BaseStatefulState<MinePage> {
               child: Column(
                 children: [
                   Container(
-                    height: 15,
+                    height: 30,
                   ),
                   AppSingleton.userInfoModel?.avatar != "" &&
                           AppSingleton.userInfoModel?.avatar != null
@@ -118,6 +119,30 @@ class _MinePageState extends BaseStatefulState<MinePage> {
               ),
             ),
             const MineList(),
+            const SizedBox(
+              height: 30,
+            ),
+            GestureDetector(
+              child: Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(left: 45, right: 45),
+                height: 50,
+                child: const Text(
+                  "Logout",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14),
+                ),
+                decoration: BoxDecoration(
+                    color: color_707070(),
+                    borderRadius: BorderRadius.circular(5)),
+              ),
+              onTap: () {
+                SignRequest.logout(context);
+              },
+              behavior: HitTestBehavior.opaque,
+            ),
             const SizedBox(
               height: 30,
             ),
