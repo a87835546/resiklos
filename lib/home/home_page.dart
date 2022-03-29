@@ -5,7 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/home_articles_widget.dart';
-import 'package:resiklos/wallet/home_verify_widget.dart';
+import 'package:resiklos/home/home_verify_widget.dart';
 import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/http_manager.dart';

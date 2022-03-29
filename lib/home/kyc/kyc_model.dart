@@ -13,7 +13,7 @@ class KycModel {
   String? createTime;
   int? idType;
   int? verifierState;
-  num? kycId;
+  String? kycId;
 
   KycModel(
       {this.id,

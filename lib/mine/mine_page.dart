@@ -8,6 +8,7 @@ import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/mine/mine_list.dart';
 import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/utils/app_singleton.dart';
+import 'package:resiklos/utils/clip_borad_tool.dart';
 import 'package:resiklos/utils/color.dart';
 
 class MinePage extends BaseStatefulWidget {
@@ -101,20 +102,39 @@ class _MinePageState extends BaseStatefulState<MinePage> {
                     child: Text(
                       "${AppSingleton.userInfoModel?.nickName ?? "123"}",
                       style: TextStyle(
-                          color: mainTitleColor(),
+                          color: color_707070(),
                           fontSize: 16,
                           fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
-                    child: Text(
-                      "ID:${AppSingleton.userInfoModel?.userId}",
-                      style: TextStyle(
-                          color: color_d4d4d4(),
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Text(
+                            "ID:${AppSingleton.userInfoModel?.userId}",
+                            style: TextStyle(
+                                color: color_d4d4d4(),
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        GestureDetector(
+                          child: Container(
+                            child: Icon(
+                              Icons.copy,
+                              color: color_d4d4d4(),
+                              size: 16,
+                            ),
+                          ),
+                          onTap: () {
+                            ClipboardTool.setDataToast("${AppSingleton.userInfoModel?.userId}");
+                          },
+                        )
+                      ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

@@ -45,13 +45,14 @@ class _MyWalletPageState extends BaseStatefulState<MyWalletPage> {
                     height: 5,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(2.5),
-                        color: mainColor()),
+                        color:const Color(0xff75BE00)),
                   ),
                   Expanded(
                     child: Container(
+                      padding: const EdgeInsets.only(left: 5),
                       child: Text(
-                        "1234556",
-                        style: TextStyle(fontSize: 12, color: mainColor()),
+                        "1234556jjj8888",
+                        style: TextStyle(fontSize: 12, color: color_707070()),
                       ),
                     ),
                     flex: 1,

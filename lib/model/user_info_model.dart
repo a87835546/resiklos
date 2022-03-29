@@ -24,7 +24,8 @@ class UserInfoModel {
   num? gems;
   num? verifyTime;
   bool? verifiedEmail;
-  num? kycState;
+  /// 0 unverify 1.pending 2.complete 3.reject
+  num? status;
 
   UserInfoModel(
       {this.id,
@@ -48,7 +49,7 @@ class UserInfoModel {
       this.rpWalletAddress,
       this.walletAddress,
       this.verifiedEmail,
-      this.kycState});
+      this.status});
 
   static UserInfoModel jsonToObject(Map<String, dynamic> map) {
     UserInfoModel model = UserInfoModel(
@@ -73,7 +74,7 @@ class UserInfoModel {
       rpWalletAddress: map['rpWalletAddress'],
       walletAddress: map['walletAddress'],
       verifiedEmail: map['verifiedEmail'],
-      kycState: map['kycState'],
+      status: map['kycState'],
     );
     return model;
   }
@@ -102,7 +103,7 @@ class UserInfoModel {
       rpWalletAddress: map['rpWalletAddress'],
       walletAddress: map['walletAddress'],
       verifiedEmail: map['verifiedEmail'],
-      kycState: map['kycState'],
+      status: map['kycState'],
     );
     return model;
   }
@@ -125,7 +126,7 @@ class UserInfoModel {
     data['ipAddress'] = ipAddress;
     data['inviteCode'] = inviteCode;
     data['lastLoginTime'] = lastLoginTime;
-    data['kycState'] = kycState;
+    data['status'] = status;
     data['verifiedEmail'] = verifiedEmail;
     data['walletAddress'] = walletAddress;
     data['rpWalletAddress'] = rpWalletAddress;
@@ -134,6 +135,6 @@ class UserInfoModel {
 
   @override
   String toString() {
-    return 'UserInfoModel{gender: $gender, avatar: $avatar, userId: $userId, id: $id, nickName: $nickName, realName: $realName, registerTime: $registerTime, available: $available, mobile: $mobile, email: $email, token: $token, inviteCode: $inviteCode, ipAddress: $ipAddress, rpWalletAddress: $rpWalletAddress, walletAddress: $walletAddress, createTime: $createTime, lastLoginTime: $lastLoginTime, deviceType: $deviceType, gems: $gems, verifyTime: $verifyTime, verifiedEmail: $verifiedEmail, kycState: $kycState}';
+    return 'UserInfoModel{gender: $gender, avatar: $avatar, userId: $userId, id: $id, nickName: $nickName, realName: $realName, registerTime: $registerTime, available: $available, mobile: $mobile, email: $email, token: $token, inviteCode: $inviteCode, ipAddress: $ipAddress, rpWalletAddress: $rpWalletAddress, walletAddress: $walletAddress, createTime: $createTime, lastLoginTime: $lastLoginTime, deviceType: $deviceType, gems: $gems, verifyTime: $verifyTime, verifiedEmail: $verifiedEmail, status: $status}';
   }
 }

@@ -16,12 +16,12 @@ import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/utils/toast.dart';
 
-import '../home/home_verify_emal_page.dart';
+import 'home_verify_emal_page.dart';
 
 class HomeVerifyView extends StatefulWidget {
   final UserInfoModel? model;
 
-  HomeVerifyView({Key? key, this.model}) : super(key: key);
+  const HomeVerifyView({Key? key, this.model}) : super(key: key);
 
 
   @override
@@ -42,7 +42,7 @@ class _HomeVerifyViewState extends State<HomeVerifyView> {
           (widget.model ?? AppSingleton.userInfoModel)?.verifiedEmail == true
               ? 1
               : 0;
-      index = (widget.model ?? AppSingleton.userInfoModel)?.kycState == 1
+      index = (widget.model ?? AppSingleton.userInfoModel)?.status == 1
           ? 2
           : index;
       log("index---->>>$index");
@@ -301,9 +301,9 @@ Widget _widget(BuildContext context) {
                   width: 16.0,
                   height: 16.0,
                   child: HomeVerifyStateIcon(
-                    type: AppSingleton.userInfoModel?.kycState == 1
+                    type: AppSingleton.userInfoModel?.status == 1
                         ? 2
-                        : (AppSingleton.userInfoModel?.kycState == 2 ? 3 : 1),
+                        : (AppSingleton.userInfoModel?.status == 2 ? 3 : 1),
                   ),
                 ),
               ),
@@ -311,11 +311,15 @@ Widget _widget(BuildContext context) {
           ),
         ),
         onTap: () {
-          log("complete kyc");
-          if (AppSingleton.userInfoModel?.verifiedEmail == true) {
-            NavigatorUtil.push(context, KycStartsPage());
+          // NavigatorUtil.push(context, KycStartsPage());
+
+          if (AppSingleton.userInfoModel?.verifiedEmail == false) {
+            if (AppSingleton.userInfoModel?.status == 0) {
+              NavigatorUtil.push(context, KycStartsPage());
+            }else if(AppSingleton.userInfoModel?.status == 2 || AppSingleton.userInfoModel?.status == 1){
+              NavigatorUtil.push(context, KYCFinishedPage());
+            }
           } else {
-            // showToast("Please verify email first");
             showErrorText("Please verify email first");
           }
         },
