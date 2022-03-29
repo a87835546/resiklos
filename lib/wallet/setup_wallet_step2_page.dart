@@ -12,6 +12,7 @@ import 'package:resiklos/wallet/setup_wallet_step3_page.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/navigator_util.dart';
+import 'package:resiklos/wallet/wallet_model.dart';
 import 'package:resiklos/wallet/wallet_request.dart';
 
 class SetupWalletStep2Page extends BaseStatefulWidget {
@@ -211,16 +212,22 @@ class _SetupWalletStep2PageState
                   log("start verify kyc");
                   if (_passwordController.text == _confirmController.text &&
                       _passwordController.text.length > 7) {
-                    var res = await createWallet(_passwordController.text);
+                    WalletModel res =
+                        await createWallet(_passwordController.text);
                     AppSingleton.walletModel = res;
-                    if(null != res){
-                      NavigatorUtil.push(context, const SetupWalletStep3Page());
+                    if (null != res) {
+                      String seed = res.seedPhrase ?? "";
+                      List<String> temp = seed.split(" ");
+                      NavigatorUtil.push(
+                          context,
+                          SetupWalletStep3Page(
+                            seedPhares: temp,
+                          ));
                     }
                   } else {
                     showErrorText("Please input correct password");
                     return;
                   }
-
                 },
               ),
             ],

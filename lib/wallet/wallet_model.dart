@@ -25,7 +25,7 @@ class WalletModel {
     walletOutcome = json['walletOutcome'];
     userId = json['userId'];
     seedPhrase = json['seedPhrase'];
-    walletAddress = json['walletAddress'];
+    walletAddress = json['address'];
     balanceFee = json['balanceFee'];
   }
 

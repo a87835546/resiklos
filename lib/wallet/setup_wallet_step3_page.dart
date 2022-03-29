@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -13,7 +14,10 @@ import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 
 class SetupWalletStep3Page extends BaseStatefulWidget {
-  const SetupWalletStep3Page({Key? key}) : super(key: key);
+  final List<String> seedPhares;
+
+  const SetupWalletStep3Page({Key? key, required this.seedPhares})
+      : super(key: key);
 
   @override
   BaseStatefulState<BaseStatefulWidget> getState() =>
@@ -118,7 +122,7 @@ class _SetupWalletStep3PageState
                                   // padding: const EdgeInsets.only(
                                   //     left: 10, right: 10, bottom: 2, top: 2),
 
-                                  child: Text("123345"),
+                                  child: Text("${widget.seedPhares[e]}"),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                       color: Colors.white,
@@ -153,7 +157,9 @@ class _SetupWalletStep3PageState
                         ),
                       ),
                       onTap: () {
-                        ClipboardTool.setDataToast("123");
+                        log("copy content---->>>${jsonEncode(widget.seedPhares)}");
+                        ClipboardTool.setDataToast(
+                            jsonEncode(widget.seedPhares));
                       },
                     )
                   ],

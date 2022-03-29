@@ -380,6 +380,7 @@ Widget _widget(BuildContext context) {
         ),
         onTap: () {
           log("set wallet");
+          NavigatorUtil.push(context,const SetupWalletStep1Page());
 
           if (AppSingleton.userInfoModel?.verifiedEmail == true) {
             NavigatorUtil.push(context, SetupWalletStep1Page());
