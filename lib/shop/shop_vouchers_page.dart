@@ -21,7 +21,8 @@ class _ShopVoucherPageState extends State<ShopVoucherPage> {
       controller: _controller,
       enablePullDown: true,
       enablePullUp: true,
-      child: Column(
+      child: ListView(
+        shrinkWrap: true,
         children: [
           ListView(
             shrinkWrap: true,

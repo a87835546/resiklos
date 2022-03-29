@@ -8,6 +8,7 @@ import 'package:resiklos/mine/mine_page.dart';
 import 'package:resiklos/scan/scan_page.dart';
 import 'package:resiklos/shop/shop_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
+import 'package:resiklos/wallet/my_wallet_page.dart';
 
 import 'home/home_page.dart';
 
@@ -38,7 +39,7 @@ class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             HomePage(
               model: null,
             ),
-            ShopPage(),
+            MyWalletPage(),
             MinePage(),
           ],
           controller: pageController,

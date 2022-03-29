@@ -54,6 +54,10 @@ Color color_707070() {
   return ColorUtil.hexColor('0xff707070');
 }
 
+Color color_FAFAFA() {
+  return ColorUtil.hexColor('0xffFAFAFA');
+}
+
 Color color_d4d4d4() {
   return ColorUtil.hexColor('0xffD4D4D4');
 }
