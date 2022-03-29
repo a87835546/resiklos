@@ -1,19 +1,21 @@
-import 'dart:developer';
+import 'dart:developer' as dev;
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/bottom_navigationbar.dart';
-import 'package:resiklos/home/kyc/kyc_frist_page.dart';
+import 'package:resiklos/utils/toast.dart';
 import 'package:resiklos/wallet/setup_wallet_progress_widget.dart';
 import 'package:resiklos/rk_app_bar.dart';
-import 'package:resiklos/utils/clip_borad_tool.dart';
 import 'package:resiklos/utils/color.dart';
-import 'package:resiklos/utils/navigator_util.dart';
 
 class SetupWalletStep4Page extends BaseStatefulWidget {
-  const SetupWalletStep4Page({Key? key}) : super(key: key);
+  final List<String> seedPhares;
+
+  const SetupWalletStep4Page({Key? key, required this.seedPhares})
+      : super(key: key);
 
   @override
   BaseStatefulState<BaseStatefulWidget> getState() =>
@@ -26,6 +28,17 @@ class _SetupWalletStep4PageState
   final TextEditingController _controller2 = TextEditingController();
   final TextEditingController _controller3 = TextEditingController();
   final TextEditingController _controller4 = TextEditingController();
+
+  List<int> randoms = [];
+
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < 4; i++) {
+      randoms.add(Random().nextInt(12));
+    }
+    dev.log("random charset --->>$randoms");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +111,7 @@ class _SetupWalletStep4PageState
                             Container(
                               padding: EdgeInsets.only(left: 5),
                               child: Text(
-                                "#1",
+                                "#${randoms[1]}",
                                 style: TextStyle(
                                     color: mainTitleColor(),
                                     fontSize: 12,
@@ -136,7 +149,7 @@ class _SetupWalletStep4PageState
                             Container(
                               padding: EdgeInsets.only(left: 5),
                               child: Text(
-                                "#2",
+                                "#${randoms[0]}",
                                 style: TextStyle(
                                     color: mainTitleColor(),
                                     fontSize: 12,
@@ -179,7 +192,7 @@ class _SetupWalletStep4PageState
                             Container(
                               padding: EdgeInsets.only(left: 5),
                               child: Text(
-                                "#3",
+                                "#${randoms[2]}",
                                 style: TextStyle(
                                     color: mainTitleColor(),
                                     fontSize: 12,
@@ -217,7 +230,7 @@ class _SetupWalletStep4PageState
                             Container(
                               padding: EdgeInsets.only(left: 5),
                               child: Text(
-                                "#4",
+                                "#${randoms[3]}",
                                 style: TextStyle(
                                     color: mainTitleColor(),
                                     fontSize: 12,
@@ -267,10 +280,17 @@ class _SetupWalletStep4PageState
                     )),
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  Navigator.pushAndRemoveUntil(context,
-                      MaterialPageRoute(builder: (ctx) {
-                    return CustomBottomNavigationBar();
-                  }), (route) => false);
+                  if (widget.seedPhares[randoms[0]] == _controller1.text &&
+                      widget.seedPhares[randoms[1]] == _controller2.text &&
+                      widget.seedPhares[randoms[2]] == _controller3.text &&
+                      widget.seedPhares[randoms[3]] == _controller4.text) {
+                    Navigator.pushAndRemoveUntil(context,
+                        MaterialPageRoute(builder: (ctx) {
+                      return CustomBottomNavigationBar();
+                    }), (route) => false);
+                  } else {
+                    showErrorText("Input the seed phares is mistake");
+                  }
                 },
               ),
             ],

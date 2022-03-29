@@ -34,3 +34,20 @@ Future importWalletFromSeedPhrase(String seed) async {
   }
   return Future.value(null);
 }
+
+Future<List> fetchAllWallet() async {
+  var res = await HttpManager.get(
+      url: "wallet/fetchAllWallet?email=${AppSingleton.userInfoModel?.email}");
+  log("fetch all wallet  res ---->>>>>$res");
+  try {
+    List<WalletModel> _list = [];
+    List temp = res["data"];
+    for (var value in temp) {
+      _list.add(WalletModel.fromJson(value));
+    }
+    return Future.value(_list);
+  } catch (e) {
+    log("fetch all wallet error --->>> $e");
+  }
+  return Future.value([]);
+}

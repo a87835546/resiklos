@@ -187,7 +187,7 @@ class _SetupWalletStep3PageState
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
                   log("start verify kyc");
-                  NavigatorUtil.push(context, SetupWalletStep4Page());
+                  NavigatorUtil.push(context, SetupWalletStep4Page(seedPhares: widget.seedPhares,));
                 },
               ),
             ],

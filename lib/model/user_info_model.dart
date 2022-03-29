@@ -51,7 +51,6 @@ class UserInfoModel {
       this.kycState});
 
   static UserInfoModel jsonToObject(Map<String, dynamic> map) {
-    log("map -- >>> $map");
     UserInfoModel model = UserInfoModel(
       gender: map['gender'],
       id: map['id'],
@@ -76,7 +75,6 @@ class UserInfoModel {
       verifiedEmail: map['verifiedEmail'],
       kycState: map['kycState'],
     );
-    log("model --- >>> $model");
     return model;
   }
 
