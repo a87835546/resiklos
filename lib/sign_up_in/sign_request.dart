@@ -278,17 +278,16 @@ class SignRequest {
 
   static void logout(context) async {
     Map<String, dynamic> map = {};
-    log("logout");
-    HttpManager.post(url: "user/logout", params: map).then((result) {
-      log("logout result --- >>>> ${result}");
-      try {
-        AppSingleton.clearUserInfo();
-        NavigatorUtil.push(context, SignInPage());
-        handleSignOut();
-        onPressedLogOutButton();
-      } catch (err) {
-        log("parser user info error ${err}");
-      }
-    });
+    // var res = await HttpManager.post(url: "user/logout", params: map);
+    // log("logout ---->>>> $res");
+
+    try {
+      AppSingleton.clearUserInfo();
+      NavigatorUtil.push(context, SignInPage());
+      handleSignOut();
+      onPressedLogOutButton();
+    } catch (err) {
+      log("parser user info error ${err}");
+    }
   }
 }
