@@ -136,3 +136,5 @@ flutter:
     - imgs/img.png
     - imgs/camera.png
     - imgs/wallet-header.png
+    - imgs/wallet/bnb_logo.svg
+    - imgs/wallet/tether_usdt_logo.svg

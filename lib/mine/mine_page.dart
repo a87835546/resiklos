@@ -5,6 +5,7 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:resiklos/base_class/base_page.dart';
+import 'package:resiklos/mine/account-verification.dart';
 import 'package:resiklos/mine/mine_list.dart';
 import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/utils/app_singleton.dart';
@@ -131,10 +132,12 @@ class _MinePageState extends BaseStatefulState<MinePage> {
                           onTap: () {
                             ClipboardTool.setDataToast("${AppSingleton.userInfoModel?.userId}");
                           },
-                        )
+                        ),
+
                       ],
                     ),
-                  )
+                  ),
+                  Center(child: MineVerificationWidget(),),
                 ],
               ),
             ),
