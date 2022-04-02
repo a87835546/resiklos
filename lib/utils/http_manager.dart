@@ -32,7 +32,7 @@ class HttpManager {
 
   static String baseUrl = _debug
       ? (AppSingleton.devMode == DevMode.local
-          ? "https://192.168.1.13:9001/api/v1/"
+          ? "https://localhost:9001/api/v1/"
           : (AppSingleton.devMode == DevMode.staging
               ? "https://staging.resiklos.app/api/v1/"
               : "https://api.resiklos.app/api/v1/"))
@@ -45,13 +45,15 @@ class HttpManager {
   static List<CancelToken> _tokens = [];
 
   static _config() async {
-    _dio.interceptors.add(HttpInterceptor());
-    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (client) {
-      client.badCertificateCallback = (cert, host, port) {
-        return true;
+    if(_dio.interceptors.isEmpty) {
+      _dio.interceptors.add(HttpInterceptor());
+      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+          (client) {
+        client.badCertificateCallback = (cert, host, port) {
+          return true;
+        };
       };
-    };
+    }
   }
 
   static get(

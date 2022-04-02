@@ -29,7 +29,8 @@ class _ShopPageState extends State<ShopPage> {
   }
 
   Widget _widget() {
-    return Column(
+    return ListView(
+      shrinkWrap: true,
       children: [
         SizedBox(height: MediaQuery.of(context).padding.top),
         DepositTransactionSegmentView(

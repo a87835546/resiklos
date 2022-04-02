@@ -15,6 +15,7 @@ import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/utils/toast.dart';
+import 'package:resiklos/wallet/setup_wallet_step4_page.dart';
 
 import 'home_verify_emal_page.dart';
 
@@ -22,7 +23,6 @@ class HomeVerifyView extends StatefulWidget {
   final UserInfoModel? model;
 
   const HomeVerifyView({Key? key, this.model}) : super(key: key);
-
 
   @override
   State<StatefulWidget> createState() => _HomeVerifyViewState();
@@ -42,9 +42,8 @@ class _HomeVerifyViewState extends State<HomeVerifyView> {
           (widget.model ?? AppSingleton.userInfoModel)?.verifiedEmail == true
               ? 1
               : 0;
-      index = (widget.model ?? AppSingleton.userInfoModel)?.status == 1
-          ? 2
-          : index;
+      index =
+          (widget.model ?? AppSingleton.userInfoModel)?.status == 1 ? 2 : index;
       log("index---->>>$index");
       index1 = _progress[index];
     });
@@ -316,7 +315,8 @@ Widget _widget(BuildContext context) {
           if (AppSingleton.userInfoModel?.verifiedEmail == false) {
             if (AppSingleton.userInfoModel?.status == 0) {
               NavigatorUtil.push(context, KycStartsPage());
-            }else if(AppSingleton.userInfoModel?.status == 2 || AppSingleton.userInfoModel?.status == 1){
+            } else if (AppSingleton.userInfoModel?.status == 2 ||
+                AppSingleton.userInfoModel?.status == 1) {
               NavigatorUtil.push(context, KYCFinishedPage());
             }
           } else {
@@ -384,10 +384,12 @@ Widget _widget(BuildContext context) {
         ),
         onTap: () {
           log("set wallet");
-          NavigatorUtil.push(context,const SetupWalletStep1Page());
-
           if (AppSingleton.userInfoModel?.verifiedEmail == true) {
-            NavigatorUtil.push(context, SetupWalletStep1Page());
+            if (AppSingleton.userInfoModel?.rpWalletAddress != null) {
+
+            } else {
+              NavigatorUtil.push(context, SetupWalletStep1Page());
+            }
           } else {
             showToast("Please verify email first");
           }
