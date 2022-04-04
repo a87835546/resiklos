@@ -156,7 +156,7 @@ class _HomePageState extends BaseStatefulState<HomePage> {
   Future getPoints() async {
     var r = await HttpManager.get(
         url: "user/points",
-        params: {"id": "${AppSingleton.userInfoModel?.id}"});
+        params: {"id": "${AppSingleton.userInfoModel?.email}"});
     if (mounted && r["data"] != null) {
       setState(() {
         _points = r["data"]["point"] ?? 50;
@@ -167,7 +167,7 @@ class _HomePageState extends BaseStatefulState<HomePage> {
   Future getUser() async {
     var r = await HttpManager.get(
         url: "user/getInfo",
-        params: {"userId": "${AppSingleton.userInfoModel?.id}"});
+        params: {"userId": "${AppSingleton.userInfoModel?.email}"});
     log("user info res ------>>>>$r");
     if (mounted && r["data"] != null) {
       var temp = r["data"];

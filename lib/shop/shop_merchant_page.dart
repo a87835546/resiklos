@@ -22,9 +22,14 @@ class _ShopMerchantPageState extends State<ShopMerchantPage> {
       enablePullDown: true,
       enablePullUp: true,
       child: Center(
-        child: Container(
-          child: const ShopMerchantBanner(),
-        ),
+        child:ListView(
+          shrinkWrap: true,
+          children: [
+            Container(
+              child: const ShopMerchantBanner(),
+            ),
+          ],
+        )
       ),
       onRefresh: () {
         _controller.refreshCompleted();

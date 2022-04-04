@@ -44,6 +44,12 @@ class _HomeVerifyViewState extends State<HomeVerifyView> {
               : 0;
       index =
           (widget.model ?? AppSingleton.userInfoModel)?.status == 1 ? 2 : index;
+
+      index = (widget.model?.walletAddress ??
+                  AppSingleton.walletModel?.walletAddress) !=
+              null
+          ? 3
+          : index;
       log("index---->>>$index");
       index1 = _progress[index];
     });
@@ -383,10 +389,9 @@ Widget _widget(BuildContext context) {
           ),
         ),
         onTap: () {
-          log("set wallet");
           if (AppSingleton.userInfoModel?.verifiedEmail == true) {
-            if (AppSingleton.userInfoModel?.rpWalletAddress != null) {
-
+            log("set wallet rsg address --->>>>${AppSingleton.walletModel?.walletAddress}");
+            if (AppSingleton.walletModel?.walletAddress != null) {
             } else {
               NavigatorUtil.push(context, SetupWalletStep1Page());
             }
