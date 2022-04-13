@@ -10,6 +10,7 @@ import 'package:resiklos/sign_up_in/authorize_request.dart';
 import 'package:resiklos/sign_up_in/sign_button.dart';
 import 'package:resiklos/sign_up_in/sign_logo_page.dart';
 import 'package:resiklos/sign_up_in/sign_request.dart';
+import 'package:resiklos/sign_up_in/sign_reset_password_page.dart';
 import 'package:resiklos/sign_up_in/sign_up.dart';
 import 'package:resiklos/sign_up_in/sign_up_input_widget.dart';
 import 'package:resiklos/sign_up_in/sign_social_widget.dart';
@@ -205,7 +206,9 @@ class SignInPageState extends State<SignInPage> {
                             GestureDetector(
                               onTap: () async{
                                 log("forgot password");
-                                showToast("forgot password");
+                                Navigator.of(context).push(MaterialPageRoute(builder: (_){
+                                  return SignResetPasswordPage();
+                                }));
                                 // var r = await AuthorizeRequest.authenticate();
                               },
                               behavior: HitTestBehavior.translucent,
