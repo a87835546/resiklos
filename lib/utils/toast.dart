@@ -21,8 +21,8 @@ void showWarnToast1(String text) {
       textColor: Colors.black);
 }
 
-
 var time = const Duration(seconds: 1);
+
 ///普通提示样式的toast
 void showToast(String text) {
   Fluttertoast.showToast(
@@ -41,11 +41,12 @@ void showLoading() {
 
 void showSuccessLoading({String? title}) {
   EasyLoading.showSuccess(
-    title??"success...",
+    title ?? "success...",
     duration: time,
     maskType: EasyLoadingMaskType.black,
   );
 }
+
 void showText(String text) {
   EasyLoading.showInfo(
     text,

@@ -85,7 +85,8 @@ class SignRequest {
         await HttpManager.get(url: "user/sendPasswordOtp?email=${email}");
     log("get reset password otp result $result");
     try {
-      if (result["data"] != null && result["code"] == 200) {
+      if (result["code"] == 200) {
+        showSuccessLoading(title: "Send OTP Success");
         return Future.value(true);
       } else {
         EasyLoading.showError(result["message"] ?? "Get Otp Error");
