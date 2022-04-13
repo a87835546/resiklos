@@ -258,7 +258,7 @@ class SignRequest {
     log("get reset password otp result $result");
     try {
       if (result["code"] == 200) {
-        showText("Send OTP Success");
+        showSuccessLoading("Send OTP Success");
         return Future.value(true);
       } else {
         EasyLoading.showError(result["message"] ?? "Get Otp Error");
