@@ -141,7 +141,7 @@ class _SignResetPasswordState extends State<SignResetPasswordPage> {
                         placeholder: 'Enter your OTP',
                         isOtp: true,
                         getOtp: () async {
-                          if (emailController.text.length > 5) {
+                          if (isEmail(emailController.text)) {
                             var otp =
                                 await SignRequest.getOtp(emailController.text);
                           } else {
@@ -219,5 +219,9 @@ class _SignResetPasswordState extends State<SignResetPasswordPage> {
         ),
       ),
     );
+  }
+  static bool isEmail(String str) {
+    return RegExp(r"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")
+        .hasMatch(str);
   }
 }
