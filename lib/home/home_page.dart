@@ -7,6 +7,9 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/home_articles_widget.dart';
 import 'package:resiklos/home/home_verify_widget.dart';
+import 'package:resiklos/home/summary_card_widget.dart';
+import 'package:resiklos/home/verification_card_widget.dart';
+import 'package:resiklos/mine/account-verification.dart';
 import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/http_manager.dart';
@@ -25,7 +28,8 @@ class HomePage extends BaseStatefulWidget {
   BaseStatefulState<BaseStatefulWidget> getState() => _HomePageState();
 }
 
-class _HomePageState extends BaseStatefulState<HomePage> with AutomaticKeepAliveClientMixin{
+class _HomePageState extends BaseStatefulState<HomePage>
+    with AutomaticKeepAliveClientMixin {
   var _controller = ScrollController();
   final RefreshController _refreshController = RefreshController();
   int _referralCount = 0;
@@ -84,14 +88,21 @@ class _HomePageState extends BaseStatefulState<HomePage> with AutomaticKeepAlive
                               points: _points ?? 50,
                               count: _referralCount,
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 30),
-                              child: Container(
-                                height: 156,
-                                child: HomeVerifyView(
-                                  model: _model,
-                                ),
-                              ),
+                            SummaryCardWidget(context,
+                                affiliatesCount: _referralCount,
+                                amount: _points ?? 0),
+
+                            // Padding(
+                            //   padding: EdgeInsets.only(top: 30),
+                            //   child: Container(
+                            //     height: 156,
+                            //     child: HomeVerifyView(
+                            //       model: _model,
+                            //     ),
+                            //   ),
+                            // ),
+                            VerificationCardWidget(
+                              _model,
                             ),
                             const Padding(
                               padding: EdgeInsets.only(top: 30),
@@ -172,7 +183,7 @@ class _HomePageState extends BaseStatefulState<HomePage> with AutomaticKeepAlive
     log("user info res ------>>>>$r");
     if (mounted && r["data"] != null) {
       var temp = r["data"];
-      UserInfoModel object = UserInfoModel.jsonToObject(temp);
+      UserInfoModel object = UserInfoModel.fromJson(temp);
       setState(() {
         _model = object;
       });

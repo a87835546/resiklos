@@ -10,7 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../bottom_navigationbar.dart';
 import 'cache.dart';
-enum DevMode {local,staging,product}
+
+enum DevMode { local, staging, product }
 
 class AppSingleton {
   // static _instance，_instance会在编译期被初始化，保证了只被创建一次
@@ -18,6 +19,7 @@ class AppSingleton {
   static final AppSingleton _instance = AppSingleton.getInstance();
   static UserInfoModel? userInfoModel;
   static WalletModel? walletModel;
+
   // bottom navigation bar controller
   static PageController? controller;
   static PageController? navigatorKey;
@@ -27,6 +29,7 @@ class AppSingleton {
   static RememberMeModel? rememberMeModel;
   static SharedPreferences? _preference;
   static DevMode? devMode;
+
   //提供了一个工厂方法来获取该类的实例
   factory AppSingleton() => getInstance();
 
@@ -48,7 +51,6 @@ class AppSingleton {
 
   static Brightness? brightness;
 
-
   static Future test1() async {
     dynamic s = await Cache.getInstance().get("userinfo");
     log("reading ---->>>>>> $s");
@@ -63,7 +65,7 @@ class AppSingleton {
         if (s.isNotEmpty) {
           Map<String, dynamic> map = json.decode(s);
           // log("string result $map");
-          model = UserInfoModel.jsonToObject1(map);
+          model = UserInfoModel.fromJson(map);
         } else {
           log("reading data is null");
         }
@@ -100,7 +102,7 @@ class AppSingleton {
   }
 
   static Future<RememberMeModel> getRememberMeModel() async {
-    if(rememberMeModel == null) {
+    if (rememberMeModel == null) {
       rememberMeModel = RememberMeModel();
       try {
         bool s1 = Cache.getInstance().get("isRemember");
@@ -109,7 +111,6 @@ class AppSingleton {
         rememberMeModel?.isRemember = s1;
         rememberMeModel?.email = s2;
         rememberMeModel?.password = s3;
-
       } catch (err) {
         log("get remember me model cache parse error ${err}");
       }

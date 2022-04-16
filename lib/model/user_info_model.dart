@@ -1,14 +1,12 @@
 import 'dart:developer';
 
-import 'package:resiklos/home/setting/setting_request.dart';
-
 class UserInfoModel {
-  late bool? gender;
+  String? gender;
   String? avatar;
   num? userId;
   num? id;
   String? nickName;
-  String? realName;
+  String? fullName;
   dynamic registerTime;
   String? available;
   String? mobile;
@@ -22,89 +20,64 @@ class UserInfoModel {
   dynamic lastLoginTime;
   num? deviceType;
   num? gems;
-  num? verifyTime;
-  bool? verifiedEmail;
-  /// 0 unverify 1.pending 2.complete 3.reject
-  num? status;
+  int emailVerificationStatus;
+
+  /// 0 unverified 1.pending 2.verified 3.rejected
+  int kycVerificationStatus;
+  int verificationStatus;
 
   UserInfoModel(
-      {this.id,
+      {this.id = 0,
       this.avatar,
-      this.gender,
+      this.gender = "M",
       this.userId,
-      this.nickName,
-      this.realName,
-      this.registerTime,
+      this.nickName = "R",
+      this.fullName = "R",
+      this.registerTime = '',
       this.available,
       this.mobile,
       this.email,
       this.deviceType,
       this.gems,
-      this.verifyTime,
       this.token,
       this.ipAddress,
       this.inviteCode,
       this.createTime,
       this.lastLoginTime,
       this.rpWalletAddress,
-      this.walletAddress,
-      this.verifiedEmail,
-      this.status});
+      this.walletAddress = '',
+      this.emailVerificationStatus = 0,
+      this.kycVerificationStatus = 0,
+      this.verificationStatus = 0});
 
-  static UserInfoModel jsonToObject(Map<String, dynamic> map) {
-    UserInfoModel model = UserInfoModel(
-      gender: map['gender'],
-      id: map['id'],
-      userId: map['userId'],
-      nickName: map['userName'],
-      realName: map['fullName'],
-      createTime: map['createTime'],
-      registerTime: map['registerTime'],
-      available: map['available'],
-      mobile: map['mobile'],
-      email: map['email'],
-      token: map['token'],
-      avatar: map['avatar'],
-      deviceType: map['deviceType'],
-      gems: map['gems'],
-      verifyTime: map['verifyTime'],
-      inviteCode: map['inviteCode'],
-      ipAddress: map['ipAddress'],
-      lastLoginTime: map['lastLoginTime'],
-      rpWalletAddress: map['rpWalletAddress'],
-      walletAddress: map['walletAddress'],
-      verifiedEmail: map['verifiedEmail'],
-      status: map['kycState'],
-    );
-    return model;
-  }
+  factory UserInfoModel.fromJson(Map<String, dynamic> json) {
+    log("map -- >>> $json", name: 'models/User');
 
-  static UserInfoModel jsonToObject1(Map<String, dynamic> map) {
-    log("map -- >>> $map");
     UserInfoModel model = UserInfoModel(
-      gender: map['gender'],
-      id: map['id'],
-      userId: map['userId'],
-      nickName: map['nickName'],
-      realName: map['fullName'],
-      createTime: map['createTime'],
-      registerTime: map['registerTime'],
-      available: map['available'],
-      mobile: map['mobile'],
-      email: map['email'],
-      token: map['token'],
-      avatar: map['avatar'],
-      deviceType: map['deviceType'],
-      gems: map['gems'],
-      verifyTime: map['verifyTime'],
-      inviteCode: map['inviteCode'],
-      ipAddress: map['ipAddress'],
-      lastLoginTime: map['lastLoginTime'],
-      rpWalletAddress: map['rpWalletAddress'],
-      walletAddress: map['walletAddress'],
-      verifiedEmail: map['verifiedEmail'],
-      status: map['kycState'],
-    );
+        id: json['id'],
+        userId: json['userId'],
+        email: json['email'],
+        token: json['token'],
+        inviteCode: json['inviteCode'],
+        nickName: json['nickName'],
+        fullName: json['fullName'],
+        avatar: json['avatar'],
+        gender: json['gender'],
+        createTime: json['createTime'],
+        registerTime: json['registerTime'],
+        available: json['available'],
+        mobile: json['mobile'],
+        // deviceType: json['deviceType'], //@yicen : remove deviceType in API response
+        gems: json['gems'],
+        ipAddress: json['ipAddress'],
+        lastLoginTime: json['lastLoginTime'],
+        rpWalletAddress: json['rpWalletAddress'],
+        walletAddress: json['walletAddress'] ??
+            '0xDF5532665F5851CD2edF005Da4e1f525cCE6c405',
+        emailVerificationStatus: json['verifiedEmail'] == false ? 0 : 1,
+        kycVerificationStatus: json['kycState'] ?? 0,
+        verificationStatus: _getVerificationStatus(
+            json['verifiedEmail'] == false ? 0 : 1, json['kycState'] ?? 0));
     return model;
   }
 
@@ -113,7 +86,7 @@ class UserInfoModel {
     data['id'] = id;
     data['gender'] = gender;
     data['available'] = available;
-    data['realName'] = realName;
+    data['realName'] = fullName;
     data['createTime'] = createTime;
     data['mobile'] = mobile;
     data['available'] = available;
@@ -122,19 +95,43 @@ class UserInfoModel {
     data['nickName'] = nickName;
     data['deviceType'] = deviceType;
     data['gems'] = gems;
-    data['verifyTime'] = verifyTime;
     data['ipAddress'] = ipAddress;
     data['inviteCode'] = inviteCode;
     data['lastLoginTime'] = lastLoginTime;
-    data['status'] = status;
-    data['verifiedEmail'] = verifiedEmail;
+    data['kycState'] = verificationStatus;
+    data['verifiedEmail'] = emailVerificationStatus;
     data['walletAddress'] = walletAddress;
     data['rpWalletAddress'] = rpWalletAddress;
     return data;
   }
 
+  static int _getVerificationStatus(
+      int emailVerification, int kycVerification) {
+    int status = 0;
+
+    if (emailVerification == 1) {
+      status++;
+    }
+
+    if (kycVerification >= 1) {
+      status++;
+    }
+
+    if (kycVerification == 2) {
+      status++;
+    }
+
+    if (kycVerification == 3) {
+      status--;
+    }
+
+    log('status $status kyc:$kycVerification');
+
+    return status;
+  }
+
   @override
   String toString() {
-    return 'UserInfoModel{gender: $gender, avatar: $avatar, userId: $userId, id: $id, nickName: $nickName, realName: $realName, registerTime: $registerTime, available: $available, mobile: $mobile, email: $email, token: $token, inviteCode: $inviteCode, ipAddress: $ipAddress, rpWalletAddress: $rpWalletAddress, walletAddress: $walletAddress, createTime: $createTime, lastLoginTime: $lastLoginTime, deviceType: $deviceType, gems: $gems, verifyTime: $verifyTime, verifiedEmail: $verifiedEmail, status: $status}';
+    return 'UserInfoModel{gender: $gender, avatar: $avatar, userId: $userId, id: $id, nickName: $nickName, fullName: $fullName, registerTime: $registerTime, available: $available, mobile: $mobile, email: $email, token: $token, inviteCode: $inviteCode, ipAddress: $ipAddress, rpWalletAddress: $rpWalletAddress, walletAddress: $walletAddress, createTime: $createTime, lastLoginTime: $lastLoginTime, deviceType: $deviceType, gems: $gems, emailVerificationStatus: $emailVerificationStatus, kycVerificationStatus: $kycVerificationStatus, verificationStatus: $verificationStatus}';
   }
 }

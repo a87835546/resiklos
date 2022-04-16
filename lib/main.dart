@@ -19,8 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'bottom_navigationbar.dart';
 
 final bool _debug = kDebugMode;
-final GlobalKey<NavigatorState> navigatorKey =
-GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
       log("sharedPreferences get user $s");
       if (s != null && s is String) {
         Map<String, dynamic> map = json.decode(s);
-        UserInfoModel model = UserInfoModel.jsonToObject1(map);
+        UserInfoModel model = UserInfoModel.fromJson(map);
         return Future.value(model);
       } else {
         return Future.value(UserInfoModel());

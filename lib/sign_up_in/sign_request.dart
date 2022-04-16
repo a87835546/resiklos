@@ -38,7 +38,7 @@ class SignRequest {
     UserInfoModel? model;
     try {
       if (result["data"] != null && result["code"] == 200) {
-        model = UserInfoModel.jsonToObject(result["data"]);
+        model = UserInfoModel.fromJson(result["data"]);
         AppSingleton.setUserInfoModel(model);
       } else {
         showWarnToast(result["message"] ?? "Sign In Fail");
@@ -67,7 +67,7 @@ class SignRequest {
     UserInfoModel? model;
     try {
       if (result["data"] != null && result["code"] == 200) {
-        model = UserInfoModel.jsonToObject(result["data"]);
+        model = UserInfoModel.fromJson(result["data"]);
         AppSingleton.setUserInfoModel(model);
       } else {
         EasyLoading.showError(result["message"] ?? "Register User Error");
@@ -262,7 +262,7 @@ class SignRequest {
         await HttpManager.post(url: "user/registerBySocial", params: params);
     try {
       var temp = result["data"];
-      UserInfoModel object = UserInfoModel.jsonToObject(temp);
+      UserInfoModel object = UserInfoModel.fromJson(temp);
       AppSingleton.setUserInfoModel(object);
       log("user model $object");
       if (null != object) {

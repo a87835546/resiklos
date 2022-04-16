@@ -43,6 +43,7 @@ Future uploadIDImage(String url, String backUrl, int type) async {
     return Future.value(false);
   }
 }
+
 Future uploadAvatarImage(String url) async {
   var result = await HttpManager.post(url: "/user/uploadAvatar", params: {
     "id": AppSingleton.userInfoModel?.id,
@@ -78,7 +79,7 @@ Future getUserProfile() async {
       url: "user/profile?id=${AppSingleton.userInfoModel?.id}");
   log("get user's profile result ---->>>> $result");
   try {
-    UserInfoModel userInfoModel = UserInfoModel.jsonToObject(result["data"]);
+    UserInfoModel userInfoModel = UserInfoModel.fromJson(result["data"]);
     return Future.value(userInfoModel);
   } catch (err) {
     log("parser delete account fail ${err.toString()}");
@@ -108,7 +109,7 @@ Future createRpWalletAddress() async {
       url: "user/profile?id=${AppSingleton.userInfoModel?.id}");
   log("get user's profile result ---->>>> $result");
   try {
-    UserInfoModel userInfoModel = UserInfoModel.jsonToObject(result["data"]);
+    UserInfoModel userInfoModel = UserInfoModel.fromJson(result["data"]);
     return Future.value(userInfoModel);
   } catch (err) {
     log("parser delete account fail ${err.toString()}");
@@ -146,8 +147,8 @@ Future verifyEmail(otp) async {
 
 Future insertNotification() async {
   var result = await HttpManager.post(
-      url:
-      "notification/addNews",params: {"content":"test1111","desc":"asdfkljsfklsdf","type":"3"});
+      url: "notification/addNews",
+      params: {"content": "test1111", "desc": "asdfkljsfklsdf", "type": "3"});
   log("verify email result ---->>>> $result");
   if (null != result["code"] && result["code"] == 200) {
     return Future.value(true);
@@ -156,7 +157,6 @@ Future insertNotification() async {
     return Future.value(false);
   }
 }
-
 
 Future uploadUserInfo(
     birthday, country, firstname, gender, lastname, mobile) async {
@@ -168,10 +168,9 @@ Future uploadUserInfo(
     "id": AppSingleton.userInfoModel?.id,
     "lastname": lastname,
     "mobile": mobile,
-    "email":AppSingleton.userInfoModel?.email
+    "email": AppSingleton.userInfoModel?.email
   };
-  var result =
-      await HttpManager.post(url: "kyc/updateInfo", params: params);
+  var result = await HttpManager.post(url: "kyc/updateInfo", params: params);
   log("upload user info result ---->>>> $result");
   if (null != result["code"] && result["code"] == 200) {
     showSuccessLoading();

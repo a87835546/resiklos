@@ -39,11 +39,11 @@ class _HomeVerifyViewState extends State<HomeVerifyView> {
     super.initState();
     setState(() {
       int index =
-          (widget.model ?? AppSingleton.userInfoModel)?.verifiedEmail == true
+          (widget.model ?? AppSingleton.userInfoModel)?.emailVerificationStatus == true
               ? 1
               : 0;
       index =
-          (widget.model ?? AppSingleton.userInfoModel)?.status == 1 ? 2 : index;
+          (widget.model ?? AppSingleton.userInfoModel)?.verificationStatus == 1 ? 2 : index;
 
       index = (widget.model?.walletAddress ??
                   AppSingleton.walletModel?.walletAddress) !=
@@ -226,7 +226,7 @@ Widget _widget(BuildContext context) {
                     width: 16.0,
                     height: 16.0,
                     child: HomeVerifyStateIcon(
-                      type: (AppSingleton.userInfoModel?.verifiedEmail == true
+                      type: (AppSingleton.userInfoModel?.emailVerificationStatus == true
                           ? 3
                           : 1),
                     )),
@@ -250,7 +250,7 @@ Widget _widget(BuildContext context) {
         ),
         onTap: () {
           log("verify email");
-          if (AppSingleton.userInfoModel?.verifiedEmail == false) {
+          if (AppSingleton.userInfoModel?.emailVerificationStatus == false) {
             NavigatorUtil.push(context, const HomeVerifyEmail());
           }
         },
@@ -306,9 +306,9 @@ Widget _widget(BuildContext context) {
                   width: 16.0,
                   height: 16.0,
                   child: HomeVerifyStateIcon(
-                    type: AppSingleton.userInfoModel?.status == 1
+                    type: AppSingleton.userInfoModel?.verificationStatus == 1
                         ? 2
-                        : (AppSingleton.userInfoModel?.status == 2 ? 3 : 1),
+                        : (AppSingleton.userInfoModel?.verificationStatus == 2 ? 3 : 1),
                   ),
                 ),
               ),
@@ -318,11 +318,11 @@ Widget _widget(BuildContext context) {
         onTap: () {
           // NavigatorUtil.push(context, KycStartsPage());
 
-          if (AppSingleton.userInfoModel?.verifiedEmail == false) {
-            if (AppSingleton.userInfoModel?.status == 0) {
+          if (AppSingleton.userInfoModel?.emailVerificationStatus == false) {
+            if (AppSingleton.userInfoModel?.verificationStatus == 0) {
               NavigatorUtil.push(context, KycStartsPage());
-            } else if (AppSingleton.userInfoModel?.status == 2 ||
-                AppSingleton.userInfoModel?.status == 1) {
+            } else if (AppSingleton.userInfoModel?.verificationStatus == 2 ||
+                AppSingleton.userInfoModel?.verificationStatus == 1) {
               NavigatorUtil.push(context, KYCFinishedPage());
             }
           } else {
@@ -389,7 +389,7 @@ Widget _widget(BuildContext context) {
           ),
         ),
         onTap: () {
-          if (AppSingleton.userInfoModel?.verifiedEmail == true) {
+          if (AppSingleton.userInfoModel?.emailVerificationStatus == true) {
             log("set wallet rsg address --->>>>${AppSingleton.walletModel?.walletAddress}");
             if (AppSingleton.walletModel?.walletAddress != null) {
             } else {

@@ -83,19 +83,6 @@ class _WalletCardState extends State<WalletCard> {
             ),
           ),
           Transform.translate(
-            offset:const Offset(15.0, 155.0),
-            child:const Text(
-              'BEP-20',
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 10,
-                color: Color(0x89ffffff),
-                fontWeight: FontWeight.w700,
-              ),
-              softWrap: false,
-            ),
-          ),
-          Transform.translate(
             offset:const Offset(20.0, 86.0),
             child: SizedBox(
               width: 320.0,
@@ -108,10 +95,10 @@ class _WalletCardState extends State<WalletCard> {
                       width: 320.0,
                       height: 19.0,
                       child: Text(
-                        '≈ 1,200 PHP',
+                        'BEP 20',
                         style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 16,
+                          fontSize: 12,
                           color: Color(0x99ffffff),
                           fontWeight: FontWeight.w700,
                         ),

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:resiklos/home/qr_code_dailog.dart';
+import 'package:resiklos/home/summary_card_widget.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -157,7 +158,8 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
           Container(
             child: Padding(
               padding: EdgeInsets.only(left: 30, top: 20, right: 30),
-              child: Row(
+              child:
+              Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: _list.map((e) {
                     int index = _list.indexOf(e);

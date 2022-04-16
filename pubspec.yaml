@@ -139,3 +139,15 @@ flutter:
     - imgs/wallet-header.png
     - imgs/wallet/bnb_logo.svg
     - imgs/wallet/tether_usdt_logo.svg
+    - imgs/svg/bnb.svg
+    - imgs/svg/usdt.svg
+    - imgs/svg/wallet_bg.svg
+    - imgs/svg/gem.svg
+    - imgs/svg/summary_bg.svg
+    - imgs/svg/verify_email.svg
+    - imgs/svg/wallet_header.svg
+    - imgs/svg/external_link.svg
+    - imgs/svg/vouchers_icon.svg
+    - imgs/svg/affiliates_icon.svg
+    - imgs/svg/scan_icon.svg
+    - imgs/svg/transfer_icon.svg
