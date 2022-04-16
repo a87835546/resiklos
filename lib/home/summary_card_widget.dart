@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:resiklos/home/home_referrals_page.dart';
@@ -40,17 +42,25 @@ Widget SummaryCardWidget(BuildContext context,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  SummaryButtonWidget("Scan QR", icon: 'imgs/svg/scan_icon.svg',
-                      onPressed: () {
+                  SummaryButtonWidget(text: "Scan QR", icon: 'imgs/svg/scan_icon.svg',
+                      click: () {
+                    log("123");
                     showCustomDialog(context);
                   }),
-                  SummaryButtonWidget("Transfer",
-                      icon: 'imgs/svg/transfer_icon.svg',
-                      onPressed: () => showTransferBottomSheetWidget(context)),
-                  SummaryButtonWidget("My Vouchers",
-                      icon: 'imgs/svg/vouchers_icon.svg', onPressed: () {}),
-                  SummaryButtonWidget("Affiliates",
-                      icon: 'imgs/svg/affiliates_icon.svg', onPressed: () {
+                  SummaryButtonWidget(text:"Transfer",
+                      icon: 'imgs/svg/transfer_icon.svg', click: () {
+                    log("123456");
+
+                    showTransferBottomSheetWidget(context);
+                  }),
+                  SummaryButtonWidget(text:"My Vouchers",
+                      icon: 'imgs/svg/vouchers_icon.svg', click: () {
+                    log("123456");
+                  }),
+                  SummaryButtonWidget(text:"Affiliates",
+                      icon: 'imgs/svg/affiliates_icon.svg', click: () {
+                    log("123456789");
+
                     NavigatorUtil.push(context, HomeReferrals());
                   }),
                 ],

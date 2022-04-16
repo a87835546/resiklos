@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-Widget SummaryButtonWidget(String text,
-        {String icon = '',required Function onPressed}) =>
-    Expanded(
+class SummaryButtonWidget extends StatefulWidget {
+  const SummaryButtonWidget(
+      {Key? key, required this.text, required this.icon, required this.click})
+      : super(key: key);
+  final String text;
+  final String icon;
+  final Function click;
+
+  @override
+  State<StatefulWidget> createState() {
+    return _SummaryButtonWidgetState();
+  }
+}
+
+class _SummaryButtonWidgetState extends State<SummaryButtonWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
       child: FlatButton(
-        onPressed: onPressed(),
+        onPressed: () {
+          widget.click();
+        },
         // splashColor: Colors.blueGrey.shade50,
         highlightColor: Colors.blueGrey.shade50,
         textColor: Colors.black,
@@ -17,13 +34,13 @@ Widget SummaryButtonWidget(String text,
           children: <Widget>[
             SizedBox(
               height: 30.0,
-              child: SvgPicture.asset(icon,
+              child: SvgPicture.asset(widget.icon,
                   allowDrawingOutsideViewBox: false, height: 30.0),
             ),
             const SizedBox(height: 10.0),
             SizedBox(
               child: Text(
-                text,
+                widget.text,
                 style: const TextStyle(
                   fontSize: 11,
                   color: Color(0xff00a8bf),
@@ -37,3 +54,5 @@ Widget SummaryButtonWidget(String text,
         ),
       ),
     );
+  }
+}

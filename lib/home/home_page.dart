@@ -84,10 +84,10 @@ class _HomePageState extends BaseStatefulState<HomePage>
                             const SizedBox(
                               height: 15,
                             ),
-                            HomeTopContainerView(
-                              points: _points ?? 50,
-                              count: _referralCount,
-                            ),
+                            // HomeTopContainerView(
+                            //   points: _points ?? 50,
+                            //   count: _referralCount,
+                            // ),
                             SummaryCardWidget(context,
                                 affiliatesCount: _referralCount,
                                 amount: _points ?? 0),
@@ -158,6 +158,7 @@ class _HomePageState extends BaseStatefulState<HomePage>
     var r = await HttpManager.get(
         url: "user/referralsCount",
         params: {"referralCode": AppSingleton.userInfoModel?.inviteCode ?? ""});
+    log("referral count --->>>$r");
     if (mounted && r["data"] != null) {
       setState(() {
         _referralCount = r["data"]["count"] ?? 0;

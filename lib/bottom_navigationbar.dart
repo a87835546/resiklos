@@ -6,6 +6,8 @@ import 'package:proste_indexed_stack/proste_indexed_stack.dart';
 import 'package:resiklos/app_tab_bar.dart';
 import 'package:resiklos/game/game_page.dart';
 import 'package:resiklos/home/setting/setting_page.dart';
+import 'package:resiklos/mine/account_page.dart';
+import 'package:resiklos/mine/mine_list.dart';
 import 'package:resiklos/mine/mine_page.dart';
 import 'package:resiklos/scan/scan_page.dart';
 import 'package:resiklos/shop/shop_page.dart';
@@ -43,7 +45,7 @@ class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
                 ),
               ),
               IndexedStackChild(child: MyWalletPage()),
-              IndexedStackChild(child: MinePage()),
+              IndexedStackChild(child: AccountPage()),
             ],
           ),
           floatingActionButtonLocation:
