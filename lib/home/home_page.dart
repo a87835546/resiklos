@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:resiklos/base_class/base_page.dart';
@@ -24,7 +25,7 @@ class HomePage extends BaseStatefulWidget {
   BaseStatefulState<BaseStatefulWidget> getState() => _HomePageState();
 }
 
-class _HomePageState extends BaseStatefulState<HomePage> {
+class _HomePageState extends BaseStatefulState<HomePage> with AutomaticKeepAliveClientMixin{
   var _controller = ScrollController();
   final RefreshController _refreshController = RefreshController();
   int _referralCount = 0;
@@ -178,4 +179,7 @@ class _HomePageState extends BaseStatefulState<HomePage> {
       AppSingleton.setUserInfoModel(object);
     }
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -19,7 +19,11 @@ class MinePage extends BaseStatefulWidget {
   BaseStatefulState<BaseStatefulWidget> getState() => _MinePageState();
 }
 
-class _MinePageState extends BaseStatefulState<MinePage> {
+class _MinePageState extends BaseStatefulState<MinePage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     log("url ----->>>>${AppSingleton.userInfoModel?.avatar != null}");
@@ -130,14 +134,16 @@ class _MinePageState extends BaseStatefulState<MinePage> {
                             ),
                           ),
                           onTap: () {
-                            ClipboardTool.setDataToast("${AppSingleton.userInfoModel?.userId}");
+                            ClipboardTool.setDataToast(
+                                "${AppSingleton.userInfoModel?.userId}");
                           },
                         ),
-
                       ],
                     ),
                   ),
-                  Center(child: MineVerificationWidget(),),
+                  Center(
+                    child: MineVerificationWidget(),
+                  ),
                 ],
               ),
             ),

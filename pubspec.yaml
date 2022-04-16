@@ -61,6 +61,7 @@ dependencies:
   dotted_border: ^2.0.0+2
   package_info_plus: ^1.4.0
   card_swiper: ^2.0.3
+  proste_indexed_stack: ^0.2.4
 
 dev_dependencies:
   flutter_test:
