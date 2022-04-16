@@ -34,7 +34,7 @@ class _HomePageState extends BaseStatefulState<HomePage> {
   @override
   void initState() {
     super.initState();
-    getReferralsCount();
+    getData();
   }
 
   @override

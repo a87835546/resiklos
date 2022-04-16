@@ -38,7 +38,7 @@ class _WalletCardState extends State<WalletCard> {
                     borderRadius: BorderRadius.circular(15.0),
                     boxShadow:const [
                       BoxShadow(
-                        color: const Color(0x29000000),
+                        color:  Color(0x29000000),
                         offset: Offset(0, 3),
                         blurRadius: 6,
                       ),
@@ -83,27 +83,27 @@ class _WalletCardState extends State<WalletCard> {
             ),
           ),
           Transform.translate(
-            offset: Offset(15.0, 155.0),
+            offset:const Offset(15.0, 155.0),
             child:const Text(
               'BEP-20',
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontSize: 10,
-                color: const Color(0x89ffffff),
+                color: Color(0x89ffffff),
                 fontWeight: FontWeight.w700,
               ),
               softWrap: false,
             ),
           ),
           Transform.translate(
-            offset: Offset(20.0, 86.0),
+            offset:const Offset(20.0, 86.0),
             child: SizedBox(
               width: 320.0,
               height: 64.0,
               child: Stack(
                 children: <Widget>[
                   Transform.translate(
-                    offset: Offset(0.0, 45.0),
+                    offset:const Offset(0.0, 45.0),
                     child: const SizedBox(
                       width: 320.0,
                       height: 19.0,
@@ -112,7 +112,7 @@ class _WalletCardState extends State<WalletCard> {
                         style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 16,
-                          color: const Color(0x99ffffff),
+                          color: Color(0x99ffffff),
                           fontWeight: FontWeight.w700,
                         ),
                         textAlign: TextAlign.center,
@@ -274,7 +274,7 @@ class _WalletCardState extends State<WalletCard> {
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontSize: 10,
-                                color: const Color(0x89ffffff),
+                                color: Color(0x89ffffff),
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
