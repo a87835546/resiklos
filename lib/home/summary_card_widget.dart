@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:resiklos/home/home_referrals_page.dart';
 import 'package:resiklos/home/qr_code_dailog.dart';
 import 'package:resiklos/home/summary_button_widget.dart';
+import 'package:resiklos/utils/event_bus_util.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/wallet/transfer_bottom_sheet_widget.dart';
 
@@ -42,27 +43,35 @@ Widget SummaryCardWidget(BuildContext context,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  SummaryButtonWidget(text: "Scan QR", icon: 'imgs/svg/scan_icon.svg',
+                  SummaryButtonWidget(
+                      text: "Scan QR",
+                      icon: 'imgs/svg/scan_icon.svg',
                       click: () {
-                    log("123");
-                    showCustomDialog(context);
-                  }),
-                  SummaryButtonWidget(text:"Transfer",
-                      icon: 'imgs/svg/transfer_icon.svg', click: () {
-                    log("123456");
+                        log("123");
+                        showCustomDialog(context);
+                      }),
+                  SummaryButtonWidget(
+                      text: "Transfer",
+                      icon: 'imgs/svg/transfer_icon.svg',
+                      click: () {
+                        log("123456");
 
-                    showTransferBottomSheetWidget(context);
-                  }),
-                  SummaryButtonWidget(text:"My Vouchers",
-                      icon: 'imgs/svg/vouchers_icon.svg', click: () {
-                    log("123456");
-                  }),
-                  SummaryButtonWidget(text:"Affiliates",
-                      icon: 'imgs/svg/affiliates_icon.svg', click: () {
-                    log("123456789");
+                        showTransferBottomSheetWidget(context);
+                      }),
+                  SummaryButtonWidget(
+                      text: "My Vouchers",
+                      icon: 'imgs/svg/vouchers_icon.svg',
+                      click: () {
+                        EventBusUtil.fire(TabBarChangeEvent(0));
+                      }),
+                  SummaryButtonWidget(
+                      text: "Affiliates",
+                      icon: 'imgs/svg/affiliates_icon.svg',
+                      click: () {
+                        log("123456789");
 
-                    NavigatorUtil.push(context, HomeReferrals());
-                  }),
+                        NavigatorUtil.push(context, HomeReferrals());
+                      }),
                 ],
               )),
         ),

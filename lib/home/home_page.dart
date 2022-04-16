@@ -1,15 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/home_articles_widget.dart';
-import 'package:resiklos/home/home_verify_widget.dart';
 import 'package:resiklos/home/summary_card_widget.dart';
 import 'package:resiklos/home/verification_card_widget.dart';
-import 'package:resiklos/mine/account-verification.dart';
 import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/http_manager.dart';
@@ -17,12 +14,9 @@ import 'package:resiklos/utils/toast.dart';
 
 import 'home_invite_widget.dart';
 import 'home_navi_widget.dart';
-import 'home_top_container_widget.dart';
 
 class HomePage extends BaseStatefulWidget {
-  final UserInfoModel? model;
-
-  const HomePage({Key? key, required this.model}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   BaseStatefulState<BaseStatefulWidget> getState() => _HomePageState();
@@ -107,7 +101,7 @@ class _HomePageState extends BaseStatefulState<HomePage>
                               child: HomeInviteView(),
                             ),
                             Container(
-                              padding: EdgeInsets.only(left: 6, top: 30),
+                              padding: const EdgeInsets.only(left: 6, top: 30),
                               alignment: Alignment.topLeft,
                               child: const Text(
                                 "ARTICLES",
