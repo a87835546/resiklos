@@ -1,10 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:resiklos/home/home_verify_emal_page.dart';
 import 'package:resiklos/model/user_info_model.dart';
+import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/constants.dart';
+import 'package:resiklos/utils/http_manager.dart';
+import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/wallet/show_toast.dart';
 import 'package:resiklos/wallet/status_icon_widget.dart';
 
@@ -20,9 +26,17 @@ class _AccountPageState extends State<AccountPage>
   @override
   bool get wantKeepAlive => true;
   double progress = 0;
+  UserInfoModel? _model = AppSingleton.userInfoModel;
+
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+  }
 
   @override
   Widget build(BuildContext context) {
+    log("user avatar --- >>> ${_model?.fullName}");
     return Scaffold(
         body: Column(
       children: [
@@ -54,22 +68,19 @@ class _AccountPageState extends State<AccountPage>
                     child: CircleAvatar(
                       backgroundColor: Colors.blueGrey,
                       radius: 62.5,
-                      child: AppSingleton.userInfoModel?.avatar == null
-                          ? Text(
-                              AppSingleton.userInfoModel?.nickName ??
-                                  "full name",
+                      child: _model?.avatar == "" || _model?.avatar == null
+                          ? Text(_model?.fullName ?? "A",
                               style: const TextStyle(
                                   color: Colors.white70,
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold))
                           : CircleAvatar(
                               backgroundColor: Colors.white,
-                              backgroundImage: AppSingleton
-                                          .userInfoModel?.avatar ==
-                                      null
-                                  ? Image.asset("imgs/default_avatar.png").image
-                                  : NetworkImage(
-                                      AppSingleton.userInfoModel?.avatar ?? ""),
+                              backgroundImage:
+                                  AppSingleton.userInfoModel?.avatar == null
+                                      ? Image.asset("imgs/default_avatar.png")
+                                          .image
+                                      : NetworkImage(_model?.avatar ?? ""),
                               radius: 62.5,
                             ),
                     ),
@@ -101,7 +112,7 @@ class _AccountPageState extends State<AccountPage>
                                     width: 20.0,
                                     height: 20.0,
                                     child: SvgPicture.asset(
-                                      'assets/svg/facebook_icon.svg',
+                                      'imgs/svg/facebook_icon.svg',
                                       allowDrawingOutsideViewBox: true,
                                     ),
                                   ),
@@ -117,7 +128,7 @@ class _AccountPageState extends State<AccountPage>
               ),
               const SizedBox(height: 10),
               Text(
-                AppSingleton.userInfoModel?.fullName ?? "",
+                _model?.fullName ?? "",
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
@@ -127,8 +138,7 @@ class _AccountPageState extends State<AccountPage>
               const SizedBox(height: 5),
               GestureDetector(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(
-                          text: '${AppSingleton.userInfoModel?.userId}'))
+                  Clipboard.setData(ClipboardData(text: '${_model?.userId}'))
                       .then((_) {
                     showToast(context, 'ID copied');
                   });
@@ -142,7 +152,7 @@ class _AccountPageState extends State<AccountPage>
                     children: [
                       const TextSpan(text: 'ID: '),
                       TextSpan(
-                        text: '${AppSingleton.userInfoModel?.userId ?? ""}',
+                        text: '${_model?.userId ?? ""}',
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
                         ),
@@ -217,7 +227,15 @@ class _AccountPageState extends State<AccountPage>
                                       1
                                   ? 2
                                   : 0,
-                              icon: CupertinoIcons.mail_solid),
+                              icon: CupertinoIcons.mail_solid,
+                              click: () {
+                                if (AppSingleton.userInfoModel
+                                        ?.emailVerificationStatus ==
+                                    0) {
+                                  NavigatorUtil.push(
+                                      context, const HomeVerifyEmail());
+                                }
+                              }),
                           StatusIconWidget(
                               title: 'Confirm Identity',
                               status: AppSingleton.userInfoModel!
@@ -271,7 +289,7 @@ class _AccountPageState extends State<AccountPage>
                         ),
                       ),
                       trailing: Text(
-                        AppSingleton.userInfoModel?.email ?? "",
+                        _model?.email ?? "",
                         style: const TextStyle(
                           color: ResiklosColors.muted,
                           fontWeight: FontWeight.w600,
@@ -287,7 +305,7 @@ class _AccountPageState extends State<AccountPage>
                         ),
                       ),
                       trailing: Text(
-                        AppSingleton.userInfoModel?.fullName ?? "",
+                        _model?.fullName ?? "",
                         style: const TextStyle(
                           color: ResiklosColors.muted,
                           fontWeight: FontWeight.w600,
@@ -303,7 +321,7 @@ class _AccountPageState extends State<AccountPage>
                         ),
                       ),
                       trailing: Text(
-                        AppSingleton.userInfoModel?.nickName ?? "",
+                        _model?.nickName ?? "",
                         style: const TextStyle(
                           color: ResiklosColors.muted,
                           fontWeight: FontWeight.w600,
@@ -319,7 +337,7 @@ class _AccountPageState extends State<AccountPage>
                         ),
                       ),
                       trailing: Text(
-                        AppSingleton.userInfoModel?.inviteCode ?? "",
+                        _model?.inviteCode ?? "",
                         style: const TextStyle(
                           color: ResiklosColors.muted,
                           fontWeight: FontWeight.w600,
@@ -333,7 +351,9 @@ class _AccountPageState extends State<AccountPage>
                       const EdgeInsets.symmetric(vertical: 30, horizontal: 45),
                   constraints: const BoxConstraints(maxWidth: 300),
                   child: FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      SignRequest.logout(context);
+                    },
                     child: const Text(
                       'Logout',
                       style:
@@ -356,5 +376,19 @@ class _AccountPageState extends State<AccountPage>
         ),
       ],
     ));
+  }
+
+  Future getUser() async {
+    var r = await HttpManager.get(
+        url: "user/getInfo", params: {"userId": "${_model?.email}"});
+    log("user info res ------>>>>$r");
+    if (mounted && r["data"] != null) {
+      var temp = r["data"];
+      UserInfoModel object = UserInfoModel.fromJson(temp);
+      setState(() {
+        _model = object;
+      });
+      AppSingleton.setUserInfoModel(object);
+    }
   }
 }

@@ -6,45 +6,54 @@ Widget StatusIconWidget(
     {String title = 'Title',
     int status = 0,
     IconData icon = Icons.person_rounded,
-    bool hasIconStatus = true}) {
+    bool hasIconStatus = true,
+    Function? click}) {
   return SizedBox(
     width: 82.0,
     height: 62.0,
-    child: Stack(
-      children: <Widget>[
-        Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            SizedBox(
-                width: 40.0,
-                height: 40.0,
-                child: circleIcon(status: status, icon: icon)),
-            Align(
-              alignment: const Alignment(0.4, 0.2),
-              child: SizedBox(
-                width: 16.0,
-                height: 16.0,
-                child: hasIconStatus ? statusIcon(status: status) : null,
+    child: GestureDetector(
+      child: Stack(
+        children: <Widget>[
+          Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              SizedBox(
+                  width: 40.0,
+                  height: 40.0,
+                  child: circleIcon(status: status, icon: icon)),
+              Align(
+                alignment: const Alignment(0.4, 0.2),
+                child: SizedBox(
+                  width: 16.0,
+                  height: 16.0,
+                  child: hasIconStatus ? statusIcon(status: status) : null,
+                ),
+              )
+            ],
+          ),
+          Transform.translate(
+            offset: Offset(0.0, 50.0),
+            child: Container(
+              width: 82.0,
+              child: Text(
+                title.toUpperCase(),
+                style: const TextStyle(
+                  fontSize: 8,
+                  color: ResiklosColors.muted,
+                  fontWeight: FontWeight.w700,
+                ),
+                textAlign: TextAlign.center,
               ),
-            )
-          ],
-        ),
-        Transform.translate(
-          offset: Offset(0.0, 50.0),
-          child: Container(
-            width: 82.0,
-            child: Text(
-              title.toUpperCase(),
-              style: const TextStyle(
-                fontSize: 8,
-                color: ResiklosColors.muted,
-                fontWeight: FontWeight.w700,
-              ),
-              textAlign: TextAlign.center,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
+      onTap: () {
+        if (click != null) {
+          click();
+        }
+      },
+      behavior: HitTestBehavior.opaque,
     ),
   );
 }

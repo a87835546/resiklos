@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/blend_mask.dart';
+import 'package:resiklos/home/home_verify_emal_page.dart';
 import 'package:resiklos/model/user_info_model.dart';
+import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/constants.dart';
+import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/wallet/status_icon_widget.dart';
 
-Widget VerificationCardWidget(UserInfoModel? user) {
+Widget VerificationCardWidget(BuildContext context, UserInfoModel? user) {
   double progress = 0.20;
 
   return Container(
@@ -181,7 +184,13 @@ Widget VerificationCardWidget(UserInfoModel? user) {
                 StatusIconWidget(
                     title: 'Verify Email',
                     status: user!.verificationStatus >= 1 ? 2 : 0,
-                    icon: CupertinoIcons.mail_solid),
+                    icon: CupertinoIcons.mail_solid,
+                    click: () {
+                      if (AppSingleton.userInfoModel?.emailVerificationStatus ==
+                          0) {
+                        NavigatorUtil.push(context, const HomeVerifyEmail());
+                      }
+                    }),
                 StatusIconWidget(
                     title: 'Confirm Identity',
                     status: user.verificationStatus == 2 &&
@@ -190,12 +199,11 @@ Widget VerificationCardWidget(UserInfoModel? user) {
                         : user.kycVerificationStatus,
                     icon: CupertinoIcons.person_fill),
                 StatusIconWidget(
-                  title: 'Fully Verified',
-                  status: user.verificationStatus == 3
-                      ? 2
-                      : (user.kycVerificationStatus == 1 ? 1 : 0),
-                  icon: CupertinoIcons.checkmark_seal_fill,
-                )
+                    title: 'Fully Verified',
+                    status: user.verificationStatus == 3
+                        ? 2
+                        : (user.kycVerificationStatus == 1 ? 1 : 0),
+                    icon: CupertinoIcons.checkmark_seal_fill)
               ],
             ),
           )
