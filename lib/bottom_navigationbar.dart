@@ -28,39 +28,44 @@ class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     AppSingleton.state = this;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Container(
-        color: Colors.transparent,
-        child: PageView(
-          physics: const NeverScrollableScrollPhysics(),
-          children: const [
-            ShopPage(),
-            HomePage(
-              model: null,
+    return WillPopScope(
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Container(
+            color: Colors.transparent,
+            child: PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              children: const [
+                ShopPage(),
+                HomePage(
+                  model: null,
+                ),
+                MyWalletPage(),
+                MinePage(),
+              ],
+              controller: pageController,
+              onPageChanged: onPageChanged,
             ),
-            MyWalletPage(),
-            MinePage(),
-          ],
-          controller: pageController,
-          onPageChanged: onPageChanged,
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: MediaQuery.removePadding(
+            context: context,
+            child: AppTabBar(
+              bottom: MediaQuery.of(context).padding.bottom,
+              click: (index) {
+                setState(() {
+                  page = index;
+                });
+                pageController.jumpToPage(page);
+              },
+            ),
+            removeBottom: true,
+          ),
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: MediaQuery.removePadding(
-        context: context,
-        child: AppTabBar(
-          bottom: MediaQuery.of(context).padding.bottom,
-          click: (index) {
-            setState(() {
-              page = index;
-            });
-            pageController.jumpToPage(page);
-          },
-        ),
-        removeBottom: true,
-      ),
-    );
+        onWillPop: () async {
+          return false;
+        });
   }
 
   @override

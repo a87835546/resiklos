@@ -3,7 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 
 class WalletCard extends StatefulWidget {
-  const WalletCard({Key? key}) : super(key: key);
+  final num rsg;
+  const WalletCard({Key? key,required this.rsg}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _WalletCardState();
@@ -118,15 +119,15 @@ class _WalletCardState extends State<WalletCard> {
                       ),
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
                     width: 320.0,
                     height: 42.0,
                     child: Text(
-                      '500 RSG',
-                      style: TextStyle(
+                      '${widget.rsg} RSG',
+                      style:const TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 34,
-                        color: const Color(0xffffffff),
+                        color: Color(0xffffffff),
                         fontWeight: FontWeight.w700,
                       ),
                       textAlign: TextAlign.center,

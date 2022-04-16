@@ -24,7 +24,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   AppSingleton.devMode = DevMode.local;
-  log("debug mode ---->>>>>${_debug}");
+  log("debug mode ---->>>>>$_debug");
   TLSizeFit.initialize();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UserLoginProviderModel()),

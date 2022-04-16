@@ -51,3 +51,15 @@ Future<List> fetchAllWallet() async {
   }
   return Future.value([]);
 }
+
+Future fetchWallet() async {
+  var res = await HttpManager.get(
+      url: "wallet/balance?email=${AppSingleton.userInfoModel?.email}");
+  log("fetch all wallet  res ---->>>>>$res");
+  try {
+    return Future.value(res["data"]);
+  } catch (e) {
+    log("fetch all wallet error --->>> $e");
+  }
+  return Future.value([]);
+}

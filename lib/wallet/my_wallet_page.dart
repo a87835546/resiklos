@@ -11,6 +11,7 @@ import 'package:resiklos/wallet/my_wallet_activity_page.dart';
 import 'package:resiklos/wallet/my_wallet_assets_page.dart';
 import 'package:resiklos/wallet/my_wallet_button_widget.dart';
 import 'package:resiklos/wallet/wallet_card.dart';
+import 'package:resiklos/wallet/wallet_request.dart';
 
 class MyWalletPage extends BaseStatefulWidget {
   const MyWalletPage({Key? key}) : super(key: key);
@@ -27,10 +28,20 @@ class _MyWalletPageState extends BaseStatefulState<MyWalletPage> {
   ];
   List pages = const [MyWalletAssetsPage(), MyWalletActivityPage()];
   int _index = 0;
+  num rsg = 0;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  void fetchData() async {
+    var res = await fetchWallet();
+    if (res != null && res is Map) {
+      setState(() {
+        rsg = res["rsgBalance"];
+      });
+    }
   }
 
   @override
@@ -83,145 +94,10 @@ class _MyWalletPageState extends BaseStatefulState<MyWalletPage> {
                   ),
                 ),
                 Center(
-                  child: WalletCard(),
+                  child: WalletCard(
+                    rsg: rsg,
+                  ),
                 ),
-                // Padding(padding: EdgeInsets.only(left: 15,right: 15),child: WalletCard(),),
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 15, right: 15),
-                //   child: Container(
-                //       height: 180,
-                //       clipBehavior: Clip.antiAlias,
-                //       decoration: BoxDecoration(
-                //         color: mainColor(),
-                //         image: DecorationImage(image: Image.asset("imgs/wallet/tether_usdt_logo.svg").image,),
-                //         borderRadius: BorderRadius.circular(10),
-                //         boxShadow: const [
-                //           BoxShadow(
-                //               color: Color(0x29000000),
-                //               blurRadius: 6.0,
-                //               offset: Offset(0, 2),
-                //               spreadRadius: 0)
-                //         ],
-                //       ),
-                //       child: Stack(
-                //         children: [
-                //           Container(
-                //             padding: const EdgeInsets.only(left: 12, right: 12),
-                //             color: Colors.redAccent,
-                //             child: Row(
-                //               mainAxisAlignment: MainAxisAlignment.center,
-                //               children: [
-                //                 Container(
-                //                   height: 40,
-                //                   child: Column(
-                //                     children: [
-                //                       Container(
-                //                         height: 20,
-                //                         alignment: Alignment.center,
-                //                         child: const Text(
-                //                           "RSG Wallet",
-                //                           style: TextStyle(
-                //                               color: Colors.white,
-                //                               fontWeight: FontWeight.bold,
-                //                               fontSize: 12),
-                //                         ),
-                //                       ),
-                //                       Container(
-                //                         height: 20,
-                //                         alignment: Alignment.center,
-                //                         child: Text(
-                //                           "Resiklos Gems",
-                //                           style: TextStyle(
-                //                               color: Colors.white.withOpacity(0.6),
-                //                               fontWeight: FontWeight.bold,
-                //                               fontSize: 10),
-                //                         ),
-                //                       ),
-                //                     ],
-                //                   ),
-                //                 ),
-                //                 Expanded(
-                //                     child: Container(
-                //                   height: 40,
-                //                   child: Row(
-                //                     mainAxisAlignment: MainAxisAlignment.end,
-                //                     children: [
-                //                       Container(
-                //                         child: Text(
-                //                           "RP:${AppSingleton.userInfoModel?.rpWalletAddress}",
-                //                           style:const TextStyle(
-                //                               color: Colors.white,
-                //                               fontWeight: FontWeight.bold,
-                //                               fontSize: 12),
-                //                         ),
-                //                       ),
-                //                       Container(
-                //                         padding: EdgeInsets.only(left: 5, right: 5),
-                //                         child: Icon(
-                //                           Icons.copy,
-                //                           color: mainColor(),
-                //                           size: 12,
-                //                         ),
-                //                       ),
-                //                       Container(
-                //                         padding: EdgeInsets.only(left: 0, right: 5),
-                //                         child: Icon(
-                //                           Icons.share,
-                //                           color: mainColor(),
-                //                           size: 12,
-                //                         ),
-                //                       ),
-                //                     ],
-                //                   ),
-                //                 ))
-                //               ],
-                //             ),
-                //           ),
-                //           Positioned(
-                //             child: Container(
-                //               height: 40,
-                //               alignment: Alignment.center,
-                //               width: MediaQuery.of(context).size.width - 30,
-                //               child: const Text(
-                //                 "500 RSG",
-                //                 style: TextStyle(
-                //                     color: Colors.white,
-                //                     fontSize: 34,
-                //                     fontWeight: FontWeight.bold),
-                //               ),
-                //             ),
-                //             left: 0,
-                //             top: 70,
-                //           ),
-                //           Positioned(
-                //             child: Container(
-                //               alignment: Alignment.center,
-                //               clipBehavior: Clip.antiAlias,
-                //               width: 80,
-                //               height: 80,
-                //               decoration: BoxDecoration(
-                //                   borderRadius: BorderRadius.circular(40),
-                //                   color: Colors.white),
-                //               child: Container(
-                //                 width: 60,
-                //                 height: 60,
-                //                 alignment: Alignment.center,
-                //                 decoration: BoxDecoration(
-                //                     borderRadius: BorderRadius.circular(30),
-                //                     color: Colors.transparent),
-                //                 child: Image.asset(
-                //                   "imgs/logo@2x.png",
-                //                   width: 60,
-                //                   height: 60,
-                //                 ),
-                //               ),
-                //             ),
-                //             left: (MediaQuery.of(context).size.width - 110) / 2,
-                //             top: 0,
-                //           )
-                //         ],
-                //       )),
-                // ),
                 Padding(
                   padding: const EdgeInsets.only(left: 40, top: 20, right: 40),
                   child: MyWalletButtonWidget(

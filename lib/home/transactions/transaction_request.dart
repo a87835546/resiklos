@@ -9,9 +9,10 @@ class TransactionRequest {
   /**
    * query user transaction request
    */
-  static Future<List<TransactionModel>> queryTransaction(type,current) async {
+  static Future<List<TransactionModel>> queryTransaction(type, current) async {
     var result = await HttpManager.get(
-        url: "/transaction/queryTransaction?type=$type&id=${AppSingleton.userInfoModel?.id.toString()}&pageSize=10&currentNum=$current");
+        url:
+            "transaction/queryTransaction?type=$type&email=${AppSingleton.userInfoModel?.email.toString()}&pageSize=10&currentNum=$current");
     log("login result $result");
     List<TransactionModel> list = [];
     try {
@@ -30,9 +31,11 @@ class TransactionRequest {
     } finally {}
     return Future.value(list);
   }
+
   static Future<List<TransactionModel>> queryReferral(current) async {
     var result = await HttpManager.get(
-        url: "/transaction/queryReferral?id=${AppSingleton.userInfoModel?.id.toString()}&pageSize=10&currentNum=$current");
+        url:
+            "/transaction/queryReferral?email=${AppSingleton.userInfoModel?.id.toString()}&pageSize=10&currentNum=$current");
     log("login result $result");
     List<TransactionModel> list = [];
     try {
