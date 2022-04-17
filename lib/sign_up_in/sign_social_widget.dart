@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 
@@ -49,19 +50,23 @@ class _SocialSignPageState extends State<SocialSignPage> {
                     if (index == 0) {
                       var r = await SignRequest.onPressedLogInButton();
                       if (r == true) {
-                        NavigatorUtil.push(
-                            context, CustomBottomNavigationBar());
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (_) {
+                          return CustomBottomNavigationBar();
+                        }), (route) => false);
                       }
                     } else if (index == 1) {
                       var r = await SignRequest.handleSignIn();
                       if (r == true) {
-                        NavigatorUtil.push(
-                            context, CustomBottomNavigationBar());
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (_) {
+                          return CustomBottomNavigationBar();
+                        }), (route) => false);
                       }
                     }
                   },
                   child: Padding(
-                    padding: EdgeInsets.only(right: 10,left: 10),
+                    padding: EdgeInsets.only(right: 10, left: 10),
                     child: Container(
                       width: 40,
                       height: 40,

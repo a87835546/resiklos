@@ -115,7 +115,7 @@ class SignRequest {
       if (res?.displayName != null && res?.id != null && res?.email != null) {
         success = await loginBySocialMedia(
             res?.id, res?.displayName, res?.email, 1, res?.photoUrl);
-        handleGetContact(res!);
+        // handleGetContact(res!);
       }
     } catch (error) {
       log("google login error : ${error}");
@@ -219,6 +219,7 @@ class SignRequest {
     log("request params $params");
     var result =
         await HttpManager.post(url: "user/registerBySocial", params: params);
+    log("message------>>>$result");
     try {
       var temp = result["data"];
       UserInfoModel object = UserInfoModel.jsonToObject(temp);
@@ -231,7 +232,8 @@ class SignRequest {
         return Future.value(false);
       }
     } catch (err) {
-      showErrorText('Parser User Info Error ${err}');
+      showErrorText('Login Fail\n${result["message"]}');
+      log("Parser User Info Error -->>$err");
       return Future.value(false);
     }
   }
