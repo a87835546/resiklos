@@ -183,7 +183,7 @@ Widget VerificationCardWidget(BuildContext context, UserInfoModel? user) {
               children: [
                 StatusIconWidget(
                     title: 'Verify Email',
-                    status: user!.verificationStatus >= 1 ? 2 : 0,
+                    status: user!.emailVerificationStatus == 1 ? 2 : 0,
                     icon: CupertinoIcons.mail_solid,
                     click: () {
                       if (AppSingleton.userInfoModel?.emailVerificationStatus ==
