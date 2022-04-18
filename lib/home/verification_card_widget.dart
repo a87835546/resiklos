@@ -202,7 +202,7 @@ Widget VerificationCardWidget(BuildContext context, UserInfoModel? user) {
                         : user.kycVerificationStatus,
                     icon: CupertinoIcons.person_fill,
                     click: () {
-                      if (user.kycVerificationStatus == 0) {
+                      if (user.kycVerificationStatus == 0 || user.kycVerificationStatus == 3) {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (_) {
                           return KycFirstPage();

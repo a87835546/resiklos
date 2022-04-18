@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:resiklos/home/home_verify_emal_page.dart';
+import 'package:resiklos/home/kyc/kyc_frist_page.dart';
 import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/utils/app_singleton.dart';
@@ -247,7 +248,20 @@ class _AccountPageState extends State<AccountPage>
                                   ? 2
                                   : AppSingleton
                                       .userInfoModel!.kycVerificationStatus,
-                              icon: CupertinoIcons.person_fill),
+                              icon: CupertinoIcons.person_fill,
+                              click: () {
+                                if (AppSingleton.userInfoModel!
+                                            .kycVerificationStatus ==
+                                        0 ||
+                                    AppSingleton.userInfoModel!
+                                            .kycVerificationStatus ==
+                                        3) {
+                                  Navigator.of(context)
+                                      .push(MaterialPageRoute(builder: (_) {
+                                    return KycFirstPage();
+                                  }));
+                                }
+                              }),
                           StatusIconWidget(
                             title: 'Fully Verified',
                             status: AppSingleton

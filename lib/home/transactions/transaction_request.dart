@@ -35,7 +35,7 @@ class TransactionRequest {
   static Future<List<TransactionModel>> queryReferral(current) async {
     var result = await HttpManager.get(
         url:
-            "/transaction/queryReferral?email=${AppSingleton.userInfoModel?.id.toString()}&pageSize=10&currentNum=$current");
+            "/transaction/queryReferralV2?email=${AppSingleton.userInfoModel?.id.toString()}&pageSize=10&currentNum=$current");
     log("login result $result");
     List<TransactionModel> list = [];
     try {
