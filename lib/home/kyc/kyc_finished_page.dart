@@ -26,7 +26,7 @@ class _KYCFinishedPageState extends State<KYCFinishedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.redAccent,
+        color: mainColor(),
         child: Stack(
           children: [
             Column(
@@ -35,7 +35,7 @@ class _KYCFinishedPageState extends State<KYCFinishedPage> {
                 Container(
                   height: 500,
                   padding: EdgeInsets.only(left: 40, top: 80, right: 40),
-                  decoration: BoxDecoration(
+                  decoration:const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(10),

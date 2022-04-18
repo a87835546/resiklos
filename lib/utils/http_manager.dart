@@ -4,9 +4,7 @@ import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/utils/toast.dart';
 
@@ -45,7 +43,7 @@ class HttpManager {
   static List<CancelToken> _tokens = [];
 
   static _config() async {
-    if(_dio.interceptors.isEmpty) {
+    if (_dio.interceptors.isEmpty) {
       _dio.interceptors.add(HttpInterceptor());
       (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
@@ -92,9 +90,7 @@ class HttpManager {
       required Map<String, dynamic> params}) async {
     _config();
     String _token = AppSingleton.userInfoModel?.token ?? "";
-    if (headers == null) {
-      headers = Map();
-    }
+    headers ??= {};
     headers.putIfAbsent("token", () => _token);
     Options options = Options(headers: headers, sendTimeout: timeout);
     log("post request params $headers");
@@ -144,9 +140,9 @@ class HttpManager {
   }
 
   static cancelRequest() {
-    _tokens.forEach((element) {
+    for (var element in _tokens) {
       log('取消网络请求 ----->>>>>> $element');
-    });
+    }
   }
 }
 

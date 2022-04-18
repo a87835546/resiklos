@@ -97,7 +97,7 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      AppSingleton.userInfoModel?.nickName ?? "JOHN DELA CRUZ",
+                      AppSingleton.userInfoModel?.fullName ?? "JOHN DELA CRUZ",
                       style: const TextStyle(
                           color: Color(0xff707070),
                           fontSize: 12,

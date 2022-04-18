@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/blend_mask.dart';
 import 'package:resiklos/home/home_verify_emal_page.dart';
+import 'package:resiklos/home/kyc/kyc_frist_page.dart';
 import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/constants.dart';
@@ -10,7 +13,7 @@ import 'package:resiklos/wallet/status_icon_widget.dart';
 
 Widget VerificationCardWidget(BuildContext context, UserInfoModel? user) {
   double progress = 0.20;
-
+  log("kyc statue ---->>>${AppSingleton.userInfoModel?.kycVerificationStatus}  verify status ---->>>>${AppSingleton.userInfoModel?.verificationStatus}");
   return Container(
     margin: const EdgeInsets.only(top: 20),
     // padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -197,7 +200,15 @@ Widget VerificationCardWidget(BuildContext context, UserInfoModel? user) {
                             user.kycVerificationStatus > 0
                         ? 2
                         : user.kycVerificationStatus,
-                    icon: CupertinoIcons.person_fill),
+                    icon: CupertinoIcons.person_fill,
+                    click: () {
+                      if (user.kycVerificationStatus == 0) {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (_) {
+                          return KycFirstPage();
+                        }));
+                      }
+                    }),
                 StatusIconWidget(
                     title: 'Fully Verified',
                     status: user.verificationStatus == 3

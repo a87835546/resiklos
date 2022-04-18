@@ -69,7 +69,7 @@ class _AccountPageState extends State<AccountPage>
                       backgroundColor: Colors.blueGrey,
                       radius: 62.5,
                       child: _model?.avatar == "" || _model?.avatar == null
-                          ? Text(_model?.fullName ?? "A",
+                          ? Text(_model?.fullName?.split("").first ?? "A",
                               style: const TextStyle(
                                   color: Colors.white70,
                                   fontSize: 24,
@@ -222,11 +222,8 @@ class _AccountPageState extends State<AccountPage>
                         children: [
                           StatusIconWidget(
                               title: 'Verify Email',
-                              status: AppSingleton
-                                          .userInfoModel!.verificationStatus >=
-                                      1
-                                  ? 2
-                                  : 0,
+                              status: AppSingleton.userInfoModel!
+                                          .emailVerificationStatus == 1 ? 2 : 0,
                               icon: CupertinoIcons.mail_solid,
                               click: () {
                                 if (AppSingleton.userInfoModel

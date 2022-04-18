@@ -93,7 +93,7 @@ class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
             selectedItemColor: mainColor(),
             unselectedItemColor: mainTitleColor(),
             selectedFontSize: 13,
-            unselectedFontSize: 12,
+            unselectedFontSize: 11,
           ),
         ),
         onWillPop: () async {
