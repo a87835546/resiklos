@@ -17,7 +17,6 @@ import 'package:resiklos/utils/toast.dart';
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: <String>[
     'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
   ],
 );
 
@@ -156,7 +155,7 @@ class SignRequest {
       if (res?.displayName != null && res?.id != null && res?.email != null) {
         success = await loginBySocialMedia(
             res?.id, res?.displayName, res?.email, 1, res?.photoUrl);
-        handleGetContact(res!);
+        // handleGetContact(res!);
       }
     } catch (error) {
       log("google login error : ${error}");

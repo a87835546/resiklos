@@ -223,7 +223,10 @@ class _AccountPageState extends State<AccountPage>
                           StatusIconWidget(
                               title: 'Verify Email',
                               status: AppSingleton.userInfoModel!
-                                          .emailVerificationStatus == 1 ? 2 : 0,
+                                          .emailVerificationStatus ==
+                                      1
+                                  ? 2
+                                  : 0,
                               icon: CupertinoIcons.mail_solid,
                               click: () {
                                 if (AppSingleton.userInfoModel
