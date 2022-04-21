@@ -35,14 +35,13 @@ class TransactionRequest {
   static Future<List<TransactionModel>> queryReferral(current) async {
     var result = await HttpManager.get(
         url:
-            "/transaction/queryReferralV2?email=${AppSingleton.userInfoModel?.id.toString()}&pageSize=10&currentNum=$current");
-    log("login result $result");
+            "/user/queryReferrals?inviteCode=${AppSingleton.userInfoModel?.inviteCode.toString()}&pageSize=10&currentNum=$current");
+    log("query referral res $result");
     List<TransactionModel> list = [];
     try {
       if (result["data"] != null &&
-          result["code"] == 200 &&
-          result["data"]["records"] != null) {
-        List temp = result["data"]["records"];
+          result["code"] == 200) {
+        List temp = result["data"];
         temp.forEach((element) {
           list.add(TransactionModel.fromJson(element));
         });

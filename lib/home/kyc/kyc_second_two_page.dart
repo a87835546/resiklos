@@ -170,6 +170,8 @@ class _KycSecond2PageState extends BaseStatefulState<KycSecond2Page> {
                       } else {
                         showErrorText("upload id error");
                       }
+                    } else {
+                      showErrorText("Please select your photos");
                     }
                   },
                 ),

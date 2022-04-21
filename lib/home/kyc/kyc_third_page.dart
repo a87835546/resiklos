@@ -101,7 +101,7 @@ class _KycThirdPageState extends BaseStatefulState<KycThirdPage> {
                               child: Container(
                                 width: 236,
                                 height: 236,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   borderRadius: BorderRadius.all(
                                       Radius.circular(236 / 2)),
                                 ),
@@ -183,6 +183,9 @@ class _KycThirdPageState extends BaseStatefulState<KycThirdPage> {
   }
 
   Future uploadFacial() async {
+    if (_path == null) {
+      return false;
+    }
     var uploadedImageUrl =
         await upload(_path?.name, _path?.path, UploadType.avatar);
 
