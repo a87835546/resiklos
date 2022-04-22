@@ -24,7 +24,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  AppSingleton.devMode = DevMode.local;
+  AppSingleton.devMode = DevMode.staging;
   log("debug mode ---->>>>>$_debug");
   TLSizeFit.initialize();
   runApp(MultiProvider(providers: [
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         } else {
           UserInfoModel? model = snapshot.data;
 
-          Future.delayed(Duration(seconds: 0)).then((onValue) {
+          Future.delayed(const Duration(seconds: 0)).then((onValue) {
             BuildContext? context = navigatorKey.currentState?.overlay?.context;
             AppSingleton.currentPage = context;
           });
