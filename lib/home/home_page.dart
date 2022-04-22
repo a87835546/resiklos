@@ -24,7 +24,7 @@ class HomePage extends BaseStatefulWidget {
 
 class _HomePageState extends BaseStatefulState<HomePage>
     with AutomaticKeepAliveClientMixin {
-  var _controller = ScrollController();
+  final _controller = ScrollController();
   final RefreshController _refreshController = RefreshController();
   int _referralCount = 0;
   num? _points = AppSingleton.userInfoModel?.gems;

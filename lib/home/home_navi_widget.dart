@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:resiklos/home/kyc/personal_info.dart';
 import 'package:resiklos/home/setting/setting_page.dart';
@@ -22,6 +23,8 @@ class HomeNaviView extends StatefulWidget {
 }
 
 class _HomeNaviViewState extends State<HomeNaviView> {
+  static const bool _debug = kDebugMode;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -123,52 +126,61 @@ class _HomeNaviViewState extends State<HomeNaviView> {
             alignment: Alignment.centerRight,
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Icons.history,
-                  Icons.notifications_active_rounded,
-                  Icons.settings
-                  // Icons.logout
-                ].map((e) {
-                  return GestureDetector(
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Container(
-                          child: e != Icons.notifications_active_rounded
-                              ? Icon(
-                                  e,
-                                  size: 22,
-                                  color: Color(0xff00A6BE),
-                                )
-                              : Badge(
-                                  position:
-                                      BadgePosition.topEnd(top: -12, end: -8),
-                                  badgeContent: Text(""),
-                                  child: Icon(
-                                    e,
-                                    size: 22,
-                                    color: Color(0xff00A6BE),
-                                  ),
-                                )),
-                    ),
-                    onTap: () {
-                      if (e == Icons.settings) {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return const SettingPage();
-                        }));
-                      } else if (e == Icons.history) {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return const TransactionPage();
-                        }));
-                      } else if (e == Icons.notifications_active_rounded) {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return const NotificationPage();
-                        }));
-                      } else if (e == Icons.logout) {
-                        SignRequest.logout(context);
-                      }
-                    },
-                  );
-                }).toList()),
+                children: (_debug
+                    ? [
+                        Icons.history,
+                        Icons.notifications_active_rounded,
+                        Icons.settings
+                        // Icons.logout
+                      ]
+                    : [
+                        Icons.history,
+                        Icons.notifications_active_rounded,
+                      ]).map((e) {
+                        return GestureDetector(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 20),
+                            child: Container(
+                                child: e != Icons.notifications_active_rounded
+                                    ? Icon(
+                                        e,
+                                        size: 22,
+                                        color: Color(0xff00A6BE),
+                                      )
+                                    : Badge(
+                                        position: BadgePosition.topEnd(
+                                            top: -12, end: -8),
+                                        badgeContent: Text(""),
+                                        child: Icon(
+                                          e,
+                                          size: 22,
+                                          color: Color(0xff00A6BE),
+                                        ),
+                                      )),
+                          ),
+                          onTap: () {
+                            if (e == Icons.settings) {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) {
+                                return const SettingPage();
+                              }));
+                            } else if (e == Icons.history) {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) {
+                                return const TransactionPage();
+                              }));
+                            } else if (e ==
+                                Icons.notifications_active_rounded) {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) {
+                                return const NotificationPage();
+                              }));
+                            } else if (e == Icons.logout) {
+                              SignRequest.logout(context);
+                            }
+                          },
+                        );
+                      }).toList()),
           )
         ],
       ),
