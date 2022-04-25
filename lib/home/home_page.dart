@@ -95,7 +95,7 @@ class _HomePageState extends BaseStatefulState<HomePage>
                             //     ),
                             //   ),
                             // ),
-                            VerificationCardWidget(context, _model),
+                            Visibility(child: VerificationCardWidget(context, _model),visible: _model != null,),
                             const Padding(
                               padding: EdgeInsets.only(top: 30),
                               child: HomeInviteView(),

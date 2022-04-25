@@ -30,7 +30,7 @@ class HttpManager {
 
   static String baseUrl = _debug
       ? (AppSingleton.devMode == DevMode.local
-          ? "https://192.168.0.188:9001/api/v1/"
+          ? "https://192.168.1.6:9001/api/v1/"
           : (AppSingleton.devMode == DevMode.staging
               ? "https://staging.resiklos.app/api/v1/"
               : "https://api.resiklos.app/api/v1/"))
@@ -69,6 +69,7 @@ class HttpManager {
         if (response.data['code'] == 200) {
           return response.data;
         } else if (response.data['code'] == 500) {
+          log("res ---->>>${response.data}");
           return HttpManagerErrorType.internalServerError;
         } else if (response.data['code'] == 511) {
           return HttpManagerErrorType.tokenExpired;
