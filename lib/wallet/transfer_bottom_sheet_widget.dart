@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:resiklos/home/home_transfer_page.dart';
 import 'package:resiklos/utils/constants.dart';
 import 'package:resiklos/wallet/badge_widget.dart';
-
 
 void showTransferBottomSheetWidget(BuildContext context) {
   showModalBottomSheet(
@@ -91,6 +93,11 @@ void showTransferBottomSheetWidget(BuildContext context) {
                   ),
                   onTap: () {
                     Navigator.pop(context);
+                    log("message ----->>>>click transfer rp");
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                      return HomeTransferPage();
+                    }));
                   },
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 12, horizontal: 35),
