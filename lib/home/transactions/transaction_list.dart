@@ -73,6 +73,9 @@ class _DepositTransactionListViewState
       child: ListView.builder(
         itemBuilder: (context, index) {
           TransactionModel model = _lists[index];
+          String? title = model.source == 0 ? "Registration" : null;
+          title = model.source == 1 ? "Referral" : title;
+          title = model.source == 5 ? "Other" : title;
           return Padding(
             padding: const EdgeInsets.only(left: 14, right: 14, bottom: 10),
             child: Container(
@@ -91,14 +94,21 @@ class _DepositTransactionListViewState
                           height: 30,
                           alignment: Alignment.center,
                           child: Text(
-                            model.receiveAddress ==
+                            title != null
+                                ? title!
+                                : (model.receiveAddress ==
                                         AppSingleton
-                                            .userInfoModel?.rpWalletAddress ||
-                                    model.source == 0
-                                ? "Transfer In"
-                                : "Transfer Out",
-                            style: const TextStyle(
-                                color: Color(0xff707070),
+                                            .userInfoModel?.rpWalletAddress
+                                    ? "Transfer In"
+                                    : "Transfer Out"),
+                            style: TextStyle(
+                                color: title != null
+                                    ? Color(0xff707070)
+                                    : (model.receiveAddress ==
+                                            AppSingleton
+                                                .userInfoModel?.rpWalletAddress
+                                        ? Colors.redAccent
+                                        : Colors.greenAccent),
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold),
                           ),

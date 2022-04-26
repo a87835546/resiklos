@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/transactions/transaction_model.dart';
 import 'package:resiklos/home/transactions/transaction_request.dart';
+import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 
 import '../rk_app_bar.dart';
@@ -42,7 +43,7 @@ class _HomeReferralsState extends BaseStatefulState<HomeReferrals> {
               if (snapshot.hasError || snapshot.data == null) {
                 return Text("");
               } else {
-                List temp = snapshot.data[0] as List<TransactionModel>;
+                List temp = snapshot.data[0] as List<UserInfoModel>;
                 return temp.length == 0
                     ? Center(
                         child: Container(
@@ -79,7 +80,7 @@ class _HomeReferralsState extends BaseStatefulState<HomeReferrals> {
     return Future.wait([getData()]);
   }
 
-  Future<List<TransactionModel>> getData() async {
+  Future<List<UserInfoModel>> getData() async {
     var result = await TransactionRequest.queryReferral(1);
     return result;
   }

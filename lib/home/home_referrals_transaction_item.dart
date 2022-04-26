@@ -3,9 +3,10 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resiklos/home/transactions/transaction_model.dart';
+import 'package:resiklos/model/user_info_model.dart';
 
 class HomeReferralsTransactionItem extends StatefulWidget {
-  final TransactionModel model;
+  final UserInfoModel model;
 
   const HomeReferralsTransactionItem(this.model, {Key? key}) : super(key: key);
 
@@ -37,13 +38,13 @@ class _HomeReferralsTransactionItem
               Container(
                 color: Colors.white,
                 alignment: Alignment.centerLeft,
-                child: Text("${widget.model.email ?? widget.model.userName}"),
+                child: Text("${widget.model.email ?? widget.model.nickName}"),
               ),
               Expanded(
                 child: Container(
                   alignment: Alignment.centerLeft,
                   color: Colors.white,
-                  child: Text("${widget.model.createAt}",style:const TextStyle(
+                  child: Text("${widget.model.createTime}",style:const TextStyle(
                     color: Color(0xffD4D4D4),
                     fontSize: 12
                   ),),

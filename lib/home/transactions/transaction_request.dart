@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:resiklos/home/transactions/transaction_model.dart';
+import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/http_manager.dart';
 
@@ -37,17 +38,17 @@ class TransactionRequest {
     return Future.value(list);
   }
 
-  static Future<List<TransactionModel>> queryReferral(current) async {
+  static Future<List<UserInfoModel>> queryReferral(current) async {
     var result = await HttpManager.get(
         url:
             "/user/queryReferrals?inviteCode=${AppSingleton.userInfoModel?.inviteCode.toString()}&pageSize=10&currentNum=$current");
     log("query referral res $result");
-    List<TransactionModel> list = [];
+    List<UserInfoModel> list = [];
     try {
       if (result["data"] != null && result["code"] == 200) {
         List temp = result["data"];
         temp.forEach((element) {
-          list.add(TransactionModel.fromJson(element));
+          list.add(UserInfoModel.fromJson(element));
         });
       } else {
         EasyLoading.showError(result["message"] ?? "query transaction error");

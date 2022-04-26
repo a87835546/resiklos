@@ -40,6 +40,13 @@ class _DepositTransactionSegmentViewState
     if (widget.isShop) {
       list = ["MERCHANTS", "VOUCHERS"];
       leftPadding = 50;
+    } else {
+      list = [
+        'REWARDS',
+        'TRANSFER',
+        'EXCHANGE',
+      ];
+      leftPadding = 14;
     }
     list = widget.titles ?? list;
   }

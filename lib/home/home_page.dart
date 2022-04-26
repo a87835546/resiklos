@@ -180,7 +180,7 @@ class _HomePageState extends BaseStatefulState<HomePage>
   Future getPoints() async {
     var r = await HttpManager.get(
         url: "user/points",
-        params: {"id": "${AppSingleton.userInfoModel?.email}"});
+        params: {"userEmail": "${AppSingleton.userInfoModel?.email}"});
     log("points --->>>$r");
     if (mounted && r["data"] != null) {
       setState(() {
