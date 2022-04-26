@@ -50,6 +50,10 @@ Color mainTitleColor() {
   return ColorUtil.hexColor('0xffC1C2C4');
 }
 
+Color color_BFBFBF() {
+  return ColorUtil.hexColor('0xffbfbfbf');
+}
+
 Color color_707070() {
   return ColorUtil.hexColor('0xff707070');
 }

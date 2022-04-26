@@ -23,6 +23,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
   final TextEditingController _noteController = TextEditingController();
 
   String _balance = "0";
+  String _inputValue = "0";
 
   @override
   void initState() {
@@ -94,6 +95,11 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                     subtitle: "Input your transfer amount",
                     editingController: _amountController,
                     hasInput: true,
+                    onChanged: (v) {
+                      setState(() {
+                        _inputValue = v;
+                      });
+                    },
                   ),
                 ),
                 Container(
@@ -172,7 +178,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                             width: 100,
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "${_amountController.text == "" ? "0" : _amountController.text} RP",
+                              "$_inputValue RP",
                               style: TextStyle(
                                   color: color_707070(),
                                   fontSize: 18,

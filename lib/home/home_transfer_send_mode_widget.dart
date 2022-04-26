@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resiklos/utils/color.dart';
@@ -7,12 +9,14 @@ class HomeTransferSendModeWidget extends StatefulWidget {
   final String subtitle;
   final bool hasInput;
   final TextEditingController? editingController;
+  final Function(String)? onChanged;
 
   const HomeTransferSendModeWidget(
       {Key? key,
       required this.title,
       required this.subtitle,
       required this.hasInput,
+      this.onChanged,
       this.editingController})
       : super(key: key);
 
@@ -59,6 +63,12 @@ class _HomeTransferSendModeWidgetState
                                   : color_707070(),
                               fontSize: 12,
                               fontWeight: FontWeight.w400)),
+                      onChanged: (v) {
+                        log("message ---->>>>$v");
+                        if (null != widget.onChanged) {
+                          widget.onChanged!(v);
+                        }
+                      },
                     ),
                   ),
                 ),

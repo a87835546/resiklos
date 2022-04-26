@@ -58,9 +58,9 @@ class _NotificationPageState extends BaseStatefulState<NotificationPage> {
     try {
       List temp = res["data"];
       List<NotificationModel> _noti = [];
-      temp.forEach((e) {
+      for (var e in temp) {
         _noti.add(NotificationModel.fromJson(e));
-      });
+      }
       setState(() {
         _list = _noti;
         log("message ---->>>>$_list");
