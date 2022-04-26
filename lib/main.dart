@@ -18,7 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bottom_navigationbar.dart';
 
-final bool _debug = kDebugMode;
+const bool _debug = kDebugMode;
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {

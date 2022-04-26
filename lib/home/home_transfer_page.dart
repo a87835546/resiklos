@@ -143,91 +143,94 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
               ],
             ),
           ),
-          Positioned(
-            child: Container(
-              decoration: const BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x40000000),
-                    offset: Offset(0, 4),
-                    blurRadius: 6,
-                  ),
-                ],
-                color: Colors.white,
-              ),
+          Visibility(
+            child: Positioned(
               child: Container(
-                padding: EdgeInsets.only(left: 18, right: 18),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 20,
-                            width: 100,
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Total Amount",
-                              style: TextStyle(
-                                  color: color_d4d4d4(), fontSize: 12),
-                            ),
-                          ),
-                          Container(
-                            height: 20,
-                            width: 100,
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "$_inputValue RP",
-                              style: TextStyle(
-                                  color: color_707070(),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Container(
-                            height: 20,
-                            width: 100,
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "No Fees",
-                              style: TextStyle(
-                                  color: color_707070(), fontSize: 10),
-                            ),
-                          ),
-                        ],
-                      ),
+                decoration: const BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x40000000),
+                      offset: Offset(0, 4),
+                      blurRadius: 6,
                     ),
-                    GestureDetector(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: mainColor(),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        alignment: Alignment.center,
-                        height: 40,
-                        width: 100,
-                        child: const Text(
-                          "Send",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold),
+                  ],
+                  color: Colors.white,
+                ),
+                child: Container(
+                  padding: EdgeInsets.only(left: 18, right: 18),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 20,
+                              width: 100,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Total Amount",
+                                style: TextStyle(
+                                    color: color_d4d4d4(), fontSize: 12),
+                              ),
+                            ),
+                            Container(
+                              height: 20,
+                              width: 100,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "$_inputValue RP",
+                                style: TextStyle(
+                                    color: color_707070(),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Container(
+                              height: 20,
+                              width: 100,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "No Fees",
+                                style: TextStyle(
+                                    color: color_707070(), fontSize: 10),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      onTap: () {
-                        transfer();
-                      },
-                    )
-                  ],
+                      GestureDetector(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: mainColor(),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          alignment: Alignment.center,
+                          height: 40,
+                          width: 100,
+                          child: const Text(
+                            "Send",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        onTap: () {
+                          transfer();
+                        },
+                      )
+                    ],
+                  ),
                 ),
+                height: 100,
+                width: MediaQuery.of(context).size.width,
               ),
-              height: 100,
-              width: MediaQuery.of(context).size.width,
+              left: 0,
+              bottom: 0,
             ),
-            left: 0,
-            bottom: 0,
+            visible: MediaQuery.of(context).viewInsets.bottom == 0,
           )
         ],
       ),

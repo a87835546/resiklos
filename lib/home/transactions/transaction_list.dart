@@ -149,7 +149,7 @@ class _DepositTransactionListViewState
                             height: 30,
                             alignment: Alignment.centerRight,
                             child: Text(
-                              "${model.source == 0 ? "Admin" : (model.source == 2 ? "Transfer ${model.userName ?? ""} " : "Referral")}",
+                              "${model.source == 0 ? "Resiklos" : (model.source == 2 ? "Transfer ${model.userName ?? ""} " : "Referral")}",
                               style: TextStyle(
                                   color: Color(0xffD4D4D4), fontSize: 12),
                             ),
