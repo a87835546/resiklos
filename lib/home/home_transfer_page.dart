@@ -6,6 +6,7 @@ import 'package:resiklos/home/home_transfer_send_mode_widget.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/color.dart';
+import 'package:resiklos/utils/event_bus_util.dart';
 import 'package:resiklos/utils/http_manager.dart';
 import 'package:resiklos/utils/toast.dart';
 import 'package:resiklos/utils/verify_util.dart';
@@ -273,5 +274,12 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
     };
     var res = await HttpManager.post(url: "wallet/transferRP", params: temp);
     log("transfer --->>>$res");
+    if (res["code"] == 200) {
+      showText("Transfer RP Success");
+      EventBusUtil.fire(RefreshRpEvent());
+      Navigator.of(context).pop();
+    } else {
+      showText("Transfer RP Fail ${res["message"]}");
+    }
   }
 }

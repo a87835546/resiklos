@@ -29,3 +29,7 @@ class TabBarChangeEvent extends Event {
   int index;
   TabBarChangeEvent(this.index);
 }
+
+class RefreshRpEvent extends Event {
+
+}

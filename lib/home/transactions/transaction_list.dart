@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:resiklos/home/transactions/transaction_model.dart';
 import 'package:resiklos/home/transactions/transaction_request.dart';
+import 'package:resiklos/utils/app_singleton.dart';
 
 /// 交易记录的类型
 enum WalletTransactionType {
@@ -90,8 +91,11 @@ class _DepositTransactionListViewState
                           height: 30,
                           alignment: Alignment.center,
                           child: Text(
-                            "RSPG",
-                            style: TextStyle(
+                            model.receiveAddress ==
+                                    AppSingleton.userInfoModel?.rpWalletAddress
+                                ? "Transfer In"
+                                : "Transfer Out",
+                            style: const TextStyle(
                                 color: Color(0xff707070),
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold),
@@ -102,8 +106,8 @@ class _DepositTransactionListViewState
                             height: 30,
                             alignment: Alignment.centerRight,
                             child: Text(
-                              "${model.point}",
-                              style: TextStyle(
+                              "${model.point} RP",
+                              style:const TextStyle(
                                   color: Color(0xff707070),
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
@@ -122,7 +126,7 @@ class _DepositTransactionListViewState
                           height: 30,
                           alignment: Alignment.center,
                           child: Text(
-                            "${model.createTime ?? DateTime.now()}",
+                            "${model.createAt ?? DateTime.now()}",
                             style: TextStyle(
                                 color: Color(0xffD4D4D4), fontSize: 12),
                           ),
@@ -166,14 +170,14 @@ class _DepositTransactionListViewState
   void getRewordsTransaction(type) async {
     var result = await TransactionRequest.queryTransaction(type, _pageNum);
     setState(() {
-      if(_pageNum > 1){
+      if (_pageNum > 1) {
         _lists.addAll(result);
-      }else {
+      } else {
         _lists = result;
       }
       _refreshController.refreshCompleted();
       _refreshController.loadComplete();
-      if(result.length > 0 && _pageNum >1){
+      if (result.length > 0 && _pageNum > 1) {
         _refreshController.loadNoData();
       }
     });

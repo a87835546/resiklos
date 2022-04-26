@@ -43,7 +43,7 @@ class _HomeReferralsTransactionItem
                 child: Container(
                   alignment: Alignment.centerLeft,
                   color: Colors.white,
-                  child: Text("${widget.model.createTime}",style:const TextStyle(
+                  child: Text("${widget.model.createAt}",style:const TextStyle(
                     color: Color(0xffD4D4D4),
                     fontSize: 12
                   ),),

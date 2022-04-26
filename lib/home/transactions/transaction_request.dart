@@ -10,10 +10,12 @@ class TransactionRequest {
    * query user transaction request
    */
   static Future<List<TransactionModel>> queryTransaction(type, current) async {
+    current = current - 1;
+    // type = type + 1;
     var result = await HttpManager.get(
         url:
-            "transaction/queryTransaction?type=$type&email=${AppSingleton.userInfoModel?.email.toString()}&pageSize=10&currentNum=$current");
-    log("login result $result");
+            "transaction/queryTransactionV2?type=$type&email=${AppSingleton.userInfoModel?.rpWalletAddress.toString()}&pageSize=10&currentNum=$current");
+    log("transaction result $result");
     List<TransactionModel> list = [];
     try {
       if (result["data"] != null &&
@@ -39,8 +41,7 @@ class TransactionRequest {
     log("query referral res $result");
     List<TransactionModel> list = [];
     try {
-      if (result["data"] != null &&
-          result["code"] == 200) {
+      if (result["data"] != null && result["code"] == 200) {
         List temp = result["data"];
         temp.forEach((element) {
           list.add(TransactionModel.fromJson(element));

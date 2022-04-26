@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:resiklos/home/summary_card_widget.dart';
 import 'package:resiklos/home/verification_card_widget.dart';
 import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
+import 'package:resiklos/utils/event_bus_util.dart';
 import 'package:resiklos/utils/http_manager.dart';
 import 'package:resiklos/utils/toast.dart';
 
@@ -29,11 +31,24 @@ class _HomePageState extends BaseStatefulState<HomePage>
   int _referralCount = 0;
   num? _points = AppSingleton.userInfoModel?.gems;
   UserInfoModel? _model;
+  StreamSubscription? _streamSubscription;
 
   @override
   void initState() {
     super.initState();
     getData();
+    _streamSubscription = EventBusUtil.listen((event) {
+      log("home page event listen -----------?>>>>>>>>>>> $event");
+      if (event is RefreshRpEvent) {
+        getAmount();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _streamSubscription?.cancel();
   }
 
   @override
@@ -95,7 +110,10 @@ class _HomePageState extends BaseStatefulState<HomePage>
                             //     ),
                             //   ),
                             // ),
-                            Visibility(child: VerificationCardWidget(context, _model),visible: _model != null,),
+                            Visibility(
+                              child: VerificationCardWidget(context, _model),
+                              visible: _model != null,
+                            ),
                             const Padding(
                               padding: EdgeInsets.only(top: 30),
                               child: HomeInviteView(),
@@ -140,7 +158,8 @@ class _HomePageState extends BaseStatefulState<HomePage>
 
   void getData() async {
     showLoading();
-    Future.wait([getReferralsCount(), getPoints(), getUser()]).whenComplete(() {
+    Future.wait([getReferralsCount(), getPoints(), getUser(), getAmount()])
+        .whenComplete(() {
       _refreshController.refreshCompleted();
       EasyLoading.dismiss();
     });
@@ -181,6 +200,19 @@ class _HomePageState extends BaseStatefulState<HomePage>
         _model = object;
       });
       AppSingleton.setUserInfoModel(object);
+    }
+  }
+
+  Future getAmount() async {
+    var res = await HttpManager.get(
+        url: "wallet/balance?email=${AppSingleton.userInfoModel?.email}");
+    log("balance --->>>$res");
+    try {
+      setState(() {
+        _points = num.parse(res["data"]["rpBalance"] ?? "0");
+      });
+    } catch (e) {
+      log("获取余额错误 ${e.toString()}");
     }
   }
 
