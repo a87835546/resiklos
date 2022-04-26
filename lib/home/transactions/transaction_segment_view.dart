@@ -29,7 +29,7 @@ class _DepositTransactionSegmentViewState
   var select = "REWARDS";
   static List list = [
     'REWARDS',
-    'TRANSFER',
+    'TRANSFERS',
     'EXCHANGE',
   ];
   double leftPadding = 14;
@@ -43,7 +43,7 @@ class _DepositTransactionSegmentViewState
     } else {
       list = [
         'REWARDS',
-        'TRANSFER',
+        'TRANSFERS',
         'EXCHANGE',
       ];
       leftPadding = 14;

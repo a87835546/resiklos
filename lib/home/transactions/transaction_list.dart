@@ -101,14 +101,9 @@ class _DepositTransactionListViewState
                                             .userInfoModel?.rpWalletAddress
                                     ? "Transfer In"
                                     : "Transfer Out"),
-                            style: TextStyle(
-                                color: title != null
-                                    ? Color(0xff707070)
-                                    : (model.receiveAddress ==
-                                            AppSingleton
-                                                .userInfoModel?.rpWalletAddress
-                                        ? Colors.redAccent
-                                        : Colors.greenAccent),
+                            style:const TextStyle(
+                                color:
+                                     Color(0xff707070),
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -119,8 +114,14 @@ class _DepositTransactionListViewState
                             alignment: Alignment.centerRight,
                             child: Text(
                               "${model.point} RP",
-                              style: const TextStyle(
-                                  color: Color(0xff707070),
+                              style:  TextStyle(
+                                  color: title != null
+                                      ? Color(0xff707070)
+                                      : (model.receiveAddress !=
+                                      AppSingleton
+                                          .userInfoModel?.rpWalletAddress
+                                      ? Colors.redAccent
+                                      : Colors.greenAccent),
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -138,7 +139,7 @@ class _DepositTransactionListViewState
                           height: 30,
                           alignment: Alignment.center,
                           child: Text(
-                            "${model.createAt ?? DateTime.now()}",
+                            "${model.transactionId ?? DateTime.now()}",
                             style: TextStyle(
                                 color: Color(0xffD4D4D4), fontSize: 12),
                           ),
