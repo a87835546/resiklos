@@ -92,7 +92,9 @@ class _DepositTransactionListViewState
                           alignment: Alignment.center,
                           child: Text(
                             model.receiveAddress ==
-                                    AppSingleton.userInfoModel?.rpWalletAddress
+                                        AppSingleton
+                                            .userInfoModel?.rpWalletAddress ||
+                                    model.source == 0
                                 ? "Transfer In"
                                 : "Transfer Out",
                             style: const TextStyle(

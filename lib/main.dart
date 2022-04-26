@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       var s = sharedPreferences.get("userinfo");
-      log("sharedPreferences get user $s");
+      // log("sharedPreferences get user $s");
       if (s != null && s is String) {
         Map<String, dynamic> map = json.decode(s);
         UserInfoModel model = UserInfoModel.fromJson(map);

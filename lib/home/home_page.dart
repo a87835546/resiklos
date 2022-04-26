@@ -181,6 +181,7 @@ class _HomePageState extends BaseStatefulState<HomePage>
     var r = await HttpManager.get(
         url: "user/points",
         params: {"id": "${AppSingleton.userInfoModel?.email}"});
+    log("points --->>>$r");
     if (mounted && r["data"] != null) {
       setState(() {
         _points = r["data"]["point"] ?? 50;
@@ -208,9 +209,15 @@ class _HomePageState extends BaseStatefulState<HomePage>
         url: "wallet/balance?email=${AppSingleton.userInfoModel?.email}");
     log("balance --->>>$res");
     try {
-      setState(() {
-        _points = num.parse(res["data"]["rpBalance"] ?? "0");
-      });
+      if (mounted && AppSingleton.userInfoModel?.emailVerificationStatus == 1) {
+        setState(() {
+          _points = num.parse(res["data"]["rpBalance"] ?? "0");
+        });
+      } else {
+        setState(() {
+          _points = AppSingleton.userInfoModel?.gems ?? 0;
+        });
+      }
     } catch (e) {
       log("获取余额错误 ${e.toString()}");
     }

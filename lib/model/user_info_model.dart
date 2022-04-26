@@ -51,7 +51,7 @@ class UserInfoModel {
       this.verificationStatus = 0});
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) {
-    log("map -- >>> $json", name: 'models/User');
+    // log("map -- >>> $json", name: 'models/User');
 
     UserInfoModel model = UserInfoModel(
         id: json['id'],
