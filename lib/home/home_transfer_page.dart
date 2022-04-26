@@ -25,6 +25,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
 
   String _balance = "0";
   String _inputValue = "0";
+  String _title = "Email";
 
   @override
   void initState() {
@@ -72,18 +73,22 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                         fontWeight: FontWeight.w400),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(top: 15, bottom: 15),
                   child: HomeTransferSendModeWidget(
                     title: "Send Mode",
-                    subtitle: "Email",
+                    subtitle: _title,
                     hasInput: false,
+                    click: () {
+                      // selectType(context);
+                      selectType1();
+                    },
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 15, bottom: 15),
                   child: HomeTransferSendModeWidget(
-                    title: "Email",
+                    title: _title,
                     subtitle: "Resiklos account email",
                     editingController: _emailController,
                     hasInput: true,
@@ -237,6 +242,141 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
     );
   }
 
+  void selectType1() {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              //在这里为了区分，在构建builder的时候将setState方法命名为了setBottomSheetState。
+              builder: (context1, setBottomSheetState) {
+            return Container(
+              color: Colors.transparent,
+              height: 170,
+              padding: EdgeInsets.only(left: 15),
+              child: Column(
+                children: <Widget>[
+                  Expanded(child: Container()),
+                  Container(
+                    height: 40,
+                    child: Text("Send Mode"),
+                  ),
+                  GestureDetector(
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.email_outlined,
+                          size: 16,
+                          color: color_707070(),
+                        ),
+                        Container(
+                          height: 40,
+                          padding: EdgeInsets.only(left: 10),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Email",
+                            style: TextStyle(color: color_707070()),
+                          ),
+                        )
+                      ],
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _title = "Email";
+                      });
+                      Navigator.of(context).pop(true);
+                    },
+                  ),
+                  GestureDetector(
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.perm_identity_outlined,
+                          size: 16,
+                          color: color_707070(),
+                        ),
+                        Container(
+                          height: 40,
+                          padding: EdgeInsets.only(left: 10),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Id",
+                            style: TextStyle(color: color_707070()),
+                          ),
+                        )
+                      ],
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _title = "Id";
+                      });
+                      Navigator.of(context).pop(true);
+                    },
+                  ),
+                  Container(
+                    height: 50,
+                  )
+                ],
+              ),
+            );
+          });
+        });
+  }
+
+  void selectType(BuildContext ctx) {
+    final List<String> _list = ["Email", "Id"];
+    showDialog(
+      context: ctx,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return MediaQuery.removePadding(
+          context: context,
+          child: Container(
+            child: Column(
+              children: [
+                Expanded(child: Container()),
+                Container(
+                  color: Colors.white,
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: _list.map((e) {
+                      return GestureDetector(
+                        child: Container(
+                          padding: EdgeInsets.only(left: 20),
+                          height: 50,
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              Container(
+                                child: Text(e),
+                              )
+                            ],
+                          ),
+                        ),
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () async {
+                          Navigator.of(context).pop(true);
+                          setState(() {
+                            _title = e;
+                          });
+                        },
+                      );
+                    }).toList(),
+                  ),
+                )
+              ],
+            ),
+          ),
+          removeBottom: true,
+          removeTop: true,
+        );
+      },
+    ).then((val) {
+      log("111111$val");
+    });
+  }
+
   void getAmount() async {
     var res = await HttpManager.get(
         url: "wallet/balance?email=${AppSingleton.userInfoModel?.email}");
@@ -270,7 +410,9 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
 
     Map<String, dynamic> temp = {
       "email": AppSingleton.userInfoModel?.email,
-      "toEmail": _emailController.text,
+      "toEmail": _title == "Email"
+          ? _emailController.text
+          : AppSingleton.userInfoModel?.id,
       "amount": _amountController.text,
       "name": AppSingleton.userInfoModel?.nickName,
       "note": _noteController.text,

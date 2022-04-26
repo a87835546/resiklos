@@ -10,6 +10,7 @@ class HomeTransferSendModeWidget extends StatefulWidget {
   final bool hasInput;
   final TextEditingController? editingController;
   final Function(String)? onChanged;
+  final Function()? click;
 
   const HomeTransferSendModeWidget(
       {Key? key,
@@ -17,6 +18,7 @@ class HomeTransferSendModeWidget extends StatefulWidget {
       required this.subtitle,
       required this.hasInput,
       this.onChanged,
+      this.click,
       this.editingController})
       : super(key: key);
 
@@ -82,7 +84,12 @@ class _HomeTransferSendModeWidgetState
                         size: 10,
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      log("message---->?>>");
+                      if(null != widget.click){
+                        widget.click!();
+                      }
+                    },
                   ),
                   visible: !widget.hasInput,
                 )
