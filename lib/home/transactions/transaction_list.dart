@@ -107,7 +107,7 @@ class _DepositTransactionListViewState
                             alignment: Alignment.centerRight,
                             child: Text(
                               "${model.point} RP",
-                              style:const TextStyle(
+                              style: const TextStyle(
                                   color: Color(0xff707070),
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
@@ -136,7 +136,7 @@ class _DepositTransactionListViewState
                             height: 30,
                             alignment: Alignment.centerRight,
                             child: Text(
-                              "${model.source == 0 ? "Admin" : "Referral"}",
+                              "${model.source == 0 ? "Admin" : (model.source == 2 ? "Transfer ${model.userName ?? ""} " : "Referral")}",
                               style: TextStyle(
                                   color: Color(0xffD4D4D4), fontSize: 12),
                             ),
