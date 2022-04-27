@@ -250,7 +250,12 @@ class _SignUpPageState extends State<SignUpPage> {
                         showWarnToast("password is different");
                       } else {
                         var model = await SignRequest.registerByName(
-                            name, email, password, _list.last.value);
+                            name,
+                            _list.first.value,
+                            _list[1].value,
+                            email,
+                            password,
+                            _list.last.value);
                         if (null != model) {
                           NavigatorUtil.push(
                               context, CustomBottomNavigationBar());

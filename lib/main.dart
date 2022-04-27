@@ -24,7 +24,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  AppSingleton.devMode = DevMode.local;
+  AppSingleton.devMode = DevMode.staging;
   log("debug mode ---->>>>>$_debug");
   TLSizeFit.initialize();
   runApp(MultiProvider(providers: [

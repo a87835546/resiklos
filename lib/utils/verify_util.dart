@@ -8,7 +8,7 @@ class VerifyUtil {
 
   ///邮箱验证
   static bool isEmail(String str) {
-    return RegExp(r"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")
+    return RegExp(r"^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?")
         .hasMatch(str);
   }
 

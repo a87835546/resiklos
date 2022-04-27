@@ -52,7 +52,7 @@ class SignRequest {
    * use name to register
    */
   static Future<UserInfoModel?> registerByName(
-      name, email, password, inviteCode) async {
+      name, lastName, firstName, email, password, inviteCode) async {
     var params = {
       "deviceType": Platform.isIOS ? 0 : 1,
       "inviteCode": inviteCode,
@@ -60,6 +60,8 @@ class SignRequest {
       "email": email,
       "password": password,
       "userName": name,
+      "lastName": lastName,
+      "firstName": firstName,
     };
     var result = await HttpManager.post(url: "user/register", params: params);
     log("login result $result");
