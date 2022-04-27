@@ -94,9 +94,7 @@ class _DepositTransactionListViewState
                           height: 30,
                           alignment: Alignment.center,
                           child: Text(
-                            title != null
-                                ? title!
-                                : (model.receiveAddress ==
+                            title ?? (model.receiveAddress ==
                                         AppSingleton
                                             .userInfoModel?.rpWalletAddress
                                     ? "Transfer In"

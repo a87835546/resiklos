@@ -20,7 +20,7 @@ class TransactionModel {
   TransactionModel.fromJson(Map<String, dynamic> map) {
     id = map["id"];
     source = map["source"];
-    point = map["point"];
+    point = map["amount"];
     description = map["descr"];
     target = map["target"];
     email = map["userEmail"];
