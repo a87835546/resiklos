@@ -144,6 +144,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/constants.dart';
+import 'package:resiklos/wallet/setup_wallet_step1_page.dart';
 import 'package:resiklos/wallet/transfer_bottom_sheet_widget.dart';
 import 'package:resiklos/wallet/wallet_button_widget.dart';
 import 'package:resiklos/wallet/wallet_card_widget.dart';
@@ -167,8 +168,11 @@ class _WalletPageState extends State<MyWalletPage> {
 
   @override
   Widget build(BuildContext context) {
+    log("adddress --- >>>${AppSingleton.userInfoModel?.walletAddress}");
     return Scaffold(
-      body: Stack(
+      body:  AppSingleton.userInfoModel?.walletAddress == null
+          ? SetupWalletStep1Page()
+          : Stack(
         children: [
           Container(
             margin: const EdgeInsets.only(top: 390, left: 15, right: 15),

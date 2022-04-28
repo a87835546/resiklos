@@ -28,6 +28,7 @@ class _SetupWalletStep3PageState
     extends BaseStatefulState<SetupWalletStep3Page> {
   @override
   Widget build(BuildContext context) {
+    log("seed phase page3 --->>>${widget.seedPhares}");
     return Scaffold(
       appBar: const CustomAppBar(
         title: "",

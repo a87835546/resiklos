@@ -35,7 +35,12 @@ class _SetupWalletStep4PageState
   void initState() {
     super.initState();
     for (int i = 0; i < 4; i++) {
-      randoms.add(Random().nextInt(12));
+      int i = Random().nextInt(11);
+      if (randoms.contains(i)) {
+        i--;
+      } else {
+        randoms.add(Random().nextInt(12));
+      }
     }
     dev.log("random charset --->>$randoms");
   }
@@ -111,7 +116,7 @@ class _SetupWalletStep4PageState
                             Container(
                               padding: EdgeInsets.only(left: 5),
                               child: Text(
-                                "#${randoms[1]}",
+                                "#${randoms[0]}",
                                 style: TextStyle(
                                     color: mainTitleColor(),
                                     fontSize: 12,
@@ -149,7 +154,7 @@ class _SetupWalletStep4PageState
                             Container(
                               padding: EdgeInsets.only(left: 5),
                               child: Text(
-                                "#${randoms[0]}",
+                                "#${randoms[1]}",
                                 style: TextStyle(
                                     color: mainTitleColor(),
                                     fontSize: 12,
@@ -289,6 +294,7 @@ class _SetupWalletStep4PageState
                       return CustomBottomNavigationBar();
                     }), (route) => false);
                   } else {
+                    dev.log("random --->>>$randoms --->>${widget.seedPhares}");
                     showErrorText("Input the seed phares is mistake");
                   }
                 },

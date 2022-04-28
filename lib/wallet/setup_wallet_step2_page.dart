@@ -218,6 +218,7 @@ class _SetupWalletStep2PageState
                     if (null != res) {
                       String seed = res.seedPhrase ?? "";
                       List<String> temp = seed.split(" ");
+                      log("seed phares --->>>$temp");
                       NavigatorUtil.push(
                           context,
                           SetupWalletStep3Page(

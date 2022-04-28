@@ -76,13 +76,6 @@ class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
             currentIndex: _index,
             onTap: (value) {
               setState(() {
-                if (value == 2) {
-                  log("wallet page address --->?>>> ${AppSingleton.userInfoModel?.walletAddress}");
-                  pages[2] = IndexedStackChild(
-                      child: AppSingleton.userInfoModel?.walletAddress != null
-                          ? MyWalletPage()
-                          : SetupWalletStep1Page());
-                }
                 _index = value;
                 log("tab bar click index ---->>>$value");
               });
@@ -96,9 +89,9 @@ class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
               BottomNavigationBarItem(
                   icon: Icon(CupertinoIcons.house_fill), label: 'Dashboard'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.account_balance_wallet_rounded),
-                  label: 'My Wallet',
-                  ),
+                icon: Icon(Icons.account_balance_wallet_rounded),
+                label: 'My Wallet',
+              ),
               BottomNavigationBarItem(
                   icon: Icon(Icons.account_circle_rounded), label: 'Account'),
             ],
