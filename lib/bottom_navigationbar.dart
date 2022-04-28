@@ -11,6 +11,7 @@ import 'package:resiklos/mine/account_page.dart';
 import 'package:resiklos/mine/mine_list.dart';
 import 'package:resiklos/mine/mine_page.dart';
 import 'package:resiklos/scan/scan_page.dart';
+import 'package:resiklos/shop/shop_merchant_page.dart';
 import 'package:resiklos/shop/shop_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/color.dart';
@@ -33,7 +34,7 @@ class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
   StreamSubscription? _streamSubscription;
   int _index = 1;
   List<IndexedStackChild> pages = [
-    IndexedStackChild(child: ShopPage()),
+    IndexedStackChild(child: MarketplacePage()),
     IndexedStackChild(
       child: const HomePage(),
     ),

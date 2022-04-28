@@ -15,9 +15,7 @@ class _ShopVoucherPageState extends State<ShopVoucherPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffFAFAFA),
-        body: SmartRefresher(
+    return SmartRefresher(
       controller: _controller,
       enablePullDown: true,
       enablePullUp: true,
@@ -41,6 +39,6 @@ class _ShopVoucherPageState extends State<ShopVoucherPage> {
       onLoading: () {
         _controller.loadComplete();
       },
-    ));
+    );
   }
 }

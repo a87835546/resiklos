@@ -59,7 +59,10 @@ class _DepositTransactionSegmentViewState
     return Container(
       height: 60,
       padding: EdgeInsets.only(
-          left: leftPadding, right: leftPadding, top: 5, bottom: 5),
+          left: leftPadding,
+          right: leftPadding,
+          top: 5 + MediaQuery.of(context).padding.top,
+          bottom: 5),
       color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

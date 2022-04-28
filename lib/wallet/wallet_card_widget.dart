@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:resiklos/wallet/show_toast.dart';
 
-Widget walletCardWidget(BuildContext context,
+Widget WalletCardWidget(BuildContext context,
         {required dynamic asset, required String address}) =>
     Container(
       margin: const EdgeInsets.symmetric(horizontal: 15),

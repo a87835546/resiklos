@@ -161,7 +161,8 @@ class _WalletPageState extends State<MyWalletPage> {
   int selectedIndex = 0;
 
   final List assets = [
-    ListItem("RSG", 'Resiklos Gems', 500, 'imgs/logo@2x.png'),
+    ListItem("RSG", 'Resiklos Gems', AppSingleton.userInfoModel?.gems,
+        'imgs/logo@2x.png'),
     ListItem("BNB", 'Binance Coin', 2.5943, 'imgs/svg/bnb.svg', type: 'svg'),
     ListItem("USDT", 'Tether', 0, 'imgs/svg/usdt.svg', type: 'svg')
   ];
@@ -170,192 +171,195 @@ class _WalletPageState extends State<MyWalletPage> {
   Widget build(BuildContext context) {
     log("adddress --- >>>${AppSingleton.userInfoModel?.walletAddress}");
     return Scaffold(
-      body:  AppSingleton.userInfoModel?.walletAddress == null
+      body: AppSingleton.userInfoModel?.walletAddress == null
           ? SetupWalletStep1Page()
           : Stack(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 390, left: 15, right: 15),
-            child: ListView.builder(
-              itemCount: assets.length,
-              itemBuilder: (BuildContext context, int index) {
-                return AnimatedContainer(
-                  margin: const EdgeInsets.only(bottom: 12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(
-                        width: 1.0,
-                        color: selectedIndex == index
-                            ? const Color(0xff00a6be)
-                            : Colors.white),
-                    boxShadow: const [
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 390, left: 15, right: 15),
+                  child: ListView.builder(
+                    itemCount: assets.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return AnimatedContainer(
+                        margin: const EdgeInsets.only(bottom: 12),
+                        decoration: BoxDecoration(
+                          color: const Color(0xffffffff),
+                          borderRadius: BorderRadius.circular(10.0),
+                          border: Border.all(
+                              width: 1.0,
+                              color: selectedIndex == index
+                                  ? const Color(0xff00a6be)
+                                  : Colors.white),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x0d000000),
+                              offset: Offset(0, 3),
+                              blurRadius: 3,
+                            ),
+                          ],
+                        ),
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                        child: ListTile(
+                          onTap: () {
+                            setState(() {
+                              selectedIndex = index;
+                            });
+                          },
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 17, horizontal: 20),
+                          style: ListTileStyle.drawer,
+                          tileColor: Colors.white,
+                          leading: assets[index].type == 'svg'
+                              ? SvgPicture.asset(assets[index].icon,
+                                  width: 45, height: 45)
+                              : CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  radius: 22.5,
+                                  child: Image.asset(
+                                    assets[index].icon,
+                                  ),
+                                ),
+                          title: Text.rich(
+                            TextSpan(
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              children: [
+                                TextSpan(text: assets[index].amount.toString()),
+                                const TextSpan(text: " "),
+                                TextSpan(
+                                  text: assets[index].coin,
+                                ),
+                              ],
+                            ),
+                          ),
+                          trailing: const Icon(CupertinoIcons.right_chevron),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 410,
+                  decoration: const BoxDecoration(
+                    color: Color(0xffffffff),
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(20.0),
+                      bottomLeft: Radius.circular(20.0),
+                    ),
+                    boxShadow: [
                       BoxShadow(
-                        color: Color(0x0d000000),
-                        offset: Offset(0, 3),
-                        blurRadius: 3,
+                        color: Color(0x14000000),
+                        offset: Offset(0, 4),
+                        blurRadius: 6,
                       ),
                     ],
                   ),
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                  child: ListTile(
-                    onTap: () {
-                      setState(() {
-                        selectedIndex = index;
-                      });
-                    },
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 17, horizontal: 20),
-                    style: ListTileStyle.drawer,
-                    tileColor: Colors.white,
-                    leading: assets[index].type == 'svg'
-                        ? SvgPicture.asset(assets[index].icon,
-                            width: 45, height: 45)
-                        : CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            radius: 22.5,
-                            child: Image.asset(
-                              assets[index].icon,
+                  child: SafeArea(
+                    top: true,
+                    bottom: false,
+                    left: false,
+                    right: false,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(6),
+                              margin: const EdgeInsets.only(
+                                  left: 25, bottom: 15, top: 22),
+                              width: 194.0,
+                              height: 25.0,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: RichText(
+                                text: const TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                      alignment: PlaceholderAlignment.bottom,
+                                      child: Icon(
+                                          CupertinoIcons
+                                              .smallcircle_fill_circle_fill,
+                                          size: 12,
+                                          color: Colors.green),
+                                    ),
+                                    WidgetSpan(
+                                      child: SizedBox(width: 5),
+                                    ),
+                                    TextSpan(
+                                      text: 'Binance Smart Chain Network',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: Color(0xff707070),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
-                    title: Text.rich(
-                      TextSpan(
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.centerRight,
+                                margin: EdgeInsets.only(right: 20),
+                                child: FlatButton(
+                                  color: Colors.white,
+                                  padding: EdgeInsets.zero,
+                                  minWidth: 40,
+                                  height: 35,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                  ),
+                                  onPressed: () {
+                                    log('Show QR', name: 'screens/wallet_page');
+                                  },
+                                  child: const Icon(Icons.qr_code_rounded,
+                                      size: 24, color: ResiklosColors.primary),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                        children: [
-                          TextSpan(text: assets[index].amount.toString()),
-                          const TextSpan(text: " "),
-                          TextSpan(
-                            text: assets[index].coin,
-                          ),
-                        ],
-                      ),
+                        WalletCardWidget(context,
+                            asset: assets[selectedIndex],
+                            address:
+                                (AppSingleton.userInfoModel?.walletAddress ??
+                                        "")
+                                    .toLowerCase()),
+                        const SizedBox(height: 25),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            WalletButtonWidget(context,
+                                icon: CupertinoIcons.creditcard_fill,
+                                text: 'Deposit',
+                                isEnabled: false),
+                            const SizedBox(width: 32),
+                            WalletButtonWidget(context,
+                                icon: CupertinoIcons.paperplane_fill,
+                                text: 'Transfer', onPressed: () {
+                              showTransferBottomSheetWidget(context);
+                            }),
+                            const SizedBox(width: 32),
+                            WalletButtonWidget(context,
+                                icon: CupertinoIcons.arrow_swap,
+                                text: 'Swap',
+                                isEnabled: false)
+                          ],
+                        ),
+                      ],
                     ),
-                    trailing: const Icon(CupertinoIcons.right_chevron),
                   ),
-                );
-              },
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            height: 410,
-            decoration: const BoxDecoration(
-              color: Color(0xffffffff),
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(20.0),
-                bottomLeft: Radius.circular(20.0),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Color(0x14000000),
-                  offset: Offset(0, 4),
-                  blurRadius: 6,
                 ),
               ],
             ),
-            child: SafeArea(
-              top: true,
-              bottom: false,
-              left: false,
-              right: false,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(6),
-                        margin: const EdgeInsets.only(
-                            left: 25, bottom: 15, top: 22),
-                        width: 194.0,
-                        height: 25.0,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                        child: RichText(
-                          text: const TextSpan(
-                            children: [
-                              WidgetSpan(
-                                alignment: PlaceholderAlignment.bottom,
-                                child: Icon(
-                                    CupertinoIcons.smallcircle_fill_circle_fill,
-                                    size: 12,
-                                    color: Colors.green),
-                              ),
-                              WidgetSpan(
-                                child: SizedBox(width: 5),
-                              ),
-                              TextSpan(
-                                text: 'Binance Smart Chain Network',
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: Color(0xff707070),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          alignment: Alignment.centerRight,
-                          margin: EdgeInsets.only(right: 20),
-                          child: FlatButton(
-                            color: Colors.white,
-                            padding: EdgeInsets.zero,
-                            minWidth: 40,
-                            height: 35,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
-                            ),
-                            onPressed: () {
-                              log('Show QR', name: 'screens/wallet_page');
-                            },
-                            child:const Icon(Icons.qr_code_rounded,
-                                size: 24, color: ResiklosColors.primary),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  walletCardWidget(context,
-                      asset: assets[selectedIndex],
-                      address: (AppSingleton.userInfoModel?.walletAddress ?? "")
-                          .toLowerCase()),
-                  const SizedBox(height: 25),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      WalletButtonWidget(context,
-                          icon: CupertinoIcons.creditcard_fill,
-                          text: 'Deposit',
-                          isEnabled: false),
-                      const SizedBox(width: 32),
-                      WalletButtonWidget(context,
-                          icon: CupertinoIcons.paperplane_fill,
-                          text: 'Transfer', onPressed: () {
-                        showTransferBottomSheetWidget(context);
-                      }),
-                      const SizedBox(width: 32),
-                      WalletButtonWidget(context,
-                          icon: CupertinoIcons.arrow_swap,
-                          text: 'Swap',
-                          isEnabled: false)
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

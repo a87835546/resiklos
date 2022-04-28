@@ -12,6 +12,7 @@ import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/sign_up_in/onboarding_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/color.dart';
+import 'package:resiklos/utils/constants.dart';
 import 'package:resiklos/utils/size_fit.dart';
 import 'package:resiklos/utils/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,7 +64,30 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 // primarySwatch: Color(0xff00A6BE),
+                primaryColor: ResiklosTypography.dark,
                 fontFamily: 'Montserrat',
+                inputDecorationTheme: const InputDecorationTheme(
+                  fillColor: Colors.white,
+                  filled: true,
+                  contentPadding: EdgeInsets.all(15.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: ResiklosColors.primary, width: 1),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: ResiklosColors.muted, width: 1),
+                  ),
+                  border: OutlineInputBorder(
+                    gapPadding: 1.0,
+                    borderSide:
+                        BorderSide(width: 1, color: ResiklosColors.muted),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(6.0),
+                    ),
+                  ),
+                  hintStyle: TextStyle(color: ResiklosColors.muted),
+                ),
               ),
               home: model?.token != null
                   ? CustomBottomNavigationBar()

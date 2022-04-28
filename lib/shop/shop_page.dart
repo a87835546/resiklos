@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resiklos/home/transactions/transaction_segment_view.dart';
 import 'package:resiklos/model/user_info_model.dart';
+import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/shop/shop_merchant_page.dart';
 import 'package:resiklos/shop/shop_vouchers_page.dart';
 
@@ -20,19 +21,19 @@ class _ShopPageState extends State<ShopPage> {
     'MERCHANTS',
     'GET VOUCHERS',
   ];
-  List pages = const [ShopMerchantPage(), ShopVoucherPage()];
+  List pages = const [MarketplacePage(), ShopVoucherPage()];
   int _index = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _widget());
+    return Scaffold(
+        body: _widget());
   }
 
   Widget _widget() {
     return ListView(
       shrinkWrap: true,
       children: [
-        SizedBox(height: MediaQuery.of(context).padding.top),
         DepositTransactionSegmentView(
           index: _index,
           isShop: true,
