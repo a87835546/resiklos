@@ -71,8 +71,7 @@ class UserInfoModel {
         ipAddress: json['ipAddress'],
         lastLoginTime: json['lastLoginTime'],
         rpWalletAddress: json['rpWalletAddress'],
-        walletAddress: json['walletAddress'] ??
-            '0xDF5532665F5851CD2edF005Da4e1f525cCE6c405',
+        walletAddress: json['walletAddress'],
         emailVerificationStatus: json['verifiedEmail'] == false ? 0 : 1,
         kycVerificationStatus: json['kycState'] ?? 0,
         verificationStatus: _getVerificationStatus(

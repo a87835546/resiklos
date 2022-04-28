@@ -16,6 +16,7 @@ import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/event_bus_util.dart';
 import 'package:resiklos/wallet/my_wallet_page.dart';
+import 'package:resiklos/wallet/setup_wallet_step1_page.dart';
 
 import 'home/home_page.dart';
 
@@ -31,6 +32,14 @@ class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
     with SingleTickerProviderStateMixin {
   StreamSubscription? _streamSubscription;
   int _index = 1;
+  List<IndexedStackChild> pages = [
+    IndexedStackChild(child: ShopPage()),
+    IndexedStackChild(
+      child: const HomePage(),
+    ),
+    IndexedStackChild(child: MyWalletPage()),
+    IndexedStackChild(child: AccountPage()),
+  ];
 
   @override
   void initState() {
@@ -44,6 +53,7 @@ class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
       }
     });
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -58,14 +68,7 @@ class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
           resizeToAvoidBottomInset: false,
           body: ProsteIndexedStack(
             index: _index,
-            children: [
-              IndexedStackChild(child: ShopPage()),
-              IndexedStackChild(
-                child: const HomePage(),
-              ),
-              IndexedStackChild(child: MyWalletPage()),
-              IndexedStackChild(child: AccountPage()),
-            ],
+            children: pages,
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
@@ -73,7 +76,15 @@ class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
             currentIndex: _index,
             onTap: (value) {
               setState(() {
+                if (value == 2) {
+                  log("wallet page address --->?>>> ${AppSingleton.userInfoModel?.walletAddress}");
+                  pages[2] = IndexedStackChild(
+                      child: AppSingleton.userInfoModel?.walletAddress != null
+                          ? MyWalletPage()
+                          : SetupWalletStep1Page());
+                }
                 _index = value;
+                log("tab bar click index ---->>>$value");
               });
             },
             type: BottomNavigationBarType.fixed,
@@ -86,7 +97,8 @@ class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
                   icon: Icon(CupertinoIcons.house_fill), label: 'Dashboard'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.account_balance_wallet_rounded),
-                  label: 'My Wallet'),
+                  label: 'My Wallet',
+                  ),
               BottomNavigationBarItem(
                   icon: Icon(Icons.account_circle_rounded), label: 'Account'),
             ],
