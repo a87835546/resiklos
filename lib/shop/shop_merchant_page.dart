@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:resiklos/shop/shop_vouchers_page.dart';
 import 'package:resiklos/utils/constants.dart';
@@ -102,7 +104,7 @@ class _MarketplacePageState extends State<MarketplacePage>
                     Container(
                       padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                       child: Column(
-                        children: const [
+                        children: [
                           Text(
                             'PARTNER MERCHANTS',
                             style: TextStyle(
@@ -137,7 +139,12 @@ class _MarketplacePageState extends State<MarketplacePage>
                               color: ResiklosColors.textColor,
                             ),
                             decoration: InputDecoration(
-                              suffixIcon: Icon(Icons.search),
+                              suffixIcon: GestureDetector(
+                                child: Icon(Icons.search),
+                                onTap: (){
+                                  log("search");
+                                },
+                              ),
                               hintText: 'Search shop name, category...',
                             ),
                           ),

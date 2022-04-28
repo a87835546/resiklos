@@ -63,7 +63,6 @@ class MyApp extends StatelessWidget {
               title: 'Resiklos',
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
-                // primarySwatch: Color(0xff00A6BE),
                 primaryColor: ResiklosTypography.dark,
                 fontFamily: 'Montserrat',
                 inputDecorationTheme: const InputDecorationTheme(
@@ -88,6 +87,30 @@ class MyApp extends StatelessWidget {
                   ),
                   hintStyle: TextStyle(color: ResiklosColors.muted),
                 ),
+                textTheme: const TextTheme(
+                  bodyText1: TextStyle(
+                    color: ResiklosColors.textColor,
+                    fontSize: 12,
+                  ),
+                  bodyText2: TextStyle(
+                    color: ResiklosColors.textColor,
+                    fontSize: 12,
+                  ),
+                  button: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                  subtitle1: TextStyle(
+                    color: ResiklosColors.textColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  subtitle2: TextStyle(
+                    color: ResiklosColors.textColor,
+                    fontSize: 12,
+                  ),
+                ),
+                scaffoldBackgroundColor: ResiklosColors.background,
               ),
               home: model?.token != null
                   ? CustomBottomNavigationBar()
