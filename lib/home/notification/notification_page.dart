@@ -52,17 +52,44 @@ class _NotificationPageState extends BaseStatefulState<NotificationPage> {
                       children: [
                         Container(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
-                                child: Text(e.content ?? ""),
+                                child: Text(
+                                  e.content ?? "",
+                                  style: TextStyle(
+                                      color: color_707070(),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                               Container(
-                                child: Text(e.description ?? ""),
+                                child: Text(
+                                  e.description ?? "",
+                                  style: TextStyle(
+                                      color: color_707070(), fontSize: 12),
+                                ),
                               ),
                             ],
                           ),
-                        )
+                        ),
+                        Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Text(""),
+                              ),
+                              Container(
+                                child: Text(
+                                  e.time ?? "",
+                                  style: TextStyle(
+                                      color: color_d4d4d4(), fontSize: 12),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),

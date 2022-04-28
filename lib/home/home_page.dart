@@ -112,7 +112,8 @@ class _HomePageState extends BaseStatefulState<HomePage>
                             // ),
                             Visibility(
                               child: VerificationCardWidget(context, _model),
-                              visible: _model != null,
+                              visible:
+                                  _model != null && _model?.fullName != null,
                             ),
                             const Padding(
                               padding: EdgeInsets.only(top: 30),
