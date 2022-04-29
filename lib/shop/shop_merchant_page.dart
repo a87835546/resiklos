@@ -60,8 +60,10 @@ class _MarketplacePageState extends State<MarketplacePage>
           return <Widget>[
             SliverAppBar(
               expandedHeight: 200,
+              toolbarHeight: 5,
+              collapsedHeight: 5,
               foregroundColor: Colors.blueGrey,
-              pinned: false,
+              pinned: true,
               floating: false,
               forceElevated: innerBoxIsScrolled,
               flexibleSpace: Container(

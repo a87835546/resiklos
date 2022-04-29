@@ -6,6 +6,7 @@ import 'package:resiklos/home/transactions/transaction_list.dart';
 import 'package:resiklos/home/transactions/transaction_request.dart';
 import 'package:resiklos/home/transactions/transaction_segment_view.dart';
 import 'package:resiklos/rk_app_bar.dart';
+import 'package:resiklos/utils/event_bus_util.dart';
 
 class TransactionPage extends StatefulWidget {
   const TransactionPage({Key? key}) : super(key: key);
@@ -17,16 +18,17 @@ class TransactionPage extends StatefulWidget {
 class _TransactionPageState extends State<TransactionPage> {
   final PageController _pageController = PageController();
   List list = [
+    'TRANSFERS',
     'REWARDS',
-    'TRANSFER',
-    'EXCHANGE',
+    'PURCHASES',
+    // 'EXCHANGES',
   ];
   List pages = const [
     WalletTransactionListView(
-      type: WalletTransactionType.rewards,
+      type: WalletTransactionType.transfer,
     ),
-    WalletTransactionListView(type: WalletTransactionType.transfer),
-    WalletTransactionListView(type: WalletTransactionType.exchange),
+    WalletTransactionListView(type: WalletTransactionType.rewards),
+    WalletTransactionListView(type: WalletTransactionType.purchase),
   ];
   int _index = 0;
 
@@ -35,6 +37,7 @@ class _TransactionPageState extends State<TransactionPage> {
     super.initState();
     getData();
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -44,7 +47,9 @@ class _TransactionPageState extends State<TransactionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "TRANSACTIONS",),
+      appBar: CustomAppBar(
+        title: "TRANSACTIONS",
+      ),
       body: Column(
         children: [
           DepositTransactionSegmentView(
@@ -70,6 +75,7 @@ class _TransactionPageState extends State<TransactionPage> {
                     _index = value;
                   });
                   log("on page changed $value");
+                  EventBusUtil.fire(ChangeSegmentIndexEvent(value));
                 },
                 children: list.map((e) {
                   return Container(child: pages[list.indexOf(e)]);
@@ -80,8 +86,8 @@ class _TransactionPageState extends State<TransactionPage> {
     );
   }
 
-  void getData() async{
-    var result =  await TransactionRequest.queryTransaction(1,1);
+  void getData() async {
+    var result = await TransactionRequest.queryTransaction(1, 1);
     log("result --->>>>$result");
   }
 }

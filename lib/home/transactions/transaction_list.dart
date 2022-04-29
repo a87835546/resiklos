@@ -12,6 +12,7 @@ enum WalletTransactionType {
   rewards,
   transfer,
   exchange,
+  purchase,
 }
 
 class WalletTransactionListView extends StatefulWidget {
@@ -56,6 +57,11 @@ class _DepositTransactionListViewState
           getRewordsTransaction(2);
           break;
         }
+      case WalletTransactionType.purchase:
+        {
+          getRewordsTransaction(3);
+          break;
+        }
     }
   }
 
@@ -94,14 +100,14 @@ class _DepositTransactionListViewState
                           height: 30,
                           alignment: Alignment.center,
                           child: Text(
-                            title ?? (model.receiveAddress ==
+                            title ??
+                                (model.receiveAddress ==
                                         AppSingleton
                                             .userInfoModel?.rpWalletAddress
                                     ? "Transfer In"
                                     : "Transfer Out"),
-                            style:const TextStyle(
-                                color:
-                                     Color(0xff707070),
+                            style: const TextStyle(
+                                color: Color(0xff707070),
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -112,14 +118,14 @@ class _DepositTransactionListViewState
                             alignment: Alignment.centerRight,
                             child: Text(
                               "${model.point} RP",
-                              style:  TextStyle(
+                              style: TextStyle(
                                   color: title != null
                                       ? Color(0xff707070)
                                       : (model.receiveAddress !=
-                                      AppSingleton
-                                          .userInfoModel?.rpWalletAddress
-                                      ? Colors.redAccent
-                                      : Colors.greenAccent),
+                                              AppSingleton.userInfoModel
+                                                  ?.rpWalletAddress
+                                          ? Colors.redAccent
+                                          : Colors.greenAccent),
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),

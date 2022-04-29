@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:resiklos/home/transactions/transaction_segment_button.dart';
+import 'package:resiklos/utils/color.dart';
+import 'package:resiklos/utils/event_bus_util.dart';
 
 typedef DepositTransactionSegmentViewClick = Function(int);
 
@@ -25,14 +27,18 @@ class DepositTransactionSegmentView extends StatefulWidget {
 }
 
 class _DepositTransactionSegmentViewState
-    extends State<DepositTransactionSegmentView> {
-  var select = "REWARDS";
+    extends State<DepositTransactionSegmentView>
+    with SingleTickerProviderStateMixin {
+  StreamSubscription? _streamSubscription;
+
+  var select = "TRANSFERS";
   static List list = [
-    'REWARDS',
     'TRANSFERS',
-    'EXCHANGE',
+    'REWARDS',
+    'PURCHASES',
   ];
-  double leftPadding = 14;
+  double leftPadding = 0;
+  late TabController _tabController;
 
   @override
   void initState() {
@@ -42,13 +48,26 @@ class _DepositTransactionSegmentViewState
       leftPadding = 50;
     } else {
       list = [
-        'REWARDS',
         'TRANSFERS',
-        'EXCHANGE',
+        'REWARDS',
+        'PURCHASES',
       ];
       leftPadding = 14;
     }
     list = widget.titles ?? list;
+
+    _tabController = TabController(length: list.length, vsync: this);
+    _streamSubscription = EventBusUtil.listen((event) {
+      if (event is ChangeSegmentIndexEvent) {
+        _tabController.animateTo(event.index);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _streamSubscription?.cancel();
   }
 
   @override
@@ -64,21 +83,41 @@ class _DepositTransactionSegmentViewState
           top: 5 + MediaQuery.of(context).padding.top,
           bottom: 5),
       color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: list.map((e) {
-          return DepositButton(
-            click: (value) {
-              setState(() {
-                select = value;
-              });
-              widget.click(list.indexOf(value));
-            },
-            selected: select == e,
-            title: e,
+      child: TabBar(
+        indicatorWeight: 5,
+        indicatorColor: mainColor(),
+        labelColor: mainColor(),
+        labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+        unselectedLabelColor: color_d4d4d4(),
+        indicatorSize: TabBarIndicatorSize.label,
+        indicatorPadding: EdgeInsets.only(bottom: 5.0, left: 5, right: 5),
+        onTap: (index) {
+          _tabController.animateTo(index);
+          widget.click(index);
+        },
+        tabs: list.map((e) {
+          return Tab(
+            text: e,
           );
         }).toList(),
+        controller: _tabController,
       ),
+
+      // Row(
+      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //   children: list.map((e) {
+      //     return DepositButton(
+      //       click: (value) {
+      //         setState(() {
+      //           select = value;
+      //         });
+      //         widget.click(list.indexOf(value));
+      //       },
+      //       selected: select == e,
+      //       title: e,
+      //     );
+      //   }).toList(),
+      // ),
     );
   }
 }

@@ -171,7 +171,8 @@ class _WalletPageState extends State<MyWalletPage> {
   Widget build(BuildContext context) {
     log("adddress --- >>>${AppSingleton.userInfoModel?.walletAddress}");
     return Scaffold(
-      body: AppSingleton.userInfoModel?.walletAddress == null
+      body: AppSingleton.userInfoModel?.walletAddress == null ||
+              AppSingleton.userInfoModel?.walletAddress == ""
           ? SetupWalletStep1Page()
           : Stack(
               children: [
