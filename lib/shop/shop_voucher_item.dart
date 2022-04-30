@@ -2,10 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:resiklos/shop/voucher_model.dart';
 import 'package:resiklos/utils/color.dart';
 
 class ShopVoucherItem extends StatefulWidget {
-  const ShopVoucherItem({Key? key}) : super(key: key);
+  final VoucherModel model;
+
+  const ShopVoucherItem({Key? key, required this.model}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ShopVoucherItemState();
@@ -36,11 +39,13 @@ class _ShopVoucherItemState extends State<ShopVoucherItem> {
                   child: Container(
                     width: 60,
                     height: 60,
-                    child: const Icon(
-                      Icons.image,
-                      size: 60,
-                      color: Colors.grey,
-                    ),
+                    child: widget.model.imageUrl != null
+                        ? Image.network(widget.model.imageUrl ?? "")
+                        : const Icon(
+                            Icons.image,
+                            size: 60,
+                            color: Colors.grey,
+                          ),
                   ),
                 ),
                 Expanded(
@@ -52,7 +57,7 @@ class _ShopVoucherItemState extends State<ShopVoucherItem> {
                         Container(
                           width: double.maxFinite,
                           child: Text(
-                            "50% off",
+                            "${widget.model.amount}",
                             style: const TextStyle(
                                 color: Color(0xff707070),
                                 fontWeight: FontWeight.bold,
@@ -62,7 +67,7 @@ class _ShopVoucherItemState extends State<ShopVoucherItem> {
                         Container(
                           width: double.maxFinite,
                           child: Text(
-                            "Min. spend 100",
+                            widget.model.name ?? "50% off",
                             style: const TextStyle(
                                 color: Color(0xffD4D4D4),
                                 fontWeight: FontWeight.w400,
@@ -72,7 +77,8 @@ class _ShopVoucherItemState extends State<ShopVoucherItem> {
                         Container(
                           width: double.maxFinite,
                           child: Text(
-                            "99% Claimed",
+                            widget.model.voucherSubCategoryName ??
+                                "99% Claimed",
                             style: const TextStyle(
                                 color: Color(0xff00A6BE),
                                 fontWeight: FontWeight.bold,

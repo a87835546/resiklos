@@ -1,7 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:resiklos/shop/marketplace_request.dart';
+import 'package:resiklos/shop/merchant_model.dart';
 import 'package:resiklos/shop/shop_vouchers_page.dart';
+import 'package:resiklos/shop/voucher_model.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/constants.dart';
 
@@ -14,43 +17,24 @@ class MarketplacePage extends StatefulWidget {
 
 class _MarketplacePageState extends State<MarketplacePage>
     with SingleTickerProviderStateMixin {
-  List<Merchant> merchants = <Merchant>[
-    Merchant(
-      image: 'https://picsum.photos/id/237/200/300',
-      title: 'Chennai',
-    ),
-    Merchant(
-      image: 'https://picsum.photos/id/235/200/300',
-      title: 'Tanjore',
-    ),
-    Merchant(
-      image: 'https://picsum.photos/id/1000/200/300',
-      title: 'Tanjore',
-    ),
-    Merchant(
-      image: 'https://picsum.photos/id/1001/200/300',
-      title: 'Tanjore',
-    ),
-    Merchant(
-      image: 'https://picsum.photos/id/789/200/300',
-      title: 'Tanjore',
-    ),
-    Merchant(
-      image: 'https://picsum.photos/id/542/200/300',
-      title: 'Pondicherry',
-    ),
-    Merchant(
-      image: 'https://picsum.photos/id/123/200/300',
-      title: 'Chennai',
-    ),
-  ];
-
   late TabController _tabController;
+  List<VoucherModel> _list = [];
+  List<MerchantModel> _list1 = [];
+  MerchantModel? _select;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
+    getData();
+  }
+
+  void getData() async {
+    var list = await MarketPlaceRequest.getList();
+    log("merchant list --->>$list");
+    setState(() {
+      _list1 = list;
+    });
   }
 
   @override
@@ -100,7 +84,7 @@ class _MarketplacePageState extends State<MarketplacePage>
               child: RefreshIndicator(
                 strokeWidth: 1,
                 onRefresh: () async {
-                  debugPrint('hello');
+                  getData();
                 },
                 child: ListView(
                   children: <Widget>[
@@ -108,7 +92,7 @@ class _MarketplacePageState extends State<MarketplacePage>
                       padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                       child: Column(
                         children: [
-                          Text(
+                          const Text(
                             'PARTNER MERCHANTS',
                             style: TextStyle(
                               fontSize: 14.0,
@@ -118,7 +102,7 @@ class _MarketplacePageState extends State<MarketplacePage>
                           SizedBox(
                             height: 3.0,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 230.0,
                             child: Text(
                               'Select from our partnered merchants to claim vouchers and rewards',
@@ -136,7 +120,7 @@ class _MarketplacePageState extends State<MarketplacePage>
                           TextField(
                             autocorrect: false,
                             textAlignVertical: TextAlignVertical.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12.0,
                               fontWeight: FontWeight.w600,
                               color: ResiklosColors.textColor,
@@ -165,7 +149,7 @@ class _MarketplacePageState extends State<MarketplacePage>
                         crossAxisSpacing: 10.0,
                         maxCrossAxisExtent:
                             (MediaQuery.of(context).size.width / 2),
-                        children: merchants.map<Widget>((Merchant merchant) {
+                        children: _list1.map<Widget>((MerchantModel merchant) {
                           return GestureDetector(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -180,18 +164,22 @@ class _MarketplacePageState extends State<MarketplacePage>
                                       color: const Color(0xffd4d4d4),
                                     ),
                                     image: DecorationImage(
-                                      image: NetworkImage(merchant.image ?? ""),
-                                      fit: BoxFit.cover,
+                                      image:
+                                          NetworkImage(merchant.logoUrl ?? ""),
+                                      fit: BoxFit.contain,
                                     ),
                                   ),
                                 ),
                                 const SizedBox(height: 5.0),
-                                Text(merchant.title ?? "",
+                                Text(merchant.name ?? "",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w600)),
                               ],
                             ),
                             onTap: () {
+                              setState(() {
+                                _select = merchant;
+                              });
                               selectVoucher();
                             },
                             behavior: HitTestBehavior.opaque,
@@ -203,7 +191,10 @@ class _MarketplacePageState extends State<MarketplacePage>
                 ),
               ),
             ),
-            Container(child: ShopVoucherPage()),
+            Container(
+                child: ShopVoucherPage(
+              id: 1,
+            )),
           ],
         ),
       ),
@@ -283,7 +274,9 @@ class _MarketplacePageState extends State<MarketplacePage>
                       ),
                       Container(
                         height: 200,
-                        child: ShopVoucherPage(),
+                        child: ShopVoucherPage(
+                          id: _select?.id ?? 1,
+                        ),
                       )
                     ],
                   ),
@@ -291,16 +284,4 @@ class _MarketplacePageState extends State<MarketplacePage>
           });
         });
   }
-}
-
-class Merchant {
-  Merchant({
-    this.id,
-    this.image,
-    this.title,
-  });
-
-  final String? id;
-  final String? image;
-  final String? title;
 }

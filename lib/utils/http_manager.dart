@@ -63,19 +63,23 @@ class HttpManager {
     options.contentType = ContentType.json.toString();
     Response response = await _dio.get(baseUrl + url,
         queryParameters: params, options: options);
+    log("get res--->>>> ${response.data}");
     try {
-      // log("$response");
-      if (response.statusCode == 200) {
-        if (response.data['code'] == 200) {
-          return response.data;
-        } else if (response.data['code'] == 500) {
-          log("res ---->>>${response.data}");
-          return HttpManagerErrorType.internalServerError;
-        } else if (response.data['code'] == 511) {
-          return HttpManagerErrorType.tokenExpired;
-        } else {
-          return response.data;
+      if (response.data is Map) {
+        if (response.statusCode == 200) {
+          if (response.data['code'] == 200) {
+            return response.data;
+          } else if (response.data['code'] == 500) {
+            log("res ---->>>${response.data}");
+            return HttpManagerErrorType.internalServerError;
+          } else if (response.data['code'] == 511) {
+            return HttpManagerErrorType.tokenExpired;
+          } else {
+            return response.data;
+          }
         }
+      } else {
+        return response.data;
       }
     } catch (error) {
       EasyLoading.dismiss();
@@ -161,14 +165,16 @@ class HttpInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     EasyLoading.dismiss();
     // log("http interceptor request  response : ${response.toString()}");
-    if (response.data["code"] == 511) {
-      log("token has expired");
-      // showWarnToast("login has expired");
-      // SignRequest.logout(context);
-      NavigatorUtil.pushLogin();
-      // showWarnToast("token has expired");
-    } else if (response.data["code"] != 200) {
-      // showWarnToast("login has expired");
+    if (response.data is Map) {
+      if (response.data["code"] == 511) {
+        log("token has expired");
+        // showWarnToast("login has expired");
+        // SignRequest.logout(context);
+        NavigatorUtil.pushLogin();
+        // showWarnToast("token has expired");
+      } else if (response.data["code"] != 200) {
+        // showWarnToast("login has expired");
+      }
     }
     super.onResponse(response, handler);
   }
