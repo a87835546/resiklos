@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:resiklos/shop/shop_vouchers_page.dart';
+import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/constants.dart';
 
 class MarketplacePage extends StatefulWidget {
@@ -143,7 +144,7 @@ class _MarketplacePageState extends State<MarketplacePage>
                             decoration: InputDecoration(
                               suffixIcon: GestureDetector(
                                 child: Icon(Icons.search),
-                                onTap: (){
+                                onTap: () {
                                   log("search");
                                 },
                               ),
@@ -165,29 +166,35 @@ class _MarketplacePageState extends State<MarketplacePage>
                         maxCrossAxisExtent:
                             (MediaQuery.of(context).size.width / 2),
                         children: merchants.map<Widget>((Merchant merchant) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                height: 120.0,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  border: Border.all(
-                                    width: 1.0,
-                                    color: const Color(0xffd4d4d4),
-                                  ),
-                                  image: DecorationImage(
-                                    image: NetworkImage(merchant.image ?? ""),
-                                    fit: BoxFit.cover,
+                          return GestureDetector(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  height: 120.0,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    border: Border.all(
+                                      width: 1.0,
+                                      color: const Color(0xffd4d4d4),
+                                    ),
+                                    image: DecorationImage(
+                                      image: NetworkImage(merchant.image ?? ""),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 5.0),
-                              Text(merchant.title ?? "",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w600)),
-                            ],
+                                const SizedBox(height: 5.0),
+                                Text(merchant.title ?? "",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w600)),
+                              ],
+                            ),
+                            onTap: () {
+                              selectVoucher();
+                            },
+                            behavior: HitTestBehavior.opaque,
                           );
                         }).toList(),
                       ),
@@ -201,6 +208,88 @@ class _MarketplacePageState extends State<MarketplacePage>
         ),
       ),
     );
+  }
+
+  void selectVoucher() {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              //在这里为了区分，在构建builder的时候将setState方法命名为了setBottomSheetState。
+              builder: (context1, setBottomSheetState) {
+            return Container(
+                color: Colors.transparent,
+                padding: EdgeInsets.only(left: 15),
+                child: Container(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      Container(
+                        // height: 50,
+                        padding: EdgeInsets.only(
+                            top: 10, left: 25, right: 25, bottom: 15),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      child: Text(
+                                        "MERCHANT NAME",
+                                        style: TextStyle(
+                                            color: color_707070(),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      alignment: Alignment.centerLeft,
+                                    ),
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+                                        style: TextStyle(
+                                          color: color_d4d4d4(),
+                                          fontSize: 12,
+                                        ),
+                                        maxLines: 2,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              flex: 2,
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                child: Container(
+                                  alignment: Alignment.centerRight,
+                                  child: Icon(
+                                    Icons.close,
+                                    color: color_d4d4d4(),
+                                    size: 18,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              flex: 1,
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 200,
+                        child: ShopVoucherPage(),
+                      )
+                    ],
+                  ),
+                ));
+          });
+        });
   }
 }
 

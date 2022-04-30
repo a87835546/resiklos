@@ -24,12 +24,16 @@ class EventBusUtil {
 }
 
 abstract class Event {}
+
 /// 底部tabbar 切换事件
 class TabBarChangeEvent extends Event {
   int index;
   TabBarChangeEvent(this.index);
 }
 
-class RefreshRpEvent extends Event {
+class RefreshRpEvent extends Event {}
 
+class ChangeSegmentIndexEvent extends Event {
+  int index;
+  ChangeSegmentIndexEvent(this.index);
 }
