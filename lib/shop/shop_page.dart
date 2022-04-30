@@ -21,7 +21,7 @@ class _ShopPageState extends State<ShopPage> {
     'MERCHANTS',
     'GET VOUCHERS',
   ];
-  List pages = const [MarketplacePage(), ShopVoucherPage()];
+  List pages = const [MarketplacePage(), ShopVoucherPage(id: 1,)];
   int _index = 0;
 
   @override
