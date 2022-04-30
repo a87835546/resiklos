@@ -58,6 +58,7 @@ class MarketPlaceRequest {
     log("claim res ---->>>>${jsonEncode(res)}");
     try {
       showToast(res["details"]);
+      return Future.value(res["details"] == "Success");
     } catch (e) {
       log("parser merchant list error --->>>${e.toString()}");
     }
