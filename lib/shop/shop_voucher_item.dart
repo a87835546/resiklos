@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:resiklos/shop/marketplace_request.dart';
 import 'package:resiklos/shop/voucher_model.dart';
 import 'package:resiklos/utils/color.dart';
 
@@ -103,8 +104,10 @@ class _ShopVoucherItemState extends State<ShopVoucherItem> {
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
-                  onTap: () {
+                  onTap: ()  async {
                     log("点击获取优惠券");
+                    var res = await MarketPlaceRequest.claimVoucher(
+                        true, widget.model.id.toString());
                   },
                 ),
               ],
