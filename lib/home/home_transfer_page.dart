@@ -322,60 +322,6 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
         });
   }
 
-  void selectType(BuildContext ctx) {
-    final List<String> _list = ["Email", "Id"];
-    showDialog(
-      context: ctx,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return MediaQuery.removePadding(
-          context: context,
-          child: Container(
-            child: Column(
-              children: [
-                Expanded(child: Container()),
-                Container(
-                  color: Colors.white,
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: _list.map((e) {
-                      return GestureDetector(
-                        child: Container(
-                          padding: EdgeInsets.only(left: 20),
-                          height: 50,
-                          child: Row(
-                            children: [
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              Container(
-                                child: Text(e),
-                              )
-                            ],
-                          ),
-                        ),
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () async {
-                          Navigator.of(context).pop(true);
-                          setState(() {
-                            _title = e;
-                          });
-                        },
-                      );
-                    }).toList(),
-                  ),
-                )
-              ],
-            ),
-          ),
-          removeBottom: true,
-          removeTop: true,
-        );
-      },
-    ).then((val) {
-      log("111111$val");
-    });
-  }
 
   void getAmount() async {
     var res = await HttpManager.get(
@@ -394,8 +340,12 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
     int amount =
         int.parse(_amountController.text == "" ? "0" : _amountController.text);
     log("message--->>>${amount}");
-    if (!VerifyUtil.isEmail(_emailController.text)) {
+    if (!VerifyUtil.isEmail(_emailController.text) && _title == "Email") {
       showErrorText("Please input correct email");
+      return;
+    }
+    if (_title == "Id" && _emailController.text.isEmpty) {
+      showErrorText("Please input correct user id");
       return;
     }
     if (amount == 0) {
@@ -407,6 +357,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
           "Please input transfer correct amount,your available balance has $_balance");
       return;
     }
+
 
     Map<String, dynamic> temp = {
       "email": AppSingleton.userInfoModel?.email,

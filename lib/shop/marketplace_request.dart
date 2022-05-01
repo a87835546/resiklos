@@ -11,10 +11,8 @@ import 'package:resiklos/utils/toast.dart';
 class MarketPlaceRequest {
   // /api/public/vouchers?merchant=1&no_pagination=1
   static Future<List<MerchantModel>> getList() async {
-    HttpManager.baseUrl = "https://resiklos-merchant.trifectacore.tech/";
-    var res =
-        await HttpManager.get(url: "api/public/merchants/?no_pagination=1")
-            as List;
+    var res = await HttpManager.get(
+        url: "api/public/merchants/?no_pagination=1", isMerchant: true) as List;
     // log("merchant list ---->>>>${jsonEncode(res)}");
     List<MerchantModel> _temp = [];
     try {
@@ -28,11 +26,10 @@ class MarketPlaceRequest {
   }
 
   static Future<List<VoucherModel>> getVoucherList(int id) async {
-    HttpManager.baseUrl = "https://resiklos-merchant.trifectacore.tech/";
     String url = id == 0
         ? "api/public/vouchers?no_pagination=1"
         : "api/public/vouchers?merchant=$id&no_pagination=1";
-    var res = await HttpManager.get(url: url) as List;
+    var res = await HttpManager.get(url: url, isMerchant: true) as List;
     // log("voucher list ---->>>>${jsonEncode(res)}");
     List<VoucherModel> _temp = [];
     try {
@@ -46,7 +43,6 @@ class MarketPlaceRequest {
   }
 
   static Future claimVoucher(bool isCode, String code) async {
-    HttpManager.baseUrl = "https://resiklos-merchant.trifectacore.tech/";
     String url = isCode
         ? "api/public/vouchers/1/claim_by_id/"
         : "api/public/vouchers/1/claim_by_code/";
@@ -54,7 +50,7 @@ class MarketPlaceRequest {
     map.putIfAbsent("email", () => AppSingleton.userInfoModel?.email);
     map.putIfAbsent("access_token", () => AppSingleton.userInfoModel?.token);
     map.putIfAbsent("code", () => code);
-    var res = await HttpManager.post(url: url, params: map);
+    var res = await HttpManager.post(url: url, params: map, isMerchant: true);
     log("claim res ---->>>>${jsonEncode(res)}");
     try {
       showToast(res["details"]);

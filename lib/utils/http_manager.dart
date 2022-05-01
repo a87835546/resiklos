@@ -36,6 +36,8 @@ class HttpManager {
               : "https://api.resiklos.app/api/v1/"))
       : "https://api.resiklos.app/api/v1/";
 
+  static String merchantUrl = "https://resiklos-merchant.trifectacore.tech/";
+
   static final Dio _dio = Dio();
 
   static const int timeout = 1500;
@@ -56,13 +58,16 @@ class HttpManager {
 
   static get(
       {required String url,
+      bool isMerchant = false,
       Map<String, dynamic>? headers,
       Map<String, String>? params}) async {
     _config();
     Options options = Options(headers: headers, sendTimeout: timeout);
     options.contentType = ContentType.json.toString();
-    Response response = await _dio.get(baseUrl + url,
-        queryParameters: params, options: options);
+    Response response = await _dio.get(
+        (isMerchant ? merchantUrl : baseUrl) + url,
+        queryParameters: params,
+        options: options);
     log("get res--->>>> ${response.data}");
     try {
       if (response.data is Map) {
@@ -91,6 +96,7 @@ class HttpManager {
 
   static post(
       {required String url,
+      bool isMerchant = false,
       Map<String, dynamic>? headers,
       required Map<String, dynamic> params}) async {
     _config();
@@ -101,8 +107,11 @@ class HttpManager {
     log("post request params $headers");
     CancelToken token = CancelToken();
     _tokens.add(token);
-    Response response = await _dio.post(baseUrl + url,
-        data: params, options: options, cancelToken: token);
+    Response response = await _dio.post(
+        (isMerchant ? merchantUrl : baseUrl) + url,
+        data: params,
+        options: options,
+        cancelToken: token);
 
     try {
       log("response data---->>>>>${response.data}");

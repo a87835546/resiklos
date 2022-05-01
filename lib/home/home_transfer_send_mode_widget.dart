@@ -73,23 +73,30 @@ class _HomeTransferSendModeWidgetState
                       },
                     ),
                   ),
+                  flex: 1,
                 ),
                 Visibility(
-                  child: GestureDetector(
-                    child: Container(
-                      width: 30,
-                      child: Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        color: color_d4d4d4(),
-                        size: 10,
+                  child: Expanded(
+                    child: GestureDetector(
+                      child: Container(
+                        height: 50,
+                        color: Colors.white,
+                        alignment: Alignment.centerRight,
+                        padding: EdgeInsets.only(right: 15),
+                        child: Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          color: color_d4d4d4(),
+                          size: 10,
+                        ),
                       ),
+                      onTap: () {
+                        log("message---->?>>");
+                        if (null != widget.click) {
+                          widget.click!();
+                        }
+                      },
                     ),
-                    onTap: () {
-                      log("message---->?>>");
-                      if(null != widget.click){
-                        widget.click!();
-                      }
-                    },
+                    flex: 1,
                   ),
                   visible: !widget.hasInput,
                 )
