@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/clip_borad_tool.dart';
+import 'package:resiklos/utils/constants.dart';
 import 'package:resiklos/utils/http_manager.dart';
 
 class HomeReferralsShareWidget extends StatelessWidget {
@@ -16,7 +17,7 @@ class HomeReferralsShareWidget extends StatelessWidget {
     bool hasInviteCode = AppSingleton.userInfoModel?.inviteCode != null &&
         AppSingleton.userInfoModel?.inviteCode != "";
     return Container(
-      height: 150,
+      height: 180,
       color: Color(0xffFAFAFA),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -72,7 +73,7 @@ class HomeReferralsShareWidget extends StatelessWidget {
                             child: null,
                           );
                         } else {
-                          String v =  snapshot.data as String;
+                          String v = snapshot.data as String;
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -121,7 +122,19 @@ class HomeReferralsShareWidget extends StatelessWidget {
                   color: Color(0xff00A6BE),
                   fontWeight: FontWeight.bold),
             ),
-          )
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+            alignment: Alignment.center,
+            child: const Text(
+              "Referrals should log in on the mobile app to get your reward",
+              style: TextStyle(
+                fontSize: 12,
+                color: ResiklosColors.muted,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
         ],
       ),
     );

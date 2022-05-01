@@ -12,13 +12,13 @@ class TransactionRequest {
    */
   static Future<List<TransactionModel>> queryTransaction(type, current) async {
     current = current - 1;
-    String? url = type == 0
+    String? url = type == 0 || type == 4
         ? AppSingleton.userInfoModel?.email
         : AppSingleton.userInfoModel?.rpWalletAddress.toString();
     var result = await HttpManager.get(
         url:
             "transaction/queryTransactionV2?type=$type&email=$url&pageSize=10&currentNum=$current");
-    log("transaction result $result");
+    // log("transaction result $result");
     List<TransactionModel> list = [];
     try {
       if (result["data"] != null &&

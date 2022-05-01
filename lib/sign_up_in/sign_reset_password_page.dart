@@ -62,7 +62,7 @@ class _SignResetPasswordState extends State<SignResetPasswordPage> {
                 child: Container(
                   width: 40,
                   height: 30,
-                  child:const Icon(
+                  child: const Icon(
                     Icons.arrow_back_ios_outlined,
                     color: Colors.white,
                     size: 25,
@@ -190,9 +190,9 @@ class _SignResetPasswordState extends State<SignResetPasswordPage> {
                         click: () async {
                           if (passwordController.text !=
                               confirmPasswordController.text) {
-                            showErrorText("input password was different");
+                            showErrorText("Passwords do not match");
                           } else if (emailController.text.length < 6) {
-                            showErrorText("input correct email address");
+                            showErrorText("Please input valid email address");
                           } else {
                             var s = await SignRequest.resetPassword(
                                 emailController.text,

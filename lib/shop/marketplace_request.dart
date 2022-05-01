@@ -45,15 +45,35 @@ class MarketPlaceRequest {
   static Future claimVoucher(bool isCode, String code) async {
     String url = isCode
         ? "api/public/vouchers/1/claim_by_id/"
-        : "api/public/vouchers/1/claim_by_code/";
-    Map<String, dynamic> map = new HashMap();
+        : "api/public/vouchers/claim_by_code";
+    Map<String, dynamic> map = HashMap();
     map.putIfAbsent("email", () => AppSingleton.userInfoModel?.email);
-    map.putIfAbsent("access_token", () => AppSingleton.userInfoModel?.token);
     map.putIfAbsent("code", () => code);
     var res = await HttpManager.post(url: url, params: map, isMerchant: true);
     log("claim res ---->>>>${jsonEncode(res)}");
     try {
-      showToast(res["details"]);
+      if (res["response"]["data"]["code"] == 200) {
+        return Future.value(true);
+      } else {
+        showToast("${res["details"]} ${res["response"]["data"]["message"]}");
+        return Future.value(false);
+      }
+    } catch (e) {
+      log("parser merchant list error --->>>${e.toString()}");
+    }
+    return Future.value(null);
+  }
+
+  static Future claimedVoucher() async {
+    String url = "api/public/claimed_vouchers";
+    var res = await HttpManager.get(url: url, isMerchant: true);
+    log("claimed vouchers res ---->>>>${jsonEncode(res)}");
+    try {
+      if (res["response"]["data"]["code"] == 200) {
+        return Future.value(true);
+      } else {
+        showToast("${res["details"]} ${res["response"]["data"]["message"]}");
+      }
       return Future.value(res["details"] == "Success");
     } catch (e) {
       log("parser merchant list error --->>>${e.toString()}");

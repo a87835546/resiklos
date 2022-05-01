@@ -183,9 +183,9 @@ class _HomePageState extends BaseStatefulState<HomePage>
         url: "user/points",
         params: {"userEmail": "${AppSingleton.userInfoModel?.email}"});
     log("points --->>>$r");
-    if (mounted && r["data"] != null) {
+    if (mounted && r["data"] != null && mounted && AppSingleton.userInfoModel?.emailVerificationStatus != 1) {
       setState(() {
-        _points = r["data"]["point"] ?? 50;
+        _points = r["data"]["point"] ?? 0;
       });
     }
   }

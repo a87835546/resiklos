@@ -60,7 +60,7 @@ class _DepositTransactionListViewState
         }
       case WalletTransactionType.purchase:
         {
-          getRewordsTransaction(3);
+          getRewordsTransaction(4);
           break;
         }
     }
@@ -80,9 +80,33 @@ class _DepositTransactionListViewState
       child: ListView.builder(
         itemBuilder: (context, index) {
           TransactionModel model = _lists[index];
-          String? title = model.source == 0 ? "Registration" : null;
+          String title = model.source == 0 ? "Registration" : "";
           title = model.source == 1 ? "Referral" : title;
-          title = model.source == 5 ? "Other" : title;
+          title = model.source == 2 ? "Transfer" : title;
+          title = model.source == 5 ? "Purchase" : title;
+          title = model.source == 6 ? "Adjustment" : title;
+          title = model.source == 7 ? "Other" : title;
+
+          // "     * 积分的来源，分两种\n" +
+          //     "     * 0 ---- 系统赠送\n" +
+          //     "     * 1 --- 邀请他人获取\n" +
+          //     "     * 2 ---- 他人转账 or 转账给他人\n" +
+          //     "     * 3 ---- exchange or convert\n" +
+          //     "     * 4 ---- rsg 转账\n" +
+          //     "     * 5 ---- merchant\n" +
+          //     "     * 6 ---- other\n" +
+          bool isAdd = false;
+          isAdd = model.source == 0 ? isAdd = true : isAdd;
+          isAdd = model.source == 1 ? isAdd = true : isAdd;
+          isAdd = model.source == 2
+              ? (model.receiveAddress ==
+                      AppSingleton.userInfoModel?.rpWalletAddress
+                  ? true
+                  : false)
+              : isAdd;
+          isAdd = model.source == 3 ? isAdd = true : isAdd;
+          isAdd = model.source == 5 ? isAdd = false : isAdd;
+          isAdd = model.source == 6 ? isAdd = true : isAdd;
           return Padding(
               padding: const EdgeInsets.only(left: 14, right: 14, bottom: 10),
               child: GestureDetector(
@@ -103,12 +127,7 @@ class _DepositTransactionListViewState
                               height: 30,
                               alignment: Alignment.center,
                               child: Text(
-                                title ??
-                                    (model.receiveAddress ==
-                                            AppSingleton
-                                                .userInfoModel?.rpWalletAddress
-                                        ? "Transfer In"
-                                        : "Transfer Out"),
+                                isAdd ? "Transfer In" : "Transfer Out",
                                 style: const TextStyle(
                                     color: Color(0xff707070),
                                     fontSize: 14,
@@ -120,15 +139,11 @@ class _DepositTransactionListViewState
                                 height: 30,
                                 alignment: Alignment.centerRight,
                                 child: Text(
-                                  "${model.point} RP",
+                                  "${isAdd ? "+" : "-"} ${model.point} RP",
                                   style: TextStyle(
-                                      color: title != null
-                                          ? Color(0xff707070)
-                                          : (model.receiveAddress !=
-                                                  AppSingleton.userInfoModel
-                                                      ?.rpWalletAddress
-                                              ? Colors.redAccent
-                                              : Colors.greenAccent),
+                                      color: (!isAdd
+                                          ? Colors.redAccent
+                                          : Colors.greenAccent),
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -156,7 +171,7 @@ class _DepositTransactionListViewState
                                 height: 30,
                                 alignment: Alignment.centerRight,
                                 child: Text(
-                                  "${model.source == 0 ? "Resiklos" : (model.source == 2 ? "Transfer ${model.userName ?? ""} " : "Referral")}",
+                                  title ?? "",
                                   style: TextStyle(
                                       color: Color(0xffD4D4D4), fontSize: 12),
                                 ),

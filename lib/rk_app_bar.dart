@@ -22,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Container(
             color: bgColor ?? Colors.white,
             alignment: Alignment.center,
-            height: 44 + MediaQuery.of(context).padding.top,
+            height: kToolbarHeight + MediaQuery.of(context).padding.top,
             padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
             child: Row(
               children: [

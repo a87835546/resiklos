@@ -10,14 +10,14 @@ typedef DepositTransactionSegmentViewClick = Function(int);
 class DepositTransactionSegmentView extends StatefulWidget {
   final DepositTransactionSegmentViewClick click;
   final int index;
-  final bool isShop;
+  final bool isVoucher;
   final List<String>? titles;
 
   const DepositTransactionSegmentView(
       {Key? key,
       required this.click,
       required this.index,
-      required this.isShop,
+      required this.isVoucher,
       this.titles})
       : super(key: key);
 
@@ -42,8 +42,8 @@ class _DepositTransactionSegmentViewState
   @override
   void initState() {
     super.initState();
-    if (widget.isShop) {
-      list = ["MERCHANTS", "VOUCHERS"];
+    if (widget.isVoucher) {
+      list = ["MY CLAIMED", "HISTORY"];
       leftPadding = 50;
     } else {
       list = [
@@ -75,12 +75,12 @@ class _DepositTransactionSegmentViewState
       select = list[widget.index];
     });
     return Container(
-      height: 60,
+      height: 45,
       padding: EdgeInsets.only(
           left: leftPadding,
           right: leftPadding,
           top: 5 + MediaQuery.of(context).padding.top,
-          bottom: 5),
+          bottom: 0),
       color: Colors.white,
       child: TabBar(
         indicatorWeight: 5,
@@ -88,12 +88,12 @@ class _DepositTransactionSegmentViewState
         labelColor: mainColor(),
         labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
         unselectedLabelColor: color_d4d4d4(),
-        indicatorSize: TabBarIndicatorSize.label,
-        indicatorPadding: EdgeInsets.only(bottom: 5.0, left: 5, right: 5),
+        indicatorPadding: EdgeInsets.only(bottom: 0.0, left: 5, right: 5),
         onTap: (index) {
           _tabController.animateTo(index);
           widget.click(index);
         },
+        labelPadding: EdgeInsets.only(bottom: 0),
         tabs: list.map((e) {
           return Tab(
             text: e,

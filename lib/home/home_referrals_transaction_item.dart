@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resiklos/home/transactions/transaction_model.dart';
 import 'package:resiklos/model/user_info_model.dart';
+import 'package:resiklos/utils/color.dart';
+import 'package:resiklos/utils/constants.dart';
 
 class HomeReferralsTransactionItem extends StatefulWidget {
   final UserInfoModel model;
@@ -18,11 +20,10 @@ class _HomeReferralsTransactionItem
     extends State<HomeReferralsTransactionItem> {
   @override
   Widget build(BuildContext context) {
-    log("model ---->>> ${widget.model}");
     return Container(
-      padding: const EdgeInsets.only(left: 25,top: 10, right: 25),
+      padding: const EdgeInsets.only(left: 25, top: 10, right: 25),
       alignment: Alignment.center,
-      decoration:const BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
             bottom: BorderSide(
                 color: Color(0xfffafafa), width: 2, style: BorderStyle.solid)),
@@ -44,20 +45,15 @@ class _HomeReferralsTransactionItem
                 child: Container(
                   alignment: Alignment.centerLeft,
                   color: Colors.white,
-                  child: Text("${widget.model.createTime}",style:const TextStyle(
-                    color: Color(0xffD4D4D4),
-                    fontSize: 12
-                  ),),
+                  child: Text(
+                    "${widget.model.createTime}",
+                    style:
+                        const TextStyle(color: Color(0xffD4D4D4), fontSize: 12),
+                  ),
                 ),
               )
             ],
           )),
-          Visibility(
-            child: Container(
-              child: Image.asset("imgs/badge-verified.png"),
-            ),
-            visible: true,
-          )
         ],
       ),
     );

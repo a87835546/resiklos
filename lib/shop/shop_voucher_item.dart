@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:resiklos/shop/marketplace_request.dart';
 import 'package:resiklos/shop/voucher_model.dart';
 import 'package:resiklos/utils/color.dart';
+import 'package:resiklos/utils/toast.dart';
 
 class ShopVoucherItem extends StatefulWidget {
   final VoucherModel model;
@@ -104,10 +105,14 @@ class _ShopVoucherItemState extends State<ShopVoucherItem> {
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
-                  onTap: ()  async {
+                  onTap: () async {
                     log("点击获取优惠券");
                     var res = await MarketPlaceRequest.claimVoucher(
-                        true, widget.model.id.toString());
+                        false, widget.model.code.toString());
+                    if (res) {
+                      showText("Claimed Success");
+                      Navigator.of(context).pop();
+                    }
                   },
                 ),
               ],

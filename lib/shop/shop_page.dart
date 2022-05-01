@@ -36,7 +36,7 @@ class _ShopPageState extends State<ShopPage> {
       children: [
         DepositTransactionSegmentView(
           index: _index,
-          isShop: true,
+          isVoucher: false,
           click: (index) {
             log("$index");
             setState(() {

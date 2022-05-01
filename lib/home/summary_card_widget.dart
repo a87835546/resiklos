@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:resiklos/home/home_referrals_page.dart';
+import 'package:resiklos/home/my_voucher/my_claimed_vouchers_page.dart';
+import 'package:resiklos/home/my_voucher/vouchers_page.dart';
 import 'package:resiklos/home/qr_code_dailog.dart';
 import 'package:resiklos/home/summary_button_widget.dart';
 import 'package:resiklos/utils/event_bus_util.dart';
@@ -48,7 +50,7 @@ Widget SummaryCardWidget(BuildContext context,
                       icon: 'imgs/svg/scan_icon.svg',
                       click: () {
                         log("123");
-                        showCustomDialog(context);
+                        // showCustomDialog(context);
                       }),
                   SummaryButtonWidget(
                       text: "Transfer",
@@ -62,7 +64,11 @@ Widget SummaryCardWidget(BuildContext context,
                       text: "My Vouchers",
                       icon: 'imgs/svg/vouchers_icon.svg',
                       click: () {
-                        EventBusUtil.fire(TabBarChangeEvent(0));
+                        // EventBusUtil.fire(TabBarChangeEvent(0));
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (_) {
+                          return MyVouchersPage();
+                        }));
                       }),
                   SummaryButtonWidget(
                       text: "Affiliates",

@@ -21,6 +21,7 @@ class UserInfoModel {
   num? deviceType;
   num? gems;
   int emailVerificationStatus;
+  int isFirstLogin;
 
   /// 0 unverified 1.pending 2.verified 3.rejected
   int kycVerificationStatus;
@@ -48,6 +49,7 @@ class UserInfoModel {
       this.walletAddress = '',
       this.emailVerificationStatus = 0,
       this.kycVerificationStatus = 0,
+      this.isFirstLogin = 0,
       this.verificationStatus = 0});
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) {
@@ -68,6 +70,7 @@ class UserInfoModel {
         available: json['available'],
         mobile: json['mobile'],
         gems: json['gems'],
+        isFirstLogin: json['isFirstLogin'],
         ipAddress: json['ipAddress'],
         lastLoginTime: json['lastLoginTime'],
         rpWalletAddress: json['rpWalletAddress'],
@@ -100,6 +103,7 @@ class UserInfoModel {
     data['verifiedEmail'] = emailVerificationStatus;
     data['walletAddress'] = walletAddress;
     data['rpWalletAddress'] = rpWalletAddress;
+    data['isFirstLogin'] = isFirstLogin;
     return data;
   }
 
@@ -130,6 +134,6 @@ class UserInfoModel {
 
   @override
   String toString() {
-    return 'UserInfoModel{gender: $gender, avatar: $avatar, userId: $userId, id: $id, nickName: $nickName, fullName: $fullName, registerTime: $registerTime, available: $available, mobile: $mobile, email: $email, token: $token, inviteCode: $inviteCode, ipAddress: $ipAddress, rpWalletAddress: $rpWalletAddress, walletAddress: $walletAddress, createTime: $createTime, lastLoginTime: $lastLoginTime, deviceType: $deviceType, gems: $gems, emailVerificationStatus: $emailVerificationStatus, kycVerificationStatus: $kycVerificationStatus, verificationStatus: $verificationStatus}';
+    return 'UserInfoModel{gender: $gender, avatar: $avatar, userId: $userId, id: $id, nickName: $nickName, fullName: $fullName, registerTime: $registerTime, available: $available, mobile: $mobile, email: $email, token: $token, inviteCode: $inviteCode, ipAddress: $ipAddress, rpWalletAddress: $rpWalletAddress, walletAddress: $walletAddress, createTime: $createTime, lastLoginTime: $lastLoginTime, deviceType: $deviceType, gems: $gems, emailVerificationStatus: $emailVerificationStatus, isFirstLogin: $isFirstLogin, kycVerificationStatus: $kycVerificationStatus, verificationStatus: $verificationStatus}';
   }
 }

@@ -68,7 +68,7 @@ class HttpManager {
         (isMerchant ? merchantUrl : baseUrl) + url,
         queryParameters: params,
         options: options);
-    log("get res--->>>> ${response.data}");
+    // log("get res--->>>> ${response.data}");
     try {
       if (response.data is Map) {
         if (response.statusCode == 200) {
@@ -104,7 +104,8 @@ class HttpManager {
     headers ??= {};
     headers.putIfAbsent("token", () => _token);
     Options options = Options(headers: headers, sendTimeout: timeout);
-    log("post request params $headers");
+    log("post request params $params");
+    log("post request headers $headers");
     CancelToken token = CancelToken();
     _tokens.add(token);
     Response response = await _dio.post(

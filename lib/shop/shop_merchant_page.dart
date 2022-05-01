@@ -15,6 +15,8 @@ class MarketplacePage extends StatefulWidget {
   State<MarketplacePage> createState() => _MarketplacePageState();
 }
 
+const double kItemSize = 120;
+
 class _MarketplacePageState extends State<MarketplacePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
@@ -146,16 +148,19 @@ class _MarketplacePageState extends State<MarketplacePage>
                         physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         mainAxisSpacing: 0,
-                        crossAxisSpacing: 10.0,
+                        crossAxisSpacing: 0.0,
                         maxCrossAxisExtent:
-                            (MediaQuery.of(context).size.width / 2),
+                            (MediaQuery.of(context).size.width / 2) *
+                                ((MediaQuery.of(context).size.width / 2) /
+                                    kItemSize),
                         children: _list1.map<Widget>((MerchantModel merchant) {
                           return GestureDetector(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Container(
-                                  height: 120.0,
+                                  height: kItemSize,
+                                  width: kItemSize,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(5.0),
@@ -166,7 +171,7 @@ class _MarketplacePageState extends State<MarketplacePage>
                                     image: DecorationImage(
                                       image:
                                           NetworkImage(merchant.logoUrl ?? ""),
-                                      fit: BoxFit.contain,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
