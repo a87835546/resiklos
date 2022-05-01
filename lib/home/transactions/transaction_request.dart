@@ -12,7 +12,6 @@ class TransactionRequest {
    */
   static Future<List<TransactionModel>> queryTransaction(type, current) async {
     current = current - 1;
-    // type = type + 1;
     String? url = type == 0
         ? AppSingleton.userInfoModel?.email
         : AppSingleton.userInfoModel?.rpWalletAddress.toString();
@@ -26,9 +25,9 @@ class TransactionRequest {
           result["code"] == 200 &&
           result["data"]["records"] != null) {
         List temp = result["data"]["records"];
-        temp.forEach((element) {
+        for (var element in temp) {
           list.add(TransactionModel.fromJson(element));
-        });
+        }
       } else {
         EasyLoading.showError(result["message"] ?? "query transaction error");
       }
