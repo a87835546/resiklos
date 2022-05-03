@@ -1,11 +1,16 @@
 import 'dart:developer';
 
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:resiklos/home/my_voucher/vouchers_page.dart';
 import 'package:resiklos/home/qr_code_dailog.dart';
+import 'package:resiklos/home/summary_button_widget.dart';
 import 'package:resiklos/home/summary_card_widget.dart';
+import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/navigator_util.dart';
+import 'package:resiklos/wallet/transfer_bottom_sheet_widget.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'home_button_widget.dart';
@@ -28,6 +33,8 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
   String text = 'title';
   String subject = 'subtitle';
   List<String> imagePaths = [];
+  SwiperController _swiperController = SwiperController();
+
   @override
   void initState() {
     super.initState();
@@ -42,15 +49,12 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
 
   @override
   Widget build(BuildContext context) {
+    bool showRP = (AppSingleton?.userInfoModel?.walletAddress == null ||
+        AppSingleton?.userInfoModel?.walletAddress == "");
     return Container(
-      height: 245,
+      height: 255,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(5),
-            topRight: Radius.circular(20),
-            bottomRight: Radius.circular(20),
-            bottomLeft: Radius.circular(20)),
         boxShadow: [
           BoxShadow(
               color: Colors.grey.withAlpha(80),
@@ -62,127 +66,180 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
       child: Column(
         children: [
           Container(
-            height: 156,
-            decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(5),
-                    topRight: Radius.circular(20),
-                    bottomRight: Radius.circular(5),
-                    bottomLeft: Radius.circular(20)),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.grey.withAlpha(80),
-                      blurRadius: 5.0,
-                      offset: Offset(0, 4),
-                      spreadRadius: 1),
-                ],
-                // gradient: const LinearGradient(
-                //     colors: [Color(0xff00A6BE), Color(0xff00F5D9)],
-                // ),
-                image: const DecorationImage(
-                    image: AssetImage("imgs/summary-bg.png"),
-                    fit: BoxFit.fill)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
+            height: 160,
+            child: Swiper(
+              controller: _swiperController,
+              loop: false,
+              itemCount: (showRP ? 2 : 1),
+              itemBuilder: (BuildContext context, int index) {
+                log("index --->>>$index show rp --->>>$showRP");
+                return Column(
                   children: [
-                    const SizedBox(
-                      height: 25,
-                    ),
                     Container(
-                      width: 100,
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "${widget.points}",
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 38,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Container(
-                      width: 100,
-                      alignment: Alignment.centerLeft,
-                      child: const Text(
-                        "RSG",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Container(
-                      width: 100,
-                      alignment: Alignment.centerLeft,
-                      child: const Text(
-                        "Resiklos Gems",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      width: 100,
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "${widget.count} Referrals",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
+                      height: 150,
+                      margin:
+                          const EdgeInsets.only(left: 15, top: 10, right: 15),
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          image: DecorationImage(
+                              image: AssetImage("imgs/summary-bg.png"),
+                              fit: BoxFit.fill)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 20),
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    width: double.maxFinite,
+                                    child: Text(
+                                      index == 0
+                                          ? "Resiklos Gems"
+                                          : "Resiklos Points",
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "${widget.points} ${index == 0 ? "RP" : "RSG"}",
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 38,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+
+                                  Visibility(
+                                    child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "= 500 RSG",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300),
+                                      ),
+                                    ),
+                                    visible: index == 0,
+                                  ),
+
+                                  // Container(
+                                  //   width: 100,
+                                  //   alignment: Alignment.centerLeft,
+                                  //   child: Text(
+                                  //     "${widget.count} Referrals",
+                                  //     style: const TextStyle(
+                                  //       color: Colors.white,
+                                  //       fontSize: 12,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
+                            ),
+                            flex: 1,
+                          ),
+                          Padding(
+                              padding: EdgeInsets.only(bottom: 70, right: 30),
+                              child: Image.asset(
+                                "imgs/logo@2x.png",
+                                width: 52,
+                                height: 52,
+                                fit: BoxFit.cover,
+                              ))
+                        ],
                       ),
                     ),
                   ],
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 70),
-                  child: Container(
-                    height: 100,
-                    width: 132,
-                    color: Colors.transparent,
-                    child: OverflowBox(
-                      maxWidth: 132,
-                      maxHeight: 127,
-                      child: Image.asset("imgs/logo@2x.png"),
-                    ),
-                  ),
-                )
-              ],
+                );
+              },
             ),
           ),
           Container(
-            child: Padding(
-              padding: EdgeInsets.only(left: 30, top: 20, right: 30),
-              child:
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: _list.map((e) {
-                    int index = _list.indexOf(e);
-                    return HomeButtonWidget(
-                      model: e,
+              padding: const EdgeInsets.all(5.0),
+              height: 85.0,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  SummaryButtonWidget(
+                      text: "Scan QR",
+                      icon: 'imgs/svg/scan_icon.svg',
                       click: () {
-                        log("click index ${_list.indexOf(e)} value ${e.title}");
-                        if (index == 3) {
-                          NavigatorUtil.push(context, HomeReferrals());
-                        } else if (index == 0) {
-                          showCustomDialog(context);
-                        }else if(index == 1){
-                          Share.share('check out our website https://resiklos.com', subject: 'Look what I made!');
-                        }
-                      },
-                    );
-                  }).toList()),
-            ),
-          )
+                        log("123");
+                        // showCustomDialog(context);
+                      }),
+                  SummaryButtonWidget(
+                      text: "Transfer",
+                      icon: 'imgs/svg/transfer_icon.svg',
+                      click: () {
+                        log("123456");
+
+                        showTransferBottomSheetWidget(context);
+                      }),
+                  SummaryButtonWidget(
+                      text: "My Vouchers",
+                      icon: 'imgs/svg/vouchers_icon.svg',
+                      click: () {
+                        // EventBusUtil.fire(TabBarChangeEvent(0));
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (_) {
+                          return MyVouchersPage();
+                        }));
+                      }),
+                  SummaryButtonWidget(
+                      text: "Affiliates",
+                      icon: 'imgs/svg/affiliates_icon.svg',
+                      click: () {
+                        log("123456789");
+
+                        NavigatorUtil.push(context, HomeReferrals());
+                      }),
+                ],
+              )),
+          // Container(
+          //   child: Padding(
+          //     padding: EdgeInsets.only(left: 30, top: 20, right: 30),
+          //     child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: _list.map((e) {
+          //           int index = _list.indexOf(e);
+          //           return HomeButtonWidget(
+          //             model: e,
+          //             click: () {
+          //               log("click index ${_list.indexOf(e)} value ${e.title}");
+          //               if (index == 3) {
+          //                 NavigatorUtil.push(context, HomeReferrals());
+          //               } else if (index == 0) {
+          //                 showCustomDialog(context);
+          //               } else if (index == 1) {
+          //                 Share.share(
+          //                     'check out our website https://resiklos.com',
+          //                     subject: 'Look what I made!');
+          //               }
+          //             },
+          //           );
+          //         }).toList()),
+          //   ),
+          // )
         ],
       ),
     );
   }
+
   void _onShare(BuildContext context) async {
     final box = context.findRenderObject() as RenderBox?;
     log("text ---->>>>>$text  subject ---->>>>>$subject");

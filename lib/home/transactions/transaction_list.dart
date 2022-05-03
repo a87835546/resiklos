@@ -171,7 +171,7 @@ class _DepositTransactionListViewState
                                 height: 30,
                                 alignment: Alignment.centerRight,
                                 child: Text(
-                                  title ?? "",
+                                  title,
                                   style: TextStyle(
                                       color: Color(0xffD4D4D4), fontSize: 12),
                                 ),

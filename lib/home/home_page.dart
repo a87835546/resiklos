@@ -6,6 +6,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/home_articles_widget.dart';
+import 'package:resiklos/home/home_top_container_widget.dart';
 import 'package:resiklos/home/summary_card_widget.dart';
 import 'package:resiklos/home/verification_card_widget.dart';
 import 'package:resiklos/model/user_info_model.dart';
@@ -85,7 +86,7 @@ class _HomePageState extends BaseStatefulState<HomePage>
                         getData();
                       },
                       child: Container(
-                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        // padding: const EdgeInsets.only(left: 15, right: 15),
                         child: ListView(
                           controller: _controller,
                           shrinkWrap: true,
@@ -93,13 +94,13 @@ class _HomePageState extends BaseStatefulState<HomePage>
                             const SizedBox(
                               height: 15,
                             ),
-                            // HomeTopContainerView(
-                            //   points: _points ?? 50,
-                            //   count: _referralCount,
-                            // ),
-                            SummaryCardWidget(context,
-                                affiliatesCount: _referralCount,
-                                amount: _points ?? 0),
+                            HomeTopContainerView(
+                              points: _points ?? 0,
+                              count: _referralCount,
+                            ),
+                            // SummaryCardWidget(context,
+                            //     affiliatesCount: _referralCount,
+                            //     amount: _points ?? 0),
 
                             // Padding(
                             //   padding: EdgeInsets.only(top: 30),
@@ -111,16 +112,22 @@ class _HomePageState extends BaseStatefulState<HomePage>
                             //   ),
                             // ),
                             Visibility(
-                              child: VerificationCardWidget(context, _model),
+                              child: Padding(
+                                child: VerificationCardWidget(context, _model),
+                                padding:
+                                    const EdgeInsets.only(left: 15, right: 15),
+                              ),
                               visible:
                                   _model != null && _model?.fullName != null,
                             ),
                             const Padding(
-                              padding: EdgeInsets.only(top: 30),
+                              padding:
+                                  EdgeInsets.only(top: 30, left: 15, right: 15),
                               child: HomeInviteView(),
                             ),
                             Container(
-                              padding: const EdgeInsets.only(left: 6, top: 30),
+                              padding:
+                                  const EdgeInsets.only(left: 6 + 15, top: 30),
                               alignment: Alignment.topLeft,
                               child: const Text(
                                 "ARTICLES",
@@ -132,15 +139,15 @@ class _HomePageState extends BaseStatefulState<HomePage>
                               ),
                             ),
                             const Padding(
-                              padding: EdgeInsets.only(
-                                top: 5,
-                              ),
+                              padding:
+                                  EdgeInsets.only(top: 5, left: 15, right: 15),
                               child: HomeArticlesView(
                                 isResiklos: true,
                               ),
                             ),
                             const Padding(
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 15, right: 15),
                               child: HomeArticlesView(
                                 isResiklos: false,
                               ),
@@ -183,7 +190,10 @@ class _HomePageState extends BaseStatefulState<HomePage>
         url: "user/points",
         params: {"userEmail": "${AppSingleton.userInfoModel?.email}"});
     log("points --->>>$r");
-    if (mounted && r["data"] != null && mounted && AppSingleton.userInfoModel?.emailVerificationStatus != 1) {
+    if (mounted &&
+        r["data"] != null &&
+        mounted &&
+        AppSingleton.userInfoModel?.emailVerificationStatus != 1) {
       setState(() {
         _points = r["data"]["point"] ?? 0;
       });

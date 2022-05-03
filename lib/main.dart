@@ -19,14 +19,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bottom_navigationbar.dart';
 
-const bool _debug = kDebugMode;
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  AppSingleton.devMode = DevMode.local;
-  log("debug mode ---->>>>>$_debug");
+  AppSingleton.devMode = DevMode.staging;
   TLSizeFit.initialize();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UserLoginProviderModel()),
