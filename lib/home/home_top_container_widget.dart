@@ -19,9 +19,13 @@ import 'home_referrals_page.dart';
 class HomeTopContainerView extends StatefulWidget {
   final num count;
   final num points;
+  final num exchangeRate;
 
   const HomeTopContainerView(
-      {Key? key, required this.count, required this.points})
+      {Key? key,
+      required this.count,
+      required this.points,
+      required this.exchangeRate})
       : super(key: key);
 
   @override
@@ -49,8 +53,8 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
 
   @override
   Widget build(BuildContext context) {
-    bool showRP = (AppSingleton?.userInfoModel?.walletAddress == null ||
-        AppSingleton?.userInfoModel?.walletAddress == "");
+    bool showRP = (AppSingleton.userInfoModel?.walletAddress == null ||
+        AppSingleton.userInfoModel?.walletAddress == "");
     return Container(
       height: 255,
       decoration: BoxDecoration(
@@ -70,7 +74,7 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
             child: Swiper(
               controller: _swiperController,
               loop: false,
-              itemCount: (showRP ? 2 : 1),
+              itemCount: (!showRP ? 2 : 1),
               itemBuilder: (BuildContext context, int index) {
                 log("index --->>>$index show rp --->>>$showRP");
                 return Column(
@@ -100,8 +104,8 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                                     width: double.maxFinite,
                                     child: Text(
                                       index == 0
-                                          ? "Resiklos Gems"
-                                          : "Resiklos Points",
+                                          ? "Resiklos Points "
+                                          : "Resiklos Gems",
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 18,
@@ -126,7 +130,7 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                                     child: Container(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        "= 500 RSG",
+                                        "= ${widget.exchangeRate * widget.points} RSG",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 12,

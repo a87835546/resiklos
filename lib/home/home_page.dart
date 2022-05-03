@@ -31,6 +31,7 @@ class _HomePageState extends BaseStatefulState<HomePage>
   final RefreshController _refreshController = RefreshController();
   int _referralCount = 0;
   num? _points = AppSingleton.userInfoModel?.gems;
+  num? _rate = 0;
   UserInfoModel? _model;
   StreamSubscription? _streamSubscription;
 
@@ -97,6 +98,7 @@ class _HomePageState extends BaseStatefulState<HomePage>
                             HomeTopContainerView(
                               points: _points ?? 0,
                               count: _referralCount,
+                              exchangeRate: _rate ?? 1,
                             ),
                             // SummaryCardWidget(context,
                             //     affiliatesCount: _referralCount,
@@ -220,6 +222,9 @@ class _HomePageState extends BaseStatefulState<HomePage>
         url: "wallet/balance?email=${AppSingleton.userInfoModel?.email}");
     log("balance --->>>$res");
     try {
+      setState(() {
+        _rate = num.parse(res["data"]["exchangeRate"] ?? "1");
+      });
       if (mounted && AppSingleton.userInfoModel?.emailVerificationStatus == 1) {
         setState(() {
           _points = num.parse(res["data"]["rpBalance"] ?? "0");
