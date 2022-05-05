@@ -52,7 +52,7 @@ class _MyVoucherPageState extends State<MyClaimedVouchersPage> {
               height: 50,
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.center,
-              child: Text("No more data"),
+              child: Text("No data"),
             )
           : ListView.builder(
               itemBuilder: (context, index) {

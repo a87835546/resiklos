@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:resiklos/home/my_voucher/vouchers_page.dart';
 import 'package:resiklos/home/qr_code_dailog.dart';
@@ -77,103 +78,141 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
               itemCount: (!showRP ? 2 : 1),
               itemBuilder: (BuildContext context, int index) {
                 log("index --->>>$index show rp --->>>$showRP");
-                return Column(
-                  children: [
-                    Container(
-                      height: 150,
-                      margin:
-                          const EdgeInsets.only(left: 15, top: 10, right: 15),
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          image: DecorationImage(
-                              image: AssetImage("imgs/summary-bg.png"),
-                              fit: BoxFit.fill)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 20),
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Container(
-                                    alignment: Alignment.centerLeft,
-                                    width: double.maxFinite,
-                                    child: Text(
-                                      index == 0
-                                          ? "Resiklos Points "
-                                          : "Resiklos Gems",
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
+                return Container(
+                    margin: const EdgeInsets.only(left: 15, right: 15),
+                    child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: 150.0,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: const Alignment(1.132, -1.192),
+                              end: const Alignment(-1.0, 1.0),
+                              colors: showRP
+                                  ? [
+                                      const Color(0xFFE8A81A),
+                                      const Color(0xFFF4BB3C)
+                                    ]
+                                  : [
+                                      const Color(0xff00f5d9),
+                                      const Color(0xff00a6be)
+                                    ],
+                              stops: const [0.0, 1.0],
+                            ),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x29000000),
+                                offset: Offset(0, 3),
+                                blurRadius: 6,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.centerRight,
+                          margin: const EdgeInsets.only(left: 39.0),
+                          child: SizedBox(
+                            height: 160.0,
+                            child: SvgPicture.asset('imgs/svg/summary_bg.svg',
+                                allowDrawingOutsideViewBox: true,
+                                height: double.infinity),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 20),
+                                child: Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 20,
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  Container(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "${widget.points} ${index == 0 ? "RP" : "RSG"}",
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 38,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-
-                                  Visibility(
-                                    child: Container(
+                                    Container(
                                       alignment: Alignment.centerLeft,
+                                      width: double.maxFinite,
                                       child: Text(
-                                        "= ${widget.exchangeRate * widget.points} RSG",
-                                        style: TextStyle(
+                                        index == 0
+                                            ? "Resiklos Points "
+                                            : "Resiklos Gems",
+                                        style: const TextStyle(
                                             color: Colors.white,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w300),
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
-                                    visible: index == 0,
-                                  ),
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "${widget.points} ${index == 0 ? "RP" : "RSG"}",
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 38,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
 
-                                  // Container(
-                                  //   width: 100,
-                                  //   alignment: Alignment.centerLeft,
-                                  //   child: Text(
-                                  //     "${widget.count} Referrals",
-                                  //     style: const TextStyle(
-                                  //       color: Colors.white,
-                                  //       fontSize: 12,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                ],
+                                    Visibility(
+                                      child: Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "= ${widget.exchangeRate * widget.points} RSG",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w300),
+                                        ),
+                                      ),
+                                      visible: index == 0,
+                                    ),
+
+                                    // Container(
+                                    //   width: 100,
+                                    //   alignment: Alignment.centerLeft,
+                                    //   child: Text(
+                                    //     "${widget.count} Referrals",
+                                    //     style: const TextStyle(
+                                    //       color: Colors.white,
+                                    //       fontSize: 12,
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
                               ),
+                              flex: 1,
                             ),
-                            flex: 1,
-                          ),
-                          Padding(
-                              padding: EdgeInsets.only(bottom: 70, right: 30),
-                              child: Image.asset(
-                                "imgs/logo@2x.png",
-                                width: 52,
-                                height: 52,
-                                fit: BoxFit.cover,
-                              ))
-                        ],
-                      ),
-                    ),
-                  ],
-                );
+                            Padding(
+                                padding: EdgeInsets.only(bottom: 70, right: 30),
+                                child: showRP
+                                    ? SvgPicture.asset(
+                                        "imgs/svg/rp_icon.svg",
+                                        width: 52,
+                                        height: 52,
+                                      )
+                                    : Image.asset(
+                                        "imgs/logo@2x.png",
+                                        width: 52,
+                                        height: 52,
+                                        fit: BoxFit.cover,
+                                      ))
+                          ],
+                        ),
+                      ],
+                    ));
               },
             ),
           ),
           Container(
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(15.0),
               height: 85.0,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,

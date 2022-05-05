@@ -127,60 +127,56 @@ class _HomeNaviViewState extends State<HomeNaviView> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: (_debug
-                    ? [
-                        Icons.history,
-                        Icons.notifications_active_rounded,
-                        Icons.settings
-                        // Icons.logout
-                      ]
-                    : [
-                        Icons.history,
-                        Icons.notifications_active_rounded,
-                      ]).map((e) {
-                        return GestureDetector(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20),
-                            child: Container(
-                                child: e != Icons.notifications_active_rounded
-                                    ? Icon(
-                                        e,
-                                        size: 22,
-                                        color: Color(0xff00A6BE),
-                                      )
-                                    : Badge(
-                                        position: BadgePosition.topEnd(
-                                            top: -12, end: -8),
-                                        badgeContent: Text(""),
-                                        child: Icon(
-                                          e,
-                                          size: 22,
-                                          color: Color(0xff00A6BE),
-                                        ),
-                                      )),
-                          ),
-                          onTap: () {
-                            if (e == Icons.settings) {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (_) {
-                                return const SettingPage();
-                              }));
-                            } else if (e == Icons.history) {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (_) {
-                                return const TransactionPage();
-                              }));
-                            } else if (e ==
-                                Icons.notifications_active_rounded) {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (_) {
-                                return const NotificationPage();
-                              }));
-                            } else if (e == Icons.logout) {
-                              SignRequest.logout(context);
-                            }
-                          },
-                        );
-                      }).toList()),
+                        ? [
+                            Icons.history,
+                            Icons.notifications_active_rounded,
+                            Icons.settings
+                            // Icons.logout
+                          ]
+                        : [
+                            Icons.history,
+                          ])
+                    .map((e) {
+                  return GestureDetector(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Container(
+                          child: e != Icons.notifications_active_rounded
+                              ? Icon(
+                                  e,
+                                  size: 22,
+                                  color: Color(0xff00A6BE),
+                                )
+                              : Badge(
+                                  position:
+                                      BadgePosition.topEnd(top: -12, end: -8),
+                                  badgeContent: Text(""),
+                                  child: Icon(
+                                    e,
+                                    size: 22,
+                                    color: Color(0xff00A6BE),
+                                  ),
+                                )),
+                    ),
+                    onTap: () {
+                      if (e == Icons.settings) {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                          return const SettingPage();
+                        }));
+                      } else if (e == Icons.history) {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                          return const TransactionPage();
+                        }));
+                      } else if (e == Icons.notifications_active_rounded) {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                          return const NotificationPage();
+                        }));
+                      } else if (e == Icons.logout) {
+                        SignRequest.logout(context);
+                      }
+                    },
+                  );
+                }).toList()),
           )
         ],
       ),

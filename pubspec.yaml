@@ -136,6 +136,7 @@ flutter:
     - imgs/verify_person.png
     - imgs/verify_face_id.png
     - imgs/img.png
+    - imgs/rp_bg.png
     - imgs/camera.png
     - imgs/wallet-header.png
     - imgs/wallet/bnb_logo.svg
@@ -149,6 +150,7 @@ flutter:
     - imgs/svg/wallet_header.svg
     - imgs/svg/external_link.svg
     - imgs/svg/vouchers_icon.svg
+    - imgs/svg/rp_icon.svg
     - imgs/svg/affiliates_icon.svg
     - imgs/svg/scan_icon.svg
     - imgs/svg/transfer_icon.svg

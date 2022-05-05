@@ -31,7 +31,7 @@ class _HomeReferralsState extends BaseStatefulState<HomeReferrals> {
     log("user info ---->>>>>>>${AppSingleton.userInfoModel}");
     return Scaffold(
       appBar: const CustomAppBar(
-        title: "REFERRALS",
+        title: "AFFILIATES",
       ),
       backgroundColor: Color(0xffFAFAFA),
       body: Container(
@@ -50,7 +50,7 @@ class _HomeReferralsState extends BaseStatefulState<HomeReferrals> {
                           height: 200,
                           alignment: Alignment.center,
                           child: const Text(
-                            "No referrals yet",
+                            "No affiliates yet",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
