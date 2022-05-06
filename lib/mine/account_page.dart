@@ -86,45 +86,6 @@ class _AccountPageState extends State<AccountPage>
                             ),
                     ),
                   ),
-                  Transform.translate(
-                    offset: const Offset(68.0, 78.0),
-                    child: SizedBox(
-                      width: 26.0,
-                      height: 26.0,
-                      child: Stack(
-                        children: <Widget>[
-                          Container(
-                            width: 26.0,
-                            height: 26.0,
-                            decoration: const BoxDecoration(
-                              color: Color(0xffffffff),
-                              borderRadius: BorderRadius.all(
-                                  Radius.elliptical(9999.0, 9999.0)),
-                            ),
-                          ),
-                          Transform.translate(
-                            offset: const Offset(3.0, 3.0),
-                            child: SizedBox(
-                              width: 20.0,
-                              height: 20.0,
-                              child: Stack(
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 20.0,
-                                    height: 20.0,
-                                    child: SvgPicture.asset(
-                                      'imgs/svg/facebook_icon.svg',
-                                      allowDrawingOutsideViewBox: true,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                 ],
               ),
               const SizedBox(height: 10),

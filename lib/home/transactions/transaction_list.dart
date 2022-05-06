@@ -81,7 +81,7 @@ class _DepositTransactionListViewState
           ? Container(
               alignment: Alignment.center,
               height: 50,
-              child: Text('No more ${widget.type.name} data '),
+              child: Text('No ${widget.type.name} record '),
             )
           : ListView.builder(
               itemBuilder: (context, index) {

@@ -63,11 +63,15 @@ class _TransactionPageState extends State<TransactionPage> {
               _pageController.jumpToPage(index);
             },
           ),
+          SizedBox(
+            height: 15,
+          ),
           Container(
             height: MediaQuery.of(context).size.height -
                 60 -
                 kToolbarHeight -
-                kBottomNavigationBarHeight,
+                kBottomNavigationBarHeight -
+                15,
             child: PageView(
                 controller: _pageController,
                 onPageChanged: (value) {
