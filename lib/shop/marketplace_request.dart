@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:resiklos/home/my_voucher/claimed_voucher_model.dart';
 import 'package:resiklos/shop/merchant_model.dart';
 import 'package:resiklos/shop/voucher_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
@@ -52,10 +53,10 @@ class MarketPlaceRequest {
     var res = await HttpManager.post(url: url, params: map, isMerchant: true);
     log("claim res ---->>>>${jsonEncode(res)}");
     try {
-      if (res["response"]["data"]["code"] == 200) {
+      if (res["response"]["code"] == 200) {
         return Future.value(true);
       } else {
-        showToast("${res["details"]} ${res["response"]["data"]["message"]}");
+        showToast("${res["details"]} ${res["response"]["message"]}");
         return Future.value(false);
       }
     } catch (e) {
@@ -64,20 +65,26 @@ class MarketPlaceRequest {
     return Future.value(null);
   }
 
-  static Future claimedVoucher() async {
-    String url = "api/public/claimed_vouchers";
+  static Future claimedVoucher(bool isUsed) async {
+    String url =
+        "api/public/claimed_vouchers?is_used=${isUsed == false ? 0 : 1}";
     var res = await HttpManager.get(url: url, isMerchant: true);
     log("claimed vouchers res ---->>>>${jsonEncode(res)}");
     try {
-      if (res["response"]["data"]["code"] == 200) {
-        return Future.value(true);
+      List<ClaimedVoucherModel> _list = [];
+      if (res["count"] > 0) {
+        List temp = res["results"];
+        temp.forEach((element) {
+          _list.add(ClaimedVoucherModel.fromJson(element));
+        });
+        return Future.value(_list);
       } else {
-        showToast("${res["details"]} ${res["response"]["data"]["message"]}");
+        showToast("${res["details"]} ${res["response"]["message"]}");
+        return Future.value([]);
       }
-      return Future.value(res["details"] == "Success");
     } catch (e) {
       log("parser merchant list error --->>>${e.toString()}");
-    }
+    } finally {}
     return Future.value(null);
   }
 }

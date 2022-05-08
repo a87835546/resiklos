@@ -29,7 +29,6 @@ class _MyVouchersPageState extends State<MyVouchersPage> {
   @override
   void initState() {
     super.initState();
-    getData();
   }
 
   @override
@@ -57,9 +56,13 @@ class _MyVouchersPageState extends State<MyVouchersPage> {
               _pageController.jumpToPage(index);
             },
           ),
+          SizedBox(
+            height: 15,
+          ),
           Container(
             height: MediaQuery.of(context).size.height -
                 60 -
+                15 -
                 kToolbarHeight -
                 kBottomNavigationBarHeight,
             child: PageView(
@@ -78,10 +81,5 @@ class _MyVouchersPageState extends State<MyVouchersPage> {
         ],
       ),
     );
-  }
-
-  void getData() async {
-    var result = await TransactionRequest.queryTransaction(1, 1);
-    log("result --->>>>$result");
   }
 }

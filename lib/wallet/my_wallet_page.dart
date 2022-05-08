@@ -161,9 +161,8 @@ class _WalletPageState extends State<MyWalletPage> {
   int selectedIndex = 0;
 
   final List assets = [
-    ListItem("RSG", 'Resiklos Gems', AppSingleton.userInfoModel?.gems,
-        'imgs/logo@2x.png'),
-    ListItem("BNB", 'Binance Coin', 2.5943, 'imgs/svg/bnb.svg', type: 'svg'),
+    ListItem("RSG", 'Resiklos Gems', 0, 'imgs/logo@2x.png'),
+    ListItem("BNB", 'Binance Coin', 0, 'imgs/svg/bnb.svg', type: 'svg'),
     ListItem("USDT", 'Tether', 0, 'imgs/svg/usdt.svg', type: 'svg')
   ];
 

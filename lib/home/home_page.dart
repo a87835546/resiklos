@@ -119,8 +119,9 @@ class _HomePageState extends BaseStatefulState<HomePage>
                                 padding:
                                     const EdgeInsets.only(left: 15, right: 15),
                               ),
-                              visible:
-                                  _model != null && _model?.fullName != null,
+                              visible: _model != null &&
+                                  (_model?.fullName != null ||
+                                      _model?.fullName != ""),
                             ),
                             const Padding(
                               padding:

@@ -90,7 +90,7 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                             gradient: LinearGradient(
                               begin: const Alignment(1.132, -1.192),
                               end: const Alignment(-1.0, 1.0),
-                              colors: showRP
+                              colors: index == 0
                                   ? [
                                       const Color(0xFFE8A81A),
                                       const Color(0xFFF4BB3C)
@@ -152,7 +152,9 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                                     Container(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        "${widget.points} ${index == 0 ? "RP" : "RSG"}",
+                                        index == 0
+                                            ? "${widget.points} RP"
+                                            : "${widget.count} RSG",
                                         style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 38,
@@ -192,7 +194,7 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                             ),
                             Padding(
                                 padding: EdgeInsets.only(bottom: 70, right: 30),
-                                child: showRP
+                                child: index == 0
                                     ? SvgPicture.asset(
                                         "imgs/svg/rp_icon.svg",
                                         width: 52,

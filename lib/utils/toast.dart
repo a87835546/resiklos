@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:resiklos/wallet/show_toast.dart' as wallet;
 
 ///错误提示样式的toast
 void showWarnToast(String text) {
@@ -30,6 +32,12 @@ void showToast(String text) {
     toastLength: Toast.LENGTH_LONG,
     gravity: ToastGravity.CENTER,
   );
+}
+
+void copyToast(String text, BuildContext context) {
+  Clipboard.setData(ClipboardData(text: text)).then((_) {
+    wallet.showToast(context, "copied " + text);
+  });
 }
 
 void showLoading() {

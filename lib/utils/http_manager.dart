@@ -34,7 +34,9 @@ class HttpManager {
           : (AppSingleton.devMode == DevMode.staging
               ? "https://staging.resiklos.app/api/v1/"
               : "https://api.resiklos.app/api/v1/"))
-      : "https://api.resiklos.app/api/v1/";
+      : ((AppSingleton.devMode == DevMode.staging
+          ? "https://staging.resiklos.app/api/v1/"
+          : "https://api.resiklos.app/api/v1/"));
 
   static String merchantUrl = "https://resiklos-merchant.trifectacore.tech/";
 

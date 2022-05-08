@@ -34,6 +34,7 @@ class _SetupWalletStep2PageState
     return Scaffold(
       appBar: const CustomAppBar(
         title: "",
+        bgColor: Colors.transparent,
       ),
       body: Container(
         padding: EdgeInsets.only(left: 45, right: 45),
@@ -84,6 +85,7 @@ class _SetupWalletStep2PageState
                       color: Color(0xff707070),
                       fontSize: 13,
                       fontWeight: FontWeight.normal),
+                  textAlign: TextAlign.center,
                 ),
               ),
               Container(
@@ -91,6 +93,7 @@ class _SetupWalletStep2PageState
                 child: Column(
                   children: [
                     Container(
+                      margin: EdgeInsets.only(bottom: 5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -118,11 +121,6 @@ class _SetupWalletStep2PageState
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          border:
-                              Border.all(color: mainTitleColor(), width: 1)),
                       child: TextField(
                         decoration: InputDecoration(
                             hintText: "Enter a password",
@@ -147,6 +145,7 @@ class _SetupWalletStep2PageState
                 child: Column(
                   children: [
                     Container(
+                      margin: EdgeInsets.only(bottom: 5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -164,11 +163,6 @@ class _SetupWalletStep2PageState
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          border:
-                              Border.all(color: mainTitleColor(), width: 1)),
                       child: TextField(
                         decoration: InputDecoration(
                             hintText: "Re-enter the password",

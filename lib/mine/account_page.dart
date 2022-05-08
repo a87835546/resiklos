@@ -100,7 +100,9 @@ class _AccountPageState extends State<AccountPage>
               const SizedBox(height: 5),
               GestureDetector(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: '${_model?.userId}'))
+                  Clipboard.setData(ClipboardData(
+                          text:
+                              '${_model?.userId != 0 ? _model?.userId : _model?.id ?? ""}'))
                       .then((_) {
                     showToast(context, 'ID copied');
                   });
@@ -114,7 +116,8 @@ class _AccountPageState extends State<AccountPage>
                     children: [
                       const TextSpan(text: 'ID: '),
                       TextSpan(
-                        text: '${_model?.userId ?? ""}',
+                        text:
+                            '${_model?.userId != 0 ? _model?.userId : _model?.id ?? ""}',
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
                         ),

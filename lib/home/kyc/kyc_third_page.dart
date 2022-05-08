@@ -153,6 +153,10 @@ class _KycThirdPageState extends BaseStatefulState<KycThirdPage> {
                       )),
                   behavior: HitTestBehavior.translucent,
                   onTap: () async {
+                    if (_path == null) {
+                      showErrorText("Please select your selfie photo");
+                      return;
+                    }
                     log("next");
                     showLoading();
                     var s = await uploadFacial();

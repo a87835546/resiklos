@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:resiklos/home/my_voucher/claimed_voucher_model.dart';
 import 'package:resiklos/home/transactions/transaction_detail_page.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/shop/marketplace_request.dart';
@@ -21,7 +22,7 @@ class _MyVoucherPageState extends State<MyClaimedVouchersPage> {
   final RefreshController _refreshController = RefreshController(
     initialRefresh: false,
   );
-  List<VoucherModel> _lists = [];
+  List<ClaimedVoucherModel> _lists = [];
   int _pageNum = 1;
 
   @override
@@ -31,9 +32,13 @@ class _MyVoucherPageState extends State<MyClaimedVouchersPage> {
   }
 
   void getData() async {
-    var list = await MarketPlaceRequest.claimedVoucher();
+    var list = await MarketPlaceRequest.claimedVoucher(false);
     log("merchant list --->>$list");
-    setState(() {});
+    _refreshController.loadComplete();
+    _refreshController.refreshCompleted();
+    setState(() {
+      _lists = list;
+    });
   }
 
   @override
@@ -56,8 +61,11 @@ class _MyVoucherPageState extends State<MyClaimedVouchersPage> {
             )
           : ListView.builder(
               itemBuilder: (context, index) {
-                VoucherModel model = _lists[index];
-                return ShopVoucherItem(model: model);
+                ClaimedVoucherModel model = _lists[index];
+                return ShopVoucherItem(
+                  model: model.voucher!,
+                  isClaimed: true,
+                );
               },
               itemCount: _lists.length,
               shrinkWrap: true,

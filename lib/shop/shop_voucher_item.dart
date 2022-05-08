@@ -2,21 +2,27 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:resiklos/shop/marketplace_request.dart';
 import 'package:resiklos/shop/voucher_model.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/toast.dart';
+import 'package:resiklos/wallet/show_toast.dart';
 
 class ShopVoucherItem extends StatefulWidget {
   final VoucherModel model;
+  final bool? isClaimed;
 
-  const ShopVoucherItem({Key? key, required this.model}) : super(key: key);
+  const ShopVoucherItem({Key? key, required this.model, this.isClaimed = false})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ShopVoucherItemState();
 }
 
 class _ShopVoucherItemState extends State<ShopVoucherItem> {
+  bool _showCode = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -91,30 +97,77 @@ class _ShopVoucherItemState extends State<ShopVoucherItem> {
                     ),
                   ),
                 ),
-                GestureDetector(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: mainColor(),
-                      borderRadius: BorderRadius.circular(3),
+                Visibility(
+                  child: GestureDetector(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: mainColor(),
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      height: 25,
+                      width: 60,
+                      alignment: Alignment.center,
+                      child: Text(
+                        "CLAIM",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
-                    height: 25,
-                    width: 60,
-                    alignment: Alignment.center,
-                    child: Text(
-                      "CLAIM",
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    onTap: () async {
+                      log("点击获取优惠券");
+                      var res = await MarketPlaceRequest.claimVoucher(
+                          false, widget.model.code.toString());
+                      if (res) {
+                        showText("Claimed Success");
+                        Navigator.of(context).pop();
+                      }
+                    },
                   ),
-                  onTap: () async {
-                    log("点击获取优惠券");
-                    var res = await MarketPlaceRequest.claimVoucher(
-                        false, widget.model.code.toString());
-                    if (res) {
-                      showText("Claimed Success");
-                      Navigator.of(context).pop();
-                    }
-                  },
+                  visible: widget.isClaimed == false,
                 ),
+                Visibility(
+                  child: GestureDetector(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: mainColor(),
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      height: 30,
+                      width: 100,
+                      alignment: Alignment.center,
+                      child: Text(
+                        "SHOW CODE",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    onTap: () async {
+                      setState(() {
+                        _showCode = true;
+                      });
+                    },
+                  ),
+                  visible: widget.isClaimed == true && _showCode == false,
+                ),
+                Visibility(
+                  child: GestureDetector(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      height: 30,
+                      width: 100,
+                      alignment: Alignment.center,
+                      child: Text(
+                        widget.model.code ?? "",
+                        style: TextStyle(color: mainColor()),
+                      ),
+                    ),
+                    onTap: () {
+                      copyToast(widget.model.code ?? "", context);
+                    },
+                  ),
+                  visible: _showCode,
+                )
               ],
             ),
           ),

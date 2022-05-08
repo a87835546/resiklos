@@ -104,6 +104,9 @@ class UserInfoModel {
     data['walletAddress'] = walletAddress;
     data['rpWalletAddress'] = rpWalletAddress;
     data['isFirstLogin'] = isFirstLogin;
+    data['verifiedEmail'] = emailVerificationStatus;
+    data['kycState'] = kycVerificationStatus;
+    data['verifiedEmail'] = verificationStatus;
     return data;
   }
 

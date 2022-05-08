@@ -6,10 +6,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/bottom_navigationbar.dart';
+import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/toast.dart';
 import 'package:resiklos/wallet/setup_wallet_progress_widget.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/color.dart';
+import 'package:resiklos/wallet/wallet_request.dart';
 
 class SetupWalletStep4Page extends BaseStatefulWidget {
   final List<String> seedPhares;
@@ -34,14 +36,26 @@ class _SetupWalletStep4PageState
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < 4; i++) {
+    bool flag = true;
+    while (flag) {
       int i = Random().nextInt(11);
       if (randoms.contains(i)) {
         i--;
       } else {
         randoms.add(Random().nextInt(12));
       }
+      if (randoms.length == 4) {
+        flag = false;
+      }
     }
+    // for (int i = 0; i < 4; i++) {
+    //   int i = Random().nextInt(11);
+    //   if (randoms.contains(i)) {
+    //     i--;
+    //   } else {
+    //     randoms.add(Random().nextInt(12));
+    //   }
+    // }
     dev.log("random charset --->>$randoms");
   }
 
@@ -284,15 +298,24 @@ class _SetupWalletStep4PageState
                           fontSize: 18),
                     )),
                 behavior: HitTestBehavior.translucent,
-                onTap: () {
+                onTap: () async {
                   if (widget.seedPhares[randoms[0]] == _controller1.text &&
                       widget.seedPhares[randoms[1]] == _controller2.text &&
                       widget.seedPhares[randoms[2]] == _controller3.text &&
                       widget.seedPhares[randoms[3]] == _controller4.text) {
-                    Navigator.pushAndRemoveUntil(context,
-                        MaterialPageRoute(builder: (ctx) {
-                      return CustomBottomNavigationBar();
-                    }), (route) => false);
+                    if (AppSingleton.walletModel?.walletAddress != null ||
+                        AppSingleton.walletModel?.walletAddress != "") {
+                      var res = await complete(
+                          AppSingleton.walletModel?.walletAddress ?? "");
+                      if (res) {
+                        Navigator.pushAndRemoveUntil(context,
+                            MaterialPageRoute(builder: (ctx) {
+                          return CustomBottomNavigationBar();
+                        }), (route) => false);
+                      } else {
+                        showErrorText("Saving wallet fail");
+                      }
+                    }
                   } else {
                     dev.log("random --->>>$randoms --->>${widget.seedPhares}");
                     showErrorText("Input the seed phares is mistake");

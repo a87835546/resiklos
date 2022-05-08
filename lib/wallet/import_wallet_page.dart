@@ -23,6 +23,7 @@ class _ImportWalletPageState extends State<ImportWalletPage> {
     return Scaffold(
       appBar: const CustomAppBar(
         title: "",
+        bgColor: Colors.transparent,
       ),
       body: Container(
         padding: const EdgeInsets.only(left: 45, right: 45),
@@ -73,6 +74,7 @@ class _ImportWalletPageState extends State<ImportWalletPage> {
                       color: Color(0xff707070),
                       fontSize: 13,
                       fontWeight: FontWeight.normal),
+                  textAlign: TextAlign.center,
                 ),
               ),
               Container(
@@ -80,7 +82,7 @@ class _ImportWalletPageState extends State<ImportWalletPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      padding: EdgeInsets.only(left: 5),
+                      padding: EdgeInsets.only(left: 5, top: 15, bottom: 5),
                       child: Text(
                         "12-word seedphrase",
                         style: TextStyle(
@@ -98,7 +100,12 @@ class _ImportWalletPageState extends State<ImportWalletPage> {
                       child: TextField(
                         decoration: const InputDecoration(
                             border: InputBorder.none,
-                            contentPadding: EdgeInsets.only(left: 5)),
+                            contentPadding: EdgeInsets.all(10)),
+                        cursorHeight: 20,
+                        maxLines: null,
+                        minLines: null,
+                        expands: true,
+                        textAlignVertical: TextAlignVertical.top,
                         controller: _controller1,
                       ),
                     )
@@ -125,11 +132,12 @@ class _ImportWalletPageState extends State<ImportWalletPage> {
                           fontSize: 18),
                     )),
                 behavior: HitTestBehavior.translucent,
-                onTap: () async{
+                onTap: () async {
                   if (_controller1.text.length < 3) {
                     showErrorText("Please input correct seedphrase");
                   } else {
-                    var res = await importWalletFromSeedPhrase(_controller1.text);
+                    var res =
+                        await importWalletFromSeedPhrase(_controller1.text);
                     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
                       return const ImportWalletCompletedPage();
                     }));
