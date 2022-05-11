@@ -90,7 +90,7 @@ class _AccountPageState extends State<AccountPage>
               ),
               const SizedBox(height: 10),
               Text(
-                _model?.fullName ?? "",
+                _model?.nickName ?? "",
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
@@ -290,22 +290,22 @@ class _AccountPageState extends State<AccountPage>
                         ),
                       ),
                     ),
-                    ListTile(
-                      title: const Text(
-                        'Nickname',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      trailing: Text(
-                        _model?.nickName ?? "",
-                        style: const TextStyle(
-                          color: ResiklosColors.muted,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
+                    // ListTile(
+                    //   title: const Text(
+                    //     'Nickname',
+                    //     style: TextStyle(
+                    //       fontSize: 12,
+                    //       fontWeight: FontWeight.w500,
+                    //     ),
+                    //   ),
+                    //   trailing: Text(
+                    //     _model?.nickName ?? "",
+                    //     style: const TextStyle(
+                    //       color: ResiklosColors.muted,
+                    //       fontWeight: FontWeight.w600,
+                    //     ),
+                    //   ),
+                    // ),
                     ListTile(
                       title: const Text(
                         'Referral Code',

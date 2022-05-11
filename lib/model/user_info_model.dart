@@ -7,6 +7,8 @@ class UserInfoModel {
   num? id;
   String? nickName;
   String? fullName;
+  String? lastName;
+  String? firstName;
   dynamic registerTime;
   String? available;
   String? mobile;
@@ -34,6 +36,8 @@ class UserInfoModel {
       this.userId,
       this.nickName = "R",
       this.fullName = "R",
+      this.lastName,
+      this.firstName,
       this.registerTime = '',
       this.available,
       this.mobile,
@@ -63,6 +67,8 @@ class UserInfoModel {
         inviteCode: json['inviteCode'],
         nickName: json['nickName'],
         fullName: json['userName'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
         avatar: json['avatar'],
         gender: json['gender'],
         createTime: json['createTime'],
@@ -88,6 +94,8 @@ class UserInfoModel {
     data['gender'] = gender;
     data['available'] = available;
     data['realName'] = fullName;
+    data['lastName'] = lastName;
+    data['firstName'] = firstName;
     data['createTime'] = createTime;
     data['mobile'] = mobile;
     data['available'] = available;
