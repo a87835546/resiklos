@@ -29,7 +29,7 @@ class _AccountPageState extends State<AccountPage>
   bool get wantKeepAlive => true;
   double progress = 0;
   UserInfoModel? _model = AppSingleton.userInfoModel;
-  String? _version;
+  String _version = "1.0";
 
   @override
   void initState() {
