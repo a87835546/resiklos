@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:resiklos/home/home_verify_emal_page.dart';
 import 'package:resiklos/home/kyc/kyc_frist_page.dart';
 import 'package:resiklos/model/user_info_model.dart';
@@ -28,11 +29,13 @@ class _AccountPageState extends State<AccountPage>
   bool get wantKeepAlive => true;
   double progress = 0;
   UserInfoModel? _model = AppSingleton.userInfoModel;
+  String? _version;
 
   @override
   void initState() {
     super.initState();
     getUser();
+    getVersion();
   }
 
   @override
@@ -290,22 +293,22 @@ class _AccountPageState extends State<AccountPage>
                         ),
                       ),
                     ),
-                    // ListTile(
-                    //   title: const Text(
-                    //     'Nickname',
-                    //     style: TextStyle(
-                    //       fontSize: 12,
-                    //       fontWeight: FontWeight.w500,
-                    //     ),
-                    //   ),
-                    //   trailing: Text(
-                    //     _model?.nickName ?? "",
-                    //     style: const TextStyle(
-                    //       color: ResiklosColors.muted,
-                    //       fontWeight: FontWeight.w600,
-                    //     ),
-                    //   ),
-                    // ),
+                    ListTile(
+                      title: const Text(
+                        'Version',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      trailing: Text(
+                        "V$_version",
+                        style: const TextStyle(
+                          color: ResiklosColors.muted,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
                     ListTile(
                       title: const Text(
                         'Referral Code',
@@ -354,6 +357,15 @@ class _AccountPageState extends State<AccountPage>
         ),
       ],
     ));
+  }
+
+  void getVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version; //版本号
+    String buildNumber = packageInfo.buildNumber; //版本构建号
+    setState(() {
+      _version = version;
+    });
   }
 
   Future getUser() async {
