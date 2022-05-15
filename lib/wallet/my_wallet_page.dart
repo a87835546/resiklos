@@ -147,6 +147,7 @@ import 'package:resiklos/utils/TokenTx.dart';
 import 'package:resiklos/utils/Tx.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/constants.dart';
+import 'package:resiklos/utils/verify_util.dart';
 import 'package:resiklos/wallet/abi/contracts.dart';
 import 'package:resiklos/wallet/setup_wallet_step1_page.dart';
 import 'package:resiklos/wallet/transfer_bottom_sheet_widget.dart';
@@ -281,7 +282,8 @@ class _WalletPageState extends State<MyWalletPage> {
                                 ),
                                 children: [
                                   TextSpan(
-                                      text: assets[index].amount.toString()),
+                                      text: formatMoney(
+                                          assets[index].amount.toString())),
                                   const TextSpan(text: " "),
                                   TextSpan(
                                     text: assets[index].coin,

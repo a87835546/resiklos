@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:resiklos/utils/verify_util.dart';
 import 'package:resiklos/wallet/show_toast.dart';
 
 Widget WalletCardWidget(BuildContext context,
@@ -191,7 +192,7 @@ Widget WalletCardWidget(BuildContext context,
                     width: 320.0,
                     height: 42.0,
                     child: Text(
-                      '${asset.amount} ${asset.coin}',
+                      '${formatMoney(asset.amount)} ${asset.coin}',
                       style: const TextStyle(
                         fontSize: 34,
                         color: Colors.white,

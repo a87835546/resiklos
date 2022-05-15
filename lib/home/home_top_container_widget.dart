@@ -11,6 +11,7 @@ import 'package:resiklos/home/summary_button_widget.dart';
 import 'package:resiklos/home/summary_card_widget.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/navigator_util.dart';
+import 'package:resiklos/utils/verify_util.dart';
 import 'package:resiklos/wallet/transfer_bottom_sheet_widget.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -153,12 +154,12 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                         index == 0
-                                            ? "${widget.points} RP"
-                                            : "${widget.count} RSG",
+                                            ? "${formatMoney(widget.points)} RP"
+                                            : "${formatMoney(widget.count)} RSG",
                                         style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 38,
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.w500),
                                       ),
                                     ),
 
@@ -166,8 +167,8 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                                       child: Container(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          "= ${widget.exchangeRate * widget.points} RSG",
-                                          style: TextStyle(
+                                          "= ${formatMoney(widget.exchangeRate * widget.points)} RSG",
+                                          style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 12,
                                               fontWeight: FontWeight.w300),
