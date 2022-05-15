@@ -1403,3 +1403,4 @@ app.*.map.json
 /android/app/build/intermediates/res/merged/release/xml_flutter_image_picker_file_paths.xml.flat
 /android/app/build/intermediates/res/merged/release/xml_flutter_share_file_paths.xml.flat
 /android/app/build/outputs/logs/manifest-merger-release-report.txt
+/android/app/
