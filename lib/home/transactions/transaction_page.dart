@@ -21,6 +21,7 @@ class _TransactionPageState extends State<TransactionPage> {
     'TRANSFERS',
     'REWARDS',
     'PURCHASES',
+    'BEP20',
     // 'EXCHANGES',
   ];
   List pages = const [
@@ -29,6 +30,7 @@ class _TransactionPageState extends State<TransactionPage> {
     ),
     WalletTransactionListView(type: WalletTransactionType.rewards),
     WalletTransactionListView(type: WalletTransactionType.purchase),
+    WalletTransactionListView(type: WalletTransactionType.bep20),
   ];
   int _index = 0;
 

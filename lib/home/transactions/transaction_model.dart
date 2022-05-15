@@ -10,7 +10,7 @@ class TransactionModel {
   String? createAt;
   String? userName;
   num? transactionId;
-  num? txId;
+  String? txId;
   String? receiveAddress;
   String? transferAddress;
   String? receivedUserName;

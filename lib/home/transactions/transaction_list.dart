@@ -14,6 +14,7 @@ enum WalletTransactionType {
   transfer,
   exchange,
   purchase,
+  bep20,
 }
 
 class WalletTransactionListView extends StatefulWidget {
@@ -59,6 +60,11 @@ class _DepositTransactionListViewState
           break;
         }
       case WalletTransactionType.purchase:
+        {
+          getRewordsTransaction(5);
+          break;
+        }
+      case WalletTransactionType.bep20:
         {
           getRewordsTransaction(4);
           break;
@@ -146,7 +152,7 @@ class _DepositTransactionListViewState
                                       height: 30,
                                       alignment: Alignment.centerRight,
                                       child: Text(
-                                        "${isAdd ? "+" : "-"} ${model.point} RP",
+                                        "${isAdd ? "+" : "-"} ${model.point} ${widget.type == WalletTransactionType.bep20 ? "RSG" : "RP"}",
                                         style: TextStyle(
                                             color: (!isAdd
                                                 ? Colors.redAccent
@@ -195,7 +201,10 @@ class _DepositTransactionListViewState
                       onTap: () {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (_) {
-                          return TransactionDetailPage(model: model);
+                          return TransactionDetailPage(
+                            model: model,
+                            type: widget.type,
+                          );
                         }));
                       },
                       behavior: HitTestBehavior.opaque,

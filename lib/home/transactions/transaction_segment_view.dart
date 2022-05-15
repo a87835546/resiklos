@@ -35,6 +35,7 @@ class _DepositTransactionSegmentViewState
     'TRANSFERS',
     'REWARDS',
     'PURCHASES',
+    'BEP20',
   ];
   double leftPadding = 0;
   late TabController _tabController;
@@ -50,6 +51,7 @@ class _DepositTransactionSegmentViewState
         'TRANSFERS',
         'REWARDS',
         'PURCHASES',
+        'BEP20',
       ];
       leftPadding = 14;
     }

@@ -1,14 +1,20 @@
 import 'package:resiklos/shop/voucher_model.dart';
 
 class ClaimedVoucherModel {
-  int? id;
+  num? id;
   String? email;
   String? reference;
   VoucherModel? voucher;
   String? voucherCode;
+  bool? isUsed;
 
   ClaimedVoucherModel(
-      {this.id, this.email, this.reference, this.voucher, this.voucherCode});
+      {this.id,
+      this.email,
+      this.reference,
+      this.voucher,
+      this.voucherCode,
+      this.isUsed});
 
   ClaimedVoucherModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -18,6 +24,7 @@ class ClaimedVoucherModel {
         ? new VoucherModel.fromJson(json['voucher'])
         : null;
     voucherCode = json['voucher_code'];
+    isUsed = json['is_used'];
   }
 
   Map<String, dynamic> toJson() {

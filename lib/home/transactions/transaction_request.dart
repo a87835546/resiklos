@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -12,13 +13,13 @@ class TransactionRequest {
    */
   static Future<List<TransactionModel>> queryTransaction(type, current) async {
     current = current - 1;
-    String? url = type == 0 || type == 4
+    String? url = type == 0 || type == 4 || type == 5
         ? AppSingleton.userInfoModel?.email
         : AppSingleton.userInfoModel?.rpWalletAddress.toString();
     var result = await HttpManager.get(
         url:
             "transaction/queryTransactionV2?type=$type&email=$url&pageSize=10&currentNum=$current");
-    // log("transaction result $result");
+    log("transaction result ${jsonEncode(result)}");
     List<TransactionModel> list = [];
     try {
       if (result["data"] != null &&

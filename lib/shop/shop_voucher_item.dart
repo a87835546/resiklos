@@ -118,7 +118,8 @@ class _ShopVoucherItemState extends State<ShopVoucherItem> {
                           false, widget.model.code.toString());
                       if (res) {
                         showText("Claimed Success");
-                        Navigator.of(context).pop();
+                      } else {
+                        showText("Claimed fail");
                       }
                     },
                   ),

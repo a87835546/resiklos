@@ -68,25 +68,19 @@ class MarketPlaceRequest {
     return Future.value(null);
   }
 
-  static Future claimedVoucher(bool isUsed) async {
+  static Future claimedVoucher(bool isUsed, int page) async {
     String url =
-        "api/public/claimed_vouchers?is_used=${isUsed == false ? 0 : 1}";
+        "api/public/claimed_vouchers?is_used=${isUsed == false ? 0 : 1}&no_pagination=0";
     var res = await HttpManager.get(url: url, isMerchant: true);
     log("claimed vouchers res ---->>>>${jsonEncode(res)}");
     try {
       List<ClaimedVoucherModel> _list = [];
-      if (res["count"] > 0) {
-        List temp = res["results"];
-        temp.forEach((element) {
-          _list.add(ClaimedVoucherModel.fromJson(element));
-        });
-        return Future.value(_list);
-      } else {
-        showToast("${res["details"]} ${res["response"]["message"]}");
-        return Future.value([]);
-      }
+      res.forEach((element) {
+        _list.add(ClaimedVoucherModel.fromJson(element));
+      });
+      return Future.value(_list);
     } catch (e) {
-      log("parser merchant list error --->>>${e.toString()}");
+      log("parser claimed vouchers error --->>>${e.toString()}");
     } finally {}
     return Future.value(null);
   }

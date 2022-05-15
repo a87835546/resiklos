@@ -116,16 +116,27 @@ class _HomePageState extends BaseStatefulState<HomePage>
                             //     ),
                             //   ),
                             // ),
-                            Visibility(
-                              child: Padding(
-                                child: VerificationCardWidget(context, _model),
-                                padding:
-                                    const EdgeInsets.only(left: 15, right: 15),
-                              ),
-                              visible: _model != null &&
-                                  (_model?.fullName != null ||
-                                      _model?.fullName != ""),
-                            ),
+
+                            FutureBuilder(builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              bool status = _model != null &&
+                                  (_model?.emailVerificationStatus != null ||
+                                      _model?.kycVerificationStatus != null);
+                              log("has data --->>>$status");
+                              if (!status) {
+                                return Container();
+                              } else {
+                                return Visibility(
+                                  child: Padding(
+                                    child:
+                                        VerificationCardWidget(context, _model),
+                                    padding: const EdgeInsets.only(
+                                        left: 15, right: 15),
+                                  ),
+                                  visible: status,
+                                );
+                              }
+                            }),
                             const Padding(
                               padding:
                                   EdgeInsets.only(top: 30, left: 15, right: 15),

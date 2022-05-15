@@ -30,7 +30,7 @@ class _MyVoucherPageState extends State<MyVoucherHistoryPage> {
   }
 
   void getData() async {
-    var list = await MarketPlaceRequest.claimedVoucher(true);
+    var list = await MarketPlaceRequest.claimedVoucher(true, _pageNum);
     _refreshController.loadComplete();
     _refreshController.refreshCompleted();
     log("merchant list --->>$list");

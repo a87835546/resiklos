@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:resiklos/home/transactions/transaction_list.dart';
 import 'package:resiklos/home/transactions/transaction_model.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/app_singleton.dart';
@@ -7,8 +8,10 @@ import 'package:resiklos/utils/color.dart';
 
 class TransactionDetailPage extends StatefulWidget {
   final TransactionModel model;
+  final WalletTransactionType type;
 
-  const TransactionDetailPage({Key? key, required this.model})
+  const TransactionDetailPage(
+      {Key? key, required this.type, required this.model})
       : super(key: key);
 
   @override
@@ -30,17 +33,27 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
               height: 20,
             ),
             TransactionDetailItem(
-              title: "Tx ID:",
+              title: "Transaction ID:",
               subTitle: "${widget.model.transactionId}",
+            ),
+            Visibility(
+              child: TransactionDetailItem(
+                title: "Transaction Hash:",
+                subTitle: "${widget.model.txId}",
+              ),
+              visible: widget.type == WalletTransactionType.bep20,
             ),
             TransactionDetailItem(
               title: "Received Address:",
               subTitle:
                   "${widget.model.receiveAddress ?? AppSingleton.userInfoModel?.rpWalletAddress}",
             ),
-            TransactionDetailItem(
-              title: "Received Name:",
-              subTitle: "${widget.model.receivedUserName}",
+            Visibility(
+              child: TransactionDetailItem(
+                title: "Received Name:",
+                subTitle: "${widget.model.receivedUserName}",
+              ),
+              visible: widget.type != WalletTransactionType.bep20,
             ),
             TransactionDetailItem(
               title: "Transfer Address:",
@@ -52,7 +65,8 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
             ),
             TransactionDetailItem(
               title: "Transfer Amount:",
-              subTitle: "${widget.model.point} RP",
+              subTitle:
+                  "${widget.model.point} ${widget.type == WalletTransactionType.bep20 ? "RSG" : "RP"}",
               color: (widget.model.receiveAddress !=
                       AppSingleton.userInfoModel?.rpWalletAddress
                   ? Colors.redAccent

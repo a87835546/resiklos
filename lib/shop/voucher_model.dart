@@ -8,25 +8,25 @@ class VoucherModel {
   num? merchant;
   String? merchantName;
   String? validity;
-  num? image;
+  String? image;
   String? imageUrl;
   String? code;
   num? amount;
 
   VoucherModel(
       {this.id,
-        this.name,
-        this.voucherCategory,
-        this.voucherCategoryName,
-        this.voucherSubCategory,
-        this.voucherSubCategoryName,
-        this.merchant,
-        this.merchantName,
-        this.validity,
-        this.image,
-        this.imageUrl,
-        this.code,
-        this.amount});
+      this.name,
+      this.voucherCategory,
+      this.voucherCategoryName,
+      this.voucherSubCategory,
+      this.voucherSubCategoryName,
+      this.merchant,
+      this.merchantName,
+      this.validity,
+      this.image,
+      this.imageUrl,
+      this.code,
+      this.amount});
 
   VoucherModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
