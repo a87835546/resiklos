@@ -23,6 +23,8 @@ class _MarketplacePageState extends State<MarketplacePage>
   List<VoucherModel> _list = [];
   List<MerchantModel> _list1 = [];
   MerchantModel? _select;
+  final TextEditingController _textEditingController = TextEditingController();
+  String? _keyword;
 
   @override
   void initState() {
@@ -32,7 +34,7 @@ class _MarketplacePageState extends State<MarketplacePage>
   }
 
   void getData() async {
-    var list = await MarketPlaceRequest.getList();
+    var list = await MarketPlaceRequest.getList(keyword: _keyword);
     log("merchant list --->>$list");
     setState(() {
       _list1 = list;
@@ -122,6 +124,7 @@ class _MarketplacePageState extends State<MarketplacePage>
                           TextField(
                             autocorrect: false,
                             textAlignVertical: TextAlignVertical.center,
+                            controller: _textEditingController,
                             style: const TextStyle(
                               fontSize: 12.0,
                               fontWeight: FontWeight.w600,
@@ -132,6 +135,10 @@ class _MarketplacePageState extends State<MarketplacePage>
                                 child: Icon(Icons.search),
                                 onTap: () {
                                   log("search");
+                                  setState(() {
+                                    _keyword = _textEditingController.text;
+                                    getData();
+                                  });
                                 },
                               ),
                               hintText: 'Search shop name, category...',
@@ -198,7 +205,7 @@ class _MarketplacePageState extends State<MarketplacePage>
             ),
             Container(
                 child: ShopVoucherPage(
-              id: 1,
+              id: 0,
             )),
           ],
         ),

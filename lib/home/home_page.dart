@@ -10,10 +10,12 @@ import 'package:resiklos/home/home_top_container_widget.dart';
 import 'package:resiklos/home/summary_card_widget.dart';
 import 'package:resiklos/home/verification_card_widget.dart';
 import 'package:resiklos/model/user_info_model.dart';
+import 'package:resiklos/utils/TokenTx.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/event_bus_util.dart';
 import 'package:resiklos/utils/http_manager.dart';
 import 'package:resiklos/utils/toast.dart';
+import 'package:resiklos/wallet/my_wallet_page.dart';
 
 import 'home_invite_widget.dart';
 import 'home_navi_widget.dart';
@@ -29,7 +31,7 @@ class _HomePageState extends BaseStatefulState<HomePage>
     with AutomaticKeepAliveClientMixin {
   final _controller = ScrollController();
   final RefreshController _refreshController = RefreshController();
-  int _referralCount = 0;
+  String _rsgBalance = "0";
   num? _points = AppSingleton.userInfoModel?.gems;
   num? _rate = 0;
   UserInfoModel? _model;
@@ -39,6 +41,7 @@ class _HomePageState extends BaseStatefulState<HomePage>
   void initState() {
     super.initState();
     getData();
+    loadBalance();
     _streamSubscription = EventBusUtil.listen((event) {
       log("home page event listen -----------?>>>>>>>>>>> $event");
       if (event is RefreshRpEvent) {
@@ -97,7 +100,7 @@ class _HomePageState extends BaseStatefulState<HomePage>
                             ),
                             HomeTopContainerView(
                               points: _points ?? 0,
-                              count: _referralCount,
+                              count: _rsgBalance,
                               exchangeRate: _rate ?? 1,
                             ),
                             // SummaryCardWidget(context,
@@ -169,7 +172,7 @@ class _HomePageState extends BaseStatefulState<HomePage>
 
   void getData() async {
     showLoading();
-    Future.wait([getReferralsCount(), getPoints(), getUser(), getAmount()])
+    Future.wait([loadBalance(), getPoints(), getUser(), getAmount()])
         .whenComplete(() {
       _refreshController.refreshCompleted();
       EasyLoading.dismiss();
@@ -182,8 +185,31 @@ class _HomePageState extends BaseStatefulState<HomePage>
         params: {"referralCode": AppSingleton.userInfoModel?.inviteCode ?? ""});
     log("referral count --->>>$r");
     if (mounted && r["data"] != null) {
-      setState(() {
-        _referralCount = r["data"]["count"] ?? 0;
+      setState(() {});
+    }
+  }
+
+  Future<void> loadBalance() async {
+    if (AppSingleton.userInfoModel?.walletAddress != null ||
+        AppSingleton.userInfoModel?.walletAddress != "") {
+      TokenTx.getBalances(AppSingleton.userInfoModel?.walletAddress ?? "")
+          .then((value) {
+        log("balance 0--->>>$value");
+
+        for (var element in value) {
+          if (element.symbol == WalletType.RSGT.name) {
+            log("rsgt ---->>>${element.balance}");
+            if (mounted) {
+              setState(() {
+                try {
+                  _rsgBalance = element.balance.toString();
+                } catch (e) {
+                  log("err--->>>$e");
+                }
+              });
+            }
+          }
+        }
       });
     }
   }

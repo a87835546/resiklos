@@ -18,7 +18,7 @@ import 'home_button_widget.dart';
 import 'home_referrals_page.dart';
 
 class HomeTopContainerView extends StatefulWidget {
-  final num count;
+  final String count;
   final num points;
   final num exchangeRate;
 

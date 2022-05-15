@@ -11,9 +11,12 @@ import 'package:resiklos/utils/toast.dart';
 
 class MarketPlaceRequest {
   // /api/public/vouchers?merchant=1&no_pagination=1
-  static Future<List<MerchantModel>> getList() async {
-    var res = await HttpManager.get(
-        url: "api/public/merchants/?no_pagination=1", isMerchant: true) as List;
+  static Future<List<MerchantModel>> getList({String? keyword}) async {
+    String url = "api/public/merchants/?no_pagination=1";
+    if (keyword != null) {
+      url = "api/public/merchants/?no_pagination=1&search=$keyword";
+    }
+    var res = await HttpManager.get(url: url, isMerchant: true) as List;
     // log("merchant list ---->>>>${jsonEncode(res)}");
     List<MerchantModel> _temp = [];
     try {
@@ -26,7 +29,7 @@ class MarketPlaceRequest {
     return Future.value(_temp);
   }
 
-  static Future<List<VoucherModel>> getVoucherList(int id) async {
+  static Future<List<VoucherModel>> getVoucherList(int? id) async {
     String url = id == 0
         ? "api/public/vouchers?no_pagination=1"
         : "api/public/vouchers?merchant=$id&no_pagination=1";

@@ -7,6 +7,7 @@ import 'package:http/http.dart';
 import 'package:resiklos/home/home_transfer_send_mode_widget.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/TokenTx.dart';
+import 'package:resiklos/utils/Tx.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/cache.dart';
 import 'package:resiklos/utils/color.dart';
@@ -41,14 +42,15 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
   String _balance = "0";
   String _inputValue = "0";
   String _title = "Email";
-  String? _private;
-  String? _public;
+  double? _gasFee;
+  double? _bnbBalance;
 
   @override
   void initState() {
     super.initState();
     if (!widget.isRp) {
       loadBalance();
+      getGasFee();
       setState(() {
         _title = "Wallet Address";
       });
@@ -59,6 +61,9 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool disable = widget.isRp
+        ? false
+        : (_bnbBalance.toString() == "0" || _balance == "0");
     return Scaffold(
       appBar: CustomAppBar(
         title: "",
@@ -199,7 +204,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                           children: [
                             Container(
                               height: 20,
-                              width: 100,
+                              width: 200,
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 "Total Amount",
@@ -209,7 +214,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                             ),
                             Container(
                               height: 20,
-                              width: 100,
+                              width: 200,
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 "$_inputValue ${widget.isRp ? "RP" : "RSG"}",
@@ -221,10 +226,12 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                             ),
                             Container(
                               height: 20,
-                              width: 100,
+                              width: 200,
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                widget.isRp ? "No Fees" : "Gas fee",
+                                widget.isRp
+                                    ? "No Fees"
+                                    : "$_gasFee BNB Gas fee",
                                 style: TextStyle(
                                     color: color_707070(), fontSize: 10),
                               ),
@@ -235,7 +242,9 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                       GestureDetector(
                         child: Container(
                           decoration: BoxDecoration(
-                            color: mainColor(),
+                            color: disable
+                                ? mainColor().withOpacity(0.2)
+                                : mainColor(),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           alignment: Alignment.center,
@@ -250,6 +259,9 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                           ),
                         ),
                         onTap: () {
+                          if (disable) {
+                            return;
+                          }
                           if (widget.isRp) {
                             transferRP();
                           } else {
@@ -433,7 +445,22 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
           }
         }
       });
+      Tx.getBalance(AppSingleton.userInfoModel?.walletAddress ?? "")
+          .then((value) {
+        setState(() {
+          _bnbBalance = value;
+          log("bnb balance ---<>>>$_bnbBalance");
+        });
+      });
     }
+  }
+
+  void getGasFee() async {
+    double gasFee = await Blockchain.estimateGasFee();
+    log("gas fee --->>$gasFee");
+    setState(() {
+      _gasFee = gasFee;
+    });
   }
 
   void transferRSG() async {

@@ -38,7 +38,7 @@ class HttpManager {
           ? "https://staging.resiklos.app/api/v1/"
           : "https://api.resiklos.app/api/v1/"));
 
-  static String merchantUrl = "https://backend.stg.resiklos.app";
+  static String merchantUrl = "https://backend.stg.resiklos.app/";
 
   static final Dio _dio = Dio();
 
