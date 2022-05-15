@@ -6,6 +6,7 @@ class WalletModel {
   String? userId;
   String? seedPhrase;
   String? walletAddress;
+  String? privateKey;
   num? balanceFee;
 
   WalletModel(
@@ -16,6 +17,7 @@ class WalletModel {
       userId,
       seedPhrase,
       walletAddress,
+      privateKey,
       balanceFee});
 
   WalletModel.fromJson(Map<String, dynamic> json) {
@@ -27,10 +29,11 @@ class WalletModel {
     seedPhrase = json['seedPhrase'];
     walletAddress = json['address'];
     balanceFee = json['balanceFee'];
+    privateKey = json['privateKey'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['publicKey'] = publicKey;
     data['lastUpdate'] = lastUpdate;
     data['walletIncome'] = walletIncome;
@@ -39,6 +42,7 @@ class WalletModel {
     data['seedPhrase'] = seedPhrase;
     data['walletAddress'] = walletAddress;
     data['balanceFee'] = balanceFee;
+    data['privateKey'] = privateKey;
     return data;
   }
 }

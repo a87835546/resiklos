@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:developer' as dev;
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -7,11 +9,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/bottom_navigationbar.dart';
 import 'package:resiklos/utils/app_singleton.dart';
+import 'package:resiklos/utils/cache.dart';
 import 'package:resiklos/utils/toast.dart';
+import 'package:resiklos/wallet/abi/contracts.dart';
 import 'package:resiklos/wallet/setup_wallet_progress_widget.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/wallet/wallet_request.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SetupWalletStep4Page extends BaseStatefulWidget {
   final List<String> seedPhares;
@@ -48,14 +53,6 @@ class _SetupWalletStep4PageState
         flag = false;
       }
     }
-    // for (int i = 0; i < 4; i++) {
-    //   int i = Random().nextInt(11);
-    //   if (randoms.contains(i)) {
-    //     i--;
-    //   } else {
-    //     randoms.add(Random().nextInt(12));
-    //   }
-    // }
     dev.log("random charset --->>$randoms");
   }
 
@@ -305,8 +302,11 @@ class _SetupWalletStep4PageState
                       widget.seedPhares[randoms[3]] == _controller4.text) {
                     if (AppSingleton.walletModel?.walletAddress != null ||
                         AppSingleton.walletModel?.walletAddress != "") {
-                      var res = await complete(
-                          AppSingleton.walletModel?.walletAddress ?? "");
+                      dev.log(
+                          "seed phrase --->>>${widget.seedPhares.join(" ")}");
+                      String address = await Blockchain.createNewWallet(
+                          widget.seedPhares.join(" "));
+                      var res = await complete(address);
                       if (res) {
                         Navigator.pushAndRemoveUntil(context,
                             MaterialPageRoute(builder: (ctx) {
@@ -334,5 +334,44 @@ class _SetupWalletStep4PageState
       '<svg viewBox="76.0 381.0 11.0 11.0" ><path transform="translate(75.44, 380.44)" d="M 6.062500476837158 0.5625 C 3.024925470352173 0.5625 0.5625 3.024925470352173 0.5625 6.062500476837158 C 0.5625 9.100074768066406 3.024925470352173 11.5625 6.062500476837158 11.5625 C 9.100074768066406 11.5625 11.5625 9.100074768066406 11.5625 6.062500476837158 C 11.5625 3.024924993515015 9.10007381439209 0.5625 6.062500476837158 0.5625 Z M 7.83669376373291 6.062500476837158 C 7.83669376373291 7.040790557861328 7.040790557861328 7.83669376373291 6.062500476837158 7.83669376373291 C 5.08420991897583 7.83669376373291 4.288306713104248 7.040790557861328 4.288306713104248 6.062500476837158 C 4.288306713104248 5.08420991897583 5.08420991897583 4.288306713104248 6.062500476837158 4.288306713104248 C 7.040790557861328 4.288306713104248 7.83669376373291 5.08420991897583 7.83669376373291 6.062500476837158 Z" fill="#00a6be" stroke="none" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>',
       allowDrawingOutsideViewBox: true,
     );
+  }
+
+  void loadEmail() async {
+    try {
+      String publicKey = "";
+      String privateKey = "";
+      if (Platform.isIOS) {
+        SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        publicKey = sharedPreferences.get("public_key") as String;
+        privateKey = sharedPreferences.get("private_key") as String;
+      } else {
+        publicKey = await Cache.getInstance().get("public_key");
+        privateKey = await Cache.getInstance().get("private_key");
+      }
+      dev.log("private key --->>>> $privateKey public key --->>>>$publicKey");
+    } catch (e) {
+      dev.log("load wallet address is error $e");
+    }
+  }
+
+  void saveData() async {
+    try {
+      if (Platform.isIOS) {
+        SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        await sharedPreferences.setString(
+            "public_key", AppSingleton.walletModel?.publicKey ?? "");
+        await sharedPreferences.setString(
+            "private_key", AppSingleton.walletModel?.privateKey ?? "");
+      } else {
+        await Cache.getInstance()
+            .setString("public_key", AppSingleton.walletModel?.publicKey ?? "");
+        await Cache.getInstance().setString(
+            "private_key", AppSingleton.walletModel?.privateKey ?? "");
+      }
+    } catch (e) {
+      dev.log("save user wallet is error $e");
+    }
   }
 }

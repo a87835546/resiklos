@@ -76,3 +76,23 @@ Future complete(String address) async {
   }
   return Future.value([]);
 }
+
+Future completeTransferRSG(String txId, String amount, String toAddress,
+    {String? note}) async {
+  Map<String, dynamic> params = {
+    "amount": amount,
+    "email": AppSingleton.userInfoModel?.email,
+    "note": note,
+    "toAddress": toAddress,
+    "txId": txId
+  };
+  var res =
+      await HttpManager.post(url: "wallet/completeTransferRSG", params: params);
+  log("complete  wallet  res ---->>>>>$res");
+  try {
+    return Future.value(res["code"] == 200);
+  } catch (e) {
+    log("complete  wallet error --->>> $e");
+  }
+  return Future.value([]);
+}

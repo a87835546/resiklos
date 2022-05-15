@@ -63,6 +63,10 @@ dependencies:
   card_swiper: ^2.0.3
   proste_indexed_stack: ^0.2.4
   event_bus: ^2.0.0
+  web3dart: ^2.3.5
+  bip39: ^1.0.6
+  bip32: ^2.0.0
+  web_socket_channel: ^2.2.0
 
 dev_dependencies:
   flutter_test:

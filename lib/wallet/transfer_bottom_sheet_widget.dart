@@ -3,10 +3,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:resiklos/home/home_transfer_page.dart';
+import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/constants.dart';
 import 'package:resiklos/wallet/badge_widget.dart';
 
 void showTransferBottomSheetWidget(BuildContext context) {
+  log("wallet address--->>>>${AppSingleton.walletModel}  ---???${AppSingleton.userInfoModel?.walletAddress}");
   showModalBottomSheet(
       backgroundColor: Colors.white,
       context: context,
@@ -96,7 +98,9 @@ void showTransferBottomSheetWidget(BuildContext context) {
                     log("message ----->>>>click transfer rp");
 
                     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                      return HomeTransferPage();
+                      return HomeTransferPage(
+                        isRp: true,
+                      );
                     }));
                   },
                   contentPadding:
@@ -107,7 +111,8 @@ void showTransferBottomSheetWidget(BuildContext context) {
                 Opacity(
                   opacity: 0.7,
                   child: ListTile(
-                    enabled: false,
+                    enabled: AppSingleton.userInfoModel?.walletAddress != "" ||
+                        AppSingleton.userInfoModel?.walletAddress != null,
                     horizontalTitleGap: 5,
                     leading: const Icon(Icons.logout,
                         size: 30, color: ResiklosColors.primary),
@@ -141,7 +146,13 @@ void showTransferBottomSheetWidget(BuildContext context) {
                       ],
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      log("eeeeeeeeee");
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (_) {
+                        return HomeTransferPage(
+                          isRp: false,
+                        );
+                      }));
                     },
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 35),

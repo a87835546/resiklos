@@ -40,9 +40,9 @@ void copyToast(String text, BuildContext context) {
   });
 }
 
-void showLoading() {
+void showLoading({String? title}) {
   EasyLoading.show(
-    status: "loading...",
+    status: title ?? "loading...",
     maskType: EasyLoadingMaskType.black,
   );
 }

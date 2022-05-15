@@ -7,6 +7,7 @@ import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/kyc/kyc_frist_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/toast.dart';
+import 'package:resiklos/wallet/abi/contracts.dart';
 import 'package:resiklos/wallet/setup_wallet_progress_widget.dart';
 import 'package:resiklos/wallet/setup_wallet_step3_page.dart';
 import 'package:resiklos/rk_app_bar.dart';
@@ -206,11 +207,8 @@ class _SetupWalletStep2PageState
                   log("start verify kyc");
                   if (_passwordController.text == _confirmController.text &&
                       _passwordController.text.length > 7) {
-                    WalletModel res =
-                        await createWallet(_passwordController.text);
-                    AppSingleton.walletModel = res;
-                    if (null != res) {
-                      String seed = res.seedPhrase ?? "";
+                    String seed = Blockchain.generateSeedPhrase();
+                    if (null != seed) {
                       List<String> temp = seed.split(" ");
                       log("seed phares --->>>$temp");
                       NavigatorUtil.push(

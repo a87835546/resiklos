@@ -1,18 +1,33 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:resiklos/home/home_transfer_send_mode_widget.dart';
 import 'package:resiklos/rk_app_bar.dart';
+import 'package:resiklos/utils/TokenTx.dart';
 import 'package:resiklos/utils/app_singleton.dart';
+import 'package:resiklos/utils/cache.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/event_bus_util.dart';
 import 'package:resiklos/utils/http_manager.dart';
 import 'package:resiklos/utils/toast.dart';
 import 'package:resiklos/utils/verify_util.dart';
+import 'package:resiklos/wallet/abi/contracts.dart';
+import 'package:resiklos/wallet/my_wallet_page.dart';
+import 'package:resiklos/wallet/wallet_request.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:web3dart/web3dart.dart';
+import 'package:web3dart/src/crypto/formatting.dart';
+import 'package:bip39/bip39.dart' as bip39;
+import 'package:bip32/bip32.dart' as bip32;
 
 class HomeTransferPage extends StatefulWidget {
-  const HomeTransferPage({Key? key}) : super(key: key);
+  final bool isRp;
+
+  const HomeTransferPage({Key? key, required this.isRp}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HomeTransferPageState();
@@ -26,11 +41,20 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
   String _balance = "0";
   String _inputValue = "0";
   String _title = "Email";
+  String? _private;
+  String? _public;
 
   @override
   void initState() {
     super.initState();
-    getAmount();
+    if (!widget.isRp) {
+      loadBalance();
+      setState(() {
+        _title = "Wallet Address";
+      });
+    } else {
+      getAmount();
+    }
   }
 
   @override
@@ -54,7 +78,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                   width: double.maxFinite,
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Send RP",
+                    "Send ${widget.isRp ? "RP" : "RSG"}",
                     style: TextStyle(
                         color: color_707070(),
                         fontWeight: FontWeight.bold,
@@ -73,23 +97,26 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                         fontWeight: FontWeight.w400),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                  child: HomeTransferSendModeWidget(
-                    title: "Send Mode",
-                    subtitle: _title,
-                    hasInput: false,
-                    click: () {
-                      // selectType(context);
-                      selectType1();
-                    },
+                Visibility(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 15, bottom: 15),
+                    child: HomeTransferSendModeWidget(
+                      title: "Send Mode",
+                      subtitle: _title,
+                      hasInput: false,
+                      click: () {
+                        // selectType(context);
+                        selectType1();
+                      },
+                    ),
                   ),
+                  visible: widget.isRp,
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 15, bottom: 15),
                   child: HomeTransferSendModeWidget(
                     title: _title,
-                    subtitle: "Resiklos account email",
+                    subtitle: widget.isRp ? "Resiklos account $_title" : _title,
                     editingController: _emailController,
                     hasInput: true,
                   ),
@@ -125,7 +152,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                       ),
                       Container(
                         child: Text(
-                          "$_balance RP",
+                          "$_balance ${widget.isRp ? "RP" : "RSG"}",
                           style: TextStyle(
                               color: color_707070(),
                               fontSize: 12,
@@ -185,7 +212,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                               width: 100,
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "$_inputValue RP",
+                                "$_inputValue ${widget.isRp ? "RP" : "RSG"}",
                                 style: TextStyle(
                                     color: color_707070(),
                                     fontSize: 18,
@@ -197,7 +224,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                               width: 100,
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "No Fees",
+                                widget.isRp ? "No Fees" : "Gas fee",
                                 style: TextStyle(
                                     color: color_707070(), fontSize: 10),
                               ),
@@ -223,7 +250,11 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                           ),
                         ),
                         onTap: () {
-                          transfer();
+                          if (widget.isRp) {
+                            transferRP();
+                          } else {
+                            transferRSG();
+                          }
                         },
                       )
                     ],
@@ -322,21 +353,22 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
         });
   }
 
-
   void getAmount() async {
     var res = await HttpManager.get(
         url: "wallet/balance?email=${AppSingleton.userInfoModel?.email}");
     log("balance --->>>$res");
     try {
-      setState(() {
-        _balance = res["data"]["rpBalance"];
-      });
+      if (mounted && widget.isRp) {
+        setState(() {
+          _balance = res["data"]["rpBalance"];
+        });
+      }
     } catch (e) {
       log("获取余额错误");
     }
   }
 
-  void transfer() async {
+  void transferRP() async {
     int amount =
         int.parse(_amountController.text == "" ? "0" : _amountController.text);
     log("message--->>>${amount}");
@@ -354,10 +386,9 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
     }
     if (amount > num.parse(_balance)) {
       showErrorText(
-          "Please input transfer correct amount,your available balance has $_balance");
+          "Please input valid amount,your available balance is $_balance");
       return;
     }
-
 
     Map<String, dynamic> temp = {
       "email": AppSingleton.userInfoModel?.email,
@@ -377,5 +408,71 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
     } else {
       showText("Transfer RP Fail ${res["message"]}");
     }
+  }
+
+  void loadBalance() {
+    if (AppSingleton.userInfoModel?.walletAddress != null ||
+        AppSingleton.userInfoModel?.walletAddress != "") {
+      TokenTx.getBalances(AppSingleton.userInfoModel?.walletAddress ?? "")
+          .then((value) {
+        log("balance 0--->>>$value");
+
+        for (var element in value) {
+          if (element.symbol == WalletType.RSGT.name) {
+            log("rsgt ---->>>${element.balance}");
+            if (mounted) {
+              setState(() {
+                log("rsg balance ---->>$_balance");
+                try {
+                  _balance = element.balance.toString();
+                } catch (e) {
+                  log("err--->>>$e");
+                }
+              });
+            }
+          }
+        }
+      });
+    }
+  }
+
+  void transferRSG() async {
+    showLoading(title: "Processing transfer. Please wait");
+    double amount = double.parse(
+        _amountController.text == "" ? "0" : _amountController.text);
+    log("message--->>>${amount}");
+    String address = _emailController.text;
+    if (amount == 0) {
+      showErrorText("Please input transfer correct amount");
+      return;
+    }
+    if (amount > num.parse(_balance)) {
+      showErrorText(
+          "Please input valid amount,your available balance is $_balance");
+      return;
+    }
+
+    Blockchain.loadWallet().then((value) {
+      Blockchain.transferBep20Token(
+              address, Bep20Token.rsgt, amount.toString(), value)
+          .then((tx) {
+        log("tx id --->>>$tx");
+        completeTransferRSG(tx, amount.toString(), _emailController.text,
+                note: _noteController.text)
+            .then((value) {
+          showText("Transfer success");
+
+          Navigator.of(context).pop();
+          log("transfer result--->>>$value");
+        });
+        showText("Transfer success");
+      }).catchError((e) {
+        log("transfer  error --->>>${e}");
+        showErrorText("Transfer failed");
+      });
+    }).catchError((e) {
+      log("load wallet error --->>>${e}");
+      showErrorText("Transfer failed");
+    });
   }
 }
