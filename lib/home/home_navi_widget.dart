@@ -108,16 +108,15 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Container(
-                    height: 20,
-                    alignment: Alignment.centerLeft,
-                    child: Image.asset(
-                      "imgs/badge-unverified.png",
-                    ),
-                  ),
+                  // const SizedBox(
+                  //   height: 4,
+                  // ),
+                  // Container(
+                  //     height: 20, alignment: Alignment.centerLeft, child: null
+                  //     // Image.asset(
+                  //     //   "imgs/badge-unverified.png",
+                  //     // ),
+                  //     ),
                 ],
               ),
             ),

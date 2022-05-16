@@ -3,8 +3,13 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:resiklos/home/home_verify_emal_page.dart';
+import 'package:resiklos/home/kyc/kyc_finished_page.dart';
+import 'package:resiklos/home/kyc/kyc_frist_page.dart';
 import 'package:resiklos/shop/marketplace_request.dart';
+import 'package:resiklos/shop/merchant_view_dailogs.dart';
 import 'package:resiklos/shop/voucher_model.dart';
+import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/toast.dart';
 import 'package:resiklos/wallet/show_toast.dart';
@@ -114,12 +119,44 @@ class _ShopVoucherItemState extends State<ShopVoucherItem> {
                     ),
                     onTap: () async {
                       log("点击获取优惠券");
-                      var res = await MarketPlaceRequest.claimVoucher(
-                          false, widget.model.code.toString());
-                      if (res) {
-                        showText("Claimed Success");
+                      if (AppSingleton.userInfoModel!.emailVerificationStatus ==
+                              1 &&
+                          AppSingleton.userInfoModel!.kycVerificationStatus !=
+                              3) {
+                        var res = await MarketPlaceRequest.claimVoucher(
+                            false, widget.model.code.toString());
+                        if (res) {
+                          showText("Claimed Success");
+                        } else {
+                          showText("Claimed fail");
+                        }
                       } else {
-                        showText("Claimed fail");
+                        ViewDialogs.clickVoucherView(context, () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) {
+                            if (AppSingleton
+                                    .userInfoModel!.emailVerificationStatus !=
+                                1) {
+                              return HomeVerifyEmail();
+                            }
+
+                            if (AppSingleton
+                                    .userInfoModel!.verificationStatus >=
+                                1) {
+                              return KycFirstPage();
+                            }
+
+                            if (AppSingleton
+                                        .userInfoModel!.verificationStatus >=
+                                    2 &&
+                                AppSingleton
+                                        .userInfoModel!.kycVerificationStatus >
+                                    0) {
+                              return KYCFinishedPage();
+                            }
+                            return KYCFinishedPage();
+                          }));
+                        });
                       }
                     },
                   ),

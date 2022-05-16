@@ -241,7 +241,7 @@ class _MarketplacePageState extends State<MarketplacePage>
                                   children: [
                                     Container(
                                       child: Text(
-                                        "MERCHANT NAME",
+                                        _select?.name ?? "MERCHANT NAME",
                                         style: TextStyle(
                                             color: color_707070(),
                                             fontSize: 14,
