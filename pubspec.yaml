@@ -140,6 +140,7 @@ flutter:
     - imgs/verify_person.png
     - imgs/verify_face_id.png
     - imgs/img.png
+    - imgs/merchant_top_cover.png
     - imgs/rp_bg.png
     - imgs/camera.png
     - imgs/wallet-header.png

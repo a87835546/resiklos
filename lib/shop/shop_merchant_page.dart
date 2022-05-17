@@ -59,14 +59,16 @@ class _MarketplacePageState extends State<MarketplacePage>
                 height: 1000,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage('https://picsum.photos/400/400'),
+                      image:AssetImage("imgs/merchant_top_cover.png"),
+          // NetworkImage('https://picsum.photos/400/400'),
                       fit: BoxFit.cover),
                 ),
               ),
               bottom: TabBar(
                 indicatorWeight: 5,
-                indicatorColor: Colors.white,
+                indicatorColor: ResiklosColors.dark,
                 indicatorSize: TabBarIndicatorSize.label,
+                labelColor: Colors.black87,
                 indicatorPadding:
                     EdgeInsets.only(bottom: 5.0, left: 20, right: 20),
                 tabs: const <Tab>[
