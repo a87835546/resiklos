@@ -6,6 +6,7 @@ import 'package:resiklos/home/home_transfer_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/constants.dart';
 import 'package:resiklos/wallet/badge_widget.dart';
+import 'package:resiklos/wallet/my_wallet_page.dart';
 
 void showTransferBottomSheetWidget(BuildContext context) {
   log("wallet address--->>>>${AppSingleton.walletModel}  ---???${AppSingleton.userInfoModel?.walletAddress}");
@@ -32,7 +33,7 @@ void showTransferBottomSheetWidget(BuildContext context) {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'Transfer',
                         style: TextStyle(
                           fontSize: 16,
@@ -100,6 +101,7 @@ void showTransferBottomSheetWidget(BuildContext context) {
                     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
                       return HomeTransferPage(
                         isRp: true,
+                        type: WalletType.RP,
                       );
                     }));
                   },
@@ -108,58 +110,58 @@ void showTransferBottomSheetWidget(BuildContext context) {
                   style: ListTileStyle.drawer,
                 ),
                 const Divider(height: 1),
-                Opacity(
-                  opacity: 0.7,
-                  child: ListTile(
-                    enabled: AppSingleton.userInfoModel?.walletAddress != "" ||
-                        AppSingleton.userInfoModel?.walletAddress != null,
-                    horizontalTitleGap: 5,
-                    leading: const Icon(Icons.logout,
-                        size: 30, color: ResiklosColors.primary),
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        RichText(
-                            text: const TextSpan(children: [
-                          TextSpan(
-                            text: 'Send via Crypto Network',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: ResiklosColors.textColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          WidgetSpan(
-                              alignment: PlaceholderAlignment.top,
-                              child: BadgeWidget(text: 'Maintenance')),
-                        ])),
-                        SizedBox(height: 2),
-                        const Text(
-                          'Send to a known crypto address via crypto network',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: ResiklosColors.muted,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        )
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (_) {
-                        return HomeTransferPage(
-                          isRp: false,
-                        );
-                      }));
-                    },
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 35),
-                    style: ListTileStyle.drawer,
-                  ),
-                ),
-                const Divider(height: 1),
+                // Opacity(
+                //   opacity: 1,
+                //   child: ListTile(
+                //     enabled: AppSingleton.userInfoModel?.walletAddress != "" ||
+                //         AppSingleton.userInfoModel?.walletAddress != null,
+                //     horizontalTitleGap: 5,
+                //     leading: const Icon(Icons.logout,
+                //         size: 30, color: ResiklosColors.primary),
+                //     title: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         RichText(
+                //             text: const TextSpan(children: [
+                //           TextSpan(
+                //             text: 'Send via Crypto Network',
+                //             style: TextStyle(
+                //               fontSize: 14,
+                //               color: ResiklosColors.textColor,
+                //               fontWeight: FontWeight.bold,
+                //             ),
+                //           ),
+                //           WidgetSpan(
+                //               alignment: PlaceholderAlignment.top,
+                //               child: BadgeWidget(text: 'Maintenance')),
+                //         ])),
+                //         SizedBox(height: 2),
+                //         const Text(
+                //           'Send to a known crypto address via crypto network',
+                //           style: TextStyle(
+                //             fontSize: 10,
+                //             color: ResiklosColors.muted,
+                //             fontWeight: FontWeight.w500,
+                //           ),
+                //         )
+                //       ],
+                //     ),
+                //     onTap: () {
+                //       Navigator.pop(context);
+                //       Navigator.of(context)
+                //           .push(MaterialPageRoute(builder: (_) {
+                //         return const HomeTransferPage(
+                //           isRp: false,
+                //         );
+                //       }));
+                //     },
+                //     contentPadding: const EdgeInsets.symmetric(
+                //         vertical: 12, horizontal: 35),
+                //     style: ListTileStyle.drawer,
+                //   ),
+                // ),
+                // const Divider(height: 1),
               ],
             ));
       });

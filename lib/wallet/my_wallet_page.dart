@@ -143,6 +143,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:resiklos/home/home_transfer_page.dart';
 import 'package:resiklos/utils/TokenTx.dart';
 import 'package:resiklos/utils/Tx.dart';
 import 'package:resiklos/utils/app_singleton.dart';
@@ -156,7 +157,7 @@ import 'package:resiklos/wallet/wallet_card_widget.dart';
 
 import 'my_wallet_page.dart';
 
-enum WalletType { RSGT, RSG, USDT, BNB }
+enum WalletType { RP, RSGT, RSG, USDT, BNB }
 
 class MyWalletPage extends StatefulWidget {
   const MyWalletPage({Key? key}) : super(key: key);
@@ -170,7 +171,7 @@ class _WalletPageState extends State<MyWalletPage> {
   int selectedIndex = 0;
 
   List assets = [
-    ListItem("RSGT", 'Resiklos Gems', 0, 'imgs/logo@2x.png'),
+    // ListItem("RSGT", 'Resiklos Gems', 0, 'imgs/logo@2x.png'),
     ListItem("BNB", 'Binance Coin', 0, 'imgs/svg/bnb.svg', type: 'svg'),
     ListItem("USDT", 'Tether', 0, 'imgs/svg/usdt.svg', type: 'svg')
   ];
@@ -406,7 +407,21 @@ class _WalletPageState extends State<MyWalletPage> {
                               WalletButtonWidget(context,
                                   icon: CupertinoIcons.paperplane_fill,
                                   text: 'Transfer', onPressed: () {
-                                showTransferBottomSheetWidget(context);
+                                // showTransferBottomSheetWidget(context);
+                                WalletType type = WalletType.BNB;
+                                if (selectedIndex == 0 &&
+                                    assets[selectedIndex].coin == "BNB") {
+                                } else if (selectedIndex == 1 &&
+                                    assets[selectedIndex].coin == "USDT") {
+                                  type = WalletType.USDT;
+                                }
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (_) {
+                                  return HomeTransferPage(
+                                    isRp: false,
+                                    type: type,
+                                  );
+                                }));
                               }),
                               const SizedBox(width: 32),
                               WalletButtonWidget(context,

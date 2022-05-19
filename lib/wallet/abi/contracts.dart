@@ -249,16 +249,17 @@ class Blockchain {
     return bytesToHex(child.privateKey!, include0x: true);
   }
 
-  static Future<dynamic> transferCoin(
-      EthereumAddress address,
-      dynamic amountInEther,
-      Credentials credentials,
-      ) async {
+  static Future<String> transferCoin(
+  String address,
+    String amountInEther,
+    Credentials credentials,
+  ) async {
     BigInt amount = BigInt.from(
         double.parse(amountInEther) * BigInt.from(10).pow(18).toDouble());
+    EthereumAddress ethereumAddress = EthereumAddress.fromHex(address);
 
     var _txn = Transaction(
-      to: address,
+      to: ethereumAddress,
       // gasPrice: gasPrice,
       // maxGas: 21000,
       value: EtherAmount.fromUnitAndValue(EtherUnit.wei, amount),
@@ -266,10 +267,10 @@ class Blockchain {
 
     // Sign transaction first
     var _signedTxn =
-    await client.signTransaction(credentials, _txn, chainId: chainId);
+        await client.signTransaction(credentials, _txn, chainId: chainId);
 
     // Send signed transaction
-    var receipt = await client.sendRawTransaction(_signedTxn);
+    String receipt = await client.sendRawTransaction(_signedTxn);
 
     debugPrint(
         'TransactionId: $receipt,\nSent by: $address,\namountInEther: $amountInEther');

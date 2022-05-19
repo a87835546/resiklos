@@ -59,6 +59,7 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
   Widget build(BuildContext context) {
     bool showRP = (AppSingleton.userInfoModel?.walletAddress == null ||
         AppSingleton.userInfoModel?.walletAddress == "");
+    showRP = true;
     return Container(
       height: 255,
       decoration: BoxDecoration(

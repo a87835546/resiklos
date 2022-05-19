@@ -84,7 +84,9 @@ class _AccountPageState extends State<AccountPage>
                                   AppSingleton.userInfoModel?.avatar == null
                                       ? Image.asset("imgs/default_avatar.png")
                                           .image
-                                      : NetworkImage(_model?.avatar ?? ""),
+                                      : NetworkImage(_model?.avatar ??
+                                          AppSingleton.userInfoModel?.avatar ??
+                                          ""),
                               radius: 62.5,
                             ),
                     ),
@@ -120,7 +122,8 @@ class _AccountPageState extends State<AccountPage>
                       const TextSpan(text: 'ID: '),
                       TextSpan(
                         text:
-                            '${(_model?.userId != 0 ? _model?.userId : _model?.id ?? "")}'.padLeft(10,"0"),
+                            '${(_model?.userId != 0 ? _model?.userId : _model?.id ?? "")}'
+                                .padLeft(10, "0"),
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
                         ),

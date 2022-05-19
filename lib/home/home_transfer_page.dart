@@ -27,8 +27,10 @@ import 'package:bip32/bip32.dart' as bip32;
 
 class HomeTransferPage extends StatefulWidget {
   final bool isRp;
+  final WalletType type;
 
-  const HomeTransferPage({Key? key, required this.isRp}) : super(key: key);
+  const HomeTransferPage({Key? key, required this.isRp, required this.type})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HomeTransferPageState();
@@ -42,6 +44,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
   String _balance = "0";
   String _inputValue = "0";
   String _title = "Email";
+  String _modeTitle = "Email";
   double? _gasFee;
   double? _bnbBalance;
 
@@ -56,6 +59,12 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
       });
     } else {
       getAmount();
+    }
+
+    if (widget.type == WalletType.BNB) {
+      setState(() {
+        _modeTitle = "BEP-20";
+      });
     }
   }
 
@@ -83,7 +92,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                   width: double.maxFinite,
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Send ${widget.isRp ? "RP" : "RSG"}",
+                    "Send ${widget.type.name}",
                     style: TextStyle(
                         color: color_707070(),
                         fontWeight: FontWeight.bold,
@@ -107,7 +116,10 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                     padding: EdgeInsets.only(top: 15, bottom: 15),
                     child: HomeTransferSendModeWidget(
                       title: "Send Mode",
-                      subtitle: _title,
+                      subtitle: widget.type == WalletType.BNB ||
+                              widget.type == WalletType.USDT
+                          ? _modeTitle
+                          : _title,
                       hasInput: false,
                       click: () {
                         // selectType(context);
@@ -157,7 +169,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                       ),
                       Container(
                         child: Text(
-                          "$_balance ${widget.isRp ? "RP" : "RSG"}",
+                          "$_balance ${widget.type.name}",
                           style: TextStyle(
                               color: color_707070(),
                               fontSize: 12,
@@ -217,7 +229,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                               width: 200,
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "$_inputValue ${widget.isRp ? "RP" : "RSG"}",
+                                "$_inputValue ${widget.type.name}",
                                 style: TextStyle(
                                     color: color_707070(),
                                     fontSize: 18,
@@ -262,10 +274,15 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                           if (disable) {
                             return;
                           }
-                          if (widget.isRp) {
+                          if (widget.type == WalletType.RP) {
                             transferRP();
-                          } else {
+                          } else if (widget.type == WalletType.RSG ||
+                              widget.type == WalletType.RSGT) {
                             transferRSG();
+                          } else if (widget.type == WalletType.BNB) {
+                            transferBNB();
+                          } else if (widget.type == WalletType.USDT) {
+                            transferUSDT();
                           }
                         },
                       )
@@ -286,7 +303,10 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
   }
 
   void selectType1() {
-    List title = widget.isRp ? ["Email", "Id"] : ["Binance Smart Chain", ""];
+    if (widget.type != WalletType.RSG) {
+      return;
+    }
+    List title = ["Email", "Id"];
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -501,7 +521,85 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
       });
     }).catchError((e) {
       log("load wallet error --->>>${e}");
-      showErrorText("Transfer failed");
+      showErrorText("Transfer RSG failed");
+    });
+  }
+
+  void transferBNB() async {
+    showLoading(title: "Processing transfer. Please wait");
+    double amount = double.parse(
+        _amountController.text == "" ? "0" : _amountController.text);
+    log("message--->>>${amount}");
+    String address = _emailController.text;
+    if (amount == 0) {
+      showErrorText("Please input transfer correct amount");
+      return;
+    }
+    if (amount > num.parse(_balance)) {
+      showErrorText(
+          "Please input valid amount,your available balance is $_balance");
+      return;
+    }
+
+    Blockchain.loadWallet().then((value) {
+      Blockchain.transferCoin(address, amount.toString(), value).then((tx) {
+        log("tx id --->>>$tx");
+        completeTransferRSG(tx, amount.toString(), _emailController.text,
+                note: _noteController.text)
+            .then((value) {
+          showText("Transfer success");
+
+          Navigator.of(context).pop();
+          log("transfer result--->>>$value");
+        });
+        showText("Transfer success");
+      }).catchError((e) {
+        log("transfer  error --->>>${e}");
+        showErrorText("Transfer BNB failed");
+      });
+    }).catchError((e) {
+      log("load wallet error --->>>${e}");
+      showErrorText("Transfer BNB failed");
+    });
+  }
+
+  void transferUSDT() async {
+    showLoading(title: "Processing transfer. Please wait");
+    double amount = double.parse(
+        _amountController.text == "" ? "0" : _amountController.text);
+    log("message--->>>${amount}");
+    String address = _emailController.text;
+    if (amount == 0) {
+      showErrorText("Please input transfer correct amount");
+      return;
+    }
+    if (amount > num.parse(_balance)) {
+      showErrorText(
+          "Please input valid amount,your available balance is $_balance");
+      return;
+    }
+
+    Blockchain.loadWallet().then((value) {
+      Blockchain.transferBep20Token(
+              address, Bep20Token.rsgt, amount.toString(), value)
+          .then((tx) {
+        log("tx id --->>>$tx");
+        completeTransferRSG(tx, amount.toString(), _emailController.text,
+                note: _noteController.text)
+            .then((value) {
+          showText("Transfer success");
+
+          Navigator.of(context).pop();
+          log("transfer result--->>>$value");
+        });
+        showText("Transfer success");
+      }).catchError((e) {
+        log("transfer  error --->>>${e}");
+        showErrorText("Transfer USDT failed");
+      });
+    }).catchError((e) {
+      log("load wallet error --->>>${e}");
+      showErrorText("Transfer USDT failed");
     });
   }
 }
