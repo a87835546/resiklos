@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/wallet/abi/rsg.g.dart';
 import 'package:resiklos/wallet/abi/rsgt.g.dart';
 import 'package:resiklos/wallet/abi/usdt.g.dart';
@@ -16,12 +17,16 @@ import 'package:bip32/bip32.dart' as bip32;
 
 /// wallet client:
 Client httpClient = Client();
-const String rpcUrl =
-    'https://speedy-nodes-nyc.moralis.io/48a08ed130f404bef87433b9/bsc/testnet';
-const int chainId = 97;
+const bool _debug = kDebugMode;
 
-var wsUrl =
-    "wss://speedy-nodes-nyc.moralis.io/48a08ed130f404bef87433b9/bsc/testnet/ws";
+const String rpcUrl = _debug
+    ? 'https://speedy-nodes-nyc.moralis.io/48a08ed130f404bef87433b9/bsc/testnet'
+    : "https://speedy-nodes-nyc.moralis.io/48a08ed130f404bef87433b9/bsc/mainnet";
+const int chainId = _debug ? 97 : 56;
+
+var wsUrl = _debug
+    ? "wss://speedy-nodes-nyc.moralis.io/48a08ed130f404bef87433b9/bsc/testnet/ws"
+    : "wss://speedy-nodes-nyc.moralis.io/48a08ed130f404bef87433b9/bsc/mainnet/ws";
 
 Web3Client client = Web3Client(rpcUrl, httpClient, socketConnector: () {
   return IOWebSocketChannel.connect(wsUrl).cast<String>();

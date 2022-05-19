@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:web3dart/web3dart.dart';
 
-const chain = 'bsc testnet';
+const bool _debug = kDebugMode;
+
+const chain = _debug ? 'bsc testnet' : "bsc";
 const apiKey =
     'yyMhtXvAxUOCB6Ti03l2uTbLG2nW3PVOmGUndQFBuWmj686wXGOOceeVEEN1k9F6';
 

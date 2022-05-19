@@ -93,7 +93,7 @@ class _AccountPageState extends State<AccountPage>
               ),
               const SizedBox(height: 10),
               Text(
-                _model?.nickName ?? "",
+                _model?.fullName ?? "",
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
