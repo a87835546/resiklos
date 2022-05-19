@@ -65,6 +65,10 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
       setState(() {
         _modeTitle = "BEP-20";
       });
+    }else if (widget.type == WalletType.USDT) {
+      setState(() {
+        _modeTitle = "ERC-20";
+      });
     }
   }
 
@@ -104,7 +108,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                   width: double.maxFinite,
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Send RSG to Resiklos account",
+                    "Send ${widget.type.name} to your account",
                     style: TextStyle(
                         color: color_d4d4d4(),
                         fontSize: 12,
