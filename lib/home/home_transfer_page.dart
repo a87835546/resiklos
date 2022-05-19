@@ -63,11 +63,11 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
 
     if (widget.type == WalletType.BNB) {
       setState(() {
-        _modeTitle = "BEP-20";
+        _modeTitle = "BSC";
       });
-    }else if (widget.type == WalletType.USDT) {
+    } else if (widget.type == WalletType.USDT) {
       setState(() {
-        _modeTitle = "ERC-20";
+        _modeTitle = "BSC BEP-20";
       });
     }
   }
@@ -119,7 +119,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                   child: Padding(
                     padding: EdgeInsets.only(top: 15, bottom: 15),
                     child: HomeTransferSendModeWidget(
-                      title: "Send Mode",
+                      title: "${widget.type == WalletType.BNB || widget.type == WalletType.USDT ? "Network" : "Send"} Mode",
                       subtitle: widget.type == WalletType.BNB ||
                               widget.type == WalletType.USDT
                           ? _modeTitle
@@ -585,7 +585,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
 
     Blockchain.loadWallet().then((value) {
       Blockchain.transferBep20Token(
-              address, Bep20Token.rsgt, amount.toString(), value)
+              address, Bep20Token.usdt, amount.toString(), value)
           .then((tx) {
         log("tx id --->>>$tx");
         completeTransferRSG(tx, amount.toString(), _emailController.text,
