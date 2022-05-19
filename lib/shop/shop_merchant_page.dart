@@ -59,23 +59,29 @@ class _MarketplacePageState extends State<MarketplacePage>
                 height: 1000,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image:AssetImage("imgs/merchant_top_cover.png"),
-          // NetworkImage('https://picsum.photos/400/400'),
+                      image: AssetImage("imgs/merchant_top_cover.png"),
+                      // NetworkImage('https://picsum.photos/400/400'),
                       fit: BoxFit.cover),
                 ),
               ),
-              bottom: TabBar(
-                indicatorWeight: 5,
-                indicatorColor: ResiklosColors.dark,
-                indicatorSize: TabBarIndicatorSize.label,
-                labelColor: Colors.black87,
-                indicatorPadding:
-                    EdgeInsets.only(bottom: 5.0, left: 20, right: 20),
-                tabs: const <Tab>[
-                  Tab(text: 'Merchants'),
-                  Tab(text: 'Vouchers'),
-                ],
-                controller: _tabController,
+              bottom: PreferredSize(
+                preferredSize: Size.fromHeight(48),
+                child: Material(
+                  color: ResiklosColors.dark.withOpacity(0.7),
+                  child: TabBar(
+                    indicatorWeight: 5,
+                    indicatorColor: Colors.white,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    labelColor: Colors.white,
+                    indicatorPadding:
+                        EdgeInsets.only(bottom: 5.0, left: 20, right: 20),
+                    tabs: const <Tab>[
+                      Tab(text: 'Merchants'),
+                      Tab(text: 'Vouchers'),
+                    ],
+                    controller: _tabController,
+                  ),
+                ),
               ),
             ),
           ];

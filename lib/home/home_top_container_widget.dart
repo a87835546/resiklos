@@ -9,8 +9,10 @@ import 'package:resiklos/home/my_voucher/vouchers_page.dart';
 import 'package:resiklos/home/qr_code_dailog.dart';
 import 'package:resiklos/home/summary_button_widget.dart';
 import 'package:resiklos/home/summary_card_widget.dart';
+import 'package:resiklos/scan/scan_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/navigator_util.dart';
+import 'package:resiklos/utils/toast.dart';
 import 'package:resiklos/utils/verify_util.dart';
 import 'package:resiklos/wallet/transfer_bottom_sheet_widget.dart';
 import 'package:share_plus/share_plus.dart';
@@ -226,6 +228,17 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                       icon: 'imgs/svg/scan_icon.svg',
                       click: () {
                         log("123");
+                        if (AppSingleton
+                                .userInfoModel?.emailVerificationStatus ==
+                            1) {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (_) {
+                            return ScanPage();
+                          }));
+                        } else {
+                          showErrorText("Please verify email first");
+                        }
+
                         // showCustomDialog(context);
                       }),
                   SummaryButtonWidget(

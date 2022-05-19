@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/scan/transfer_page.dart';
 import 'package:resiklos/scan/verify_proceed_page.dart';
 import 'package:resiklos/utils/color.dart';
@@ -38,6 +39,7 @@ class _ScanPageState extends State<ScanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey,
+      appBar: CustomAppBar(title: '',),
       body: WillPopScope(
         onWillPop: () async {
           return false;
