@@ -65,7 +65,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
         ? false
         : (_bnbBalance.toString() == "0" || _balance == "0");
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: "",
       ),
       body: Stack(
@@ -115,7 +115,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                       },
                     ),
                   ),
-                  visible: widget.isRp,
+                  visible: true,
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 15, bottom: 15),
@@ -286,6 +286,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
   }
 
   void selectType1() {
+    List title = widget.isRp ? ["Email", "Id"] : ["Binance Smart Chain", ""];
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -301,7 +302,8 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                   Expanded(child: Container()),
                   Container(
                     height: 40,
-                    child: Text("Send Mode"),
+                    child: Text(
+                        widget.isRp ? "Send Mode" : "Send via crypto network,"),
                   ),
                   GestureDetector(
                     child: Row(
@@ -316,7 +318,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                           padding: EdgeInsets.only(left: 10),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Email",
+                            title.first,
                             style: TextStyle(color: color_707070()),
                           ),
                         )
@@ -324,7 +326,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                     ),
                     onTap: () {
                       setState(() {
-                        _title = "Email";
+                        _title = title.first;
                       });
                       Navigator.of(context).pop(true);
                     },
@@ -342,7 +344,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                           padding: EdgeInsets.only(left: 10),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Id",
+                            title.last,
                             style: TextStyle(color: color_707070()),
                           ),
                         )
@@ -350,7 +352,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                     ),
                     onTap: () {
                       setState(() {
-                        _title = "Id";
+                        _title = title.last;
                       });
                       Navigator.of(context).pop(true);
                     },

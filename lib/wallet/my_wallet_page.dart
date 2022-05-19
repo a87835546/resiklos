@@ -361,26 +361,29 @@ class _WalletPageState extends State<MyWalletPage> {
                                 ),
                               ),
                               Expanded(
-                                child: Container(
-                                  alignment: Alignment.centerRight,
-                                  margin: EdgeInsets.only(right: 20),
-                                  child: FlatButton(
-                                    color: Colors.white,
-                                    padding: EdgeInsets.zero,
-                                    minWidth: 40,
-                                    height: 35,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5.0)),
+                                child: Visibility(
+                                  child: Container(
+                                    alignment: Alignment.centerRight,
+                                    margin: EdgeInsets.only(right: 20),
+                                    child: FlatButton(
+                                      color: Colors.white,
+                                      padding: EdgeInsets.zero,
+                                      minWidth: 40,
+                                      height: 35,
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5.0)),
+                                      ),
+                                      onPressed: () {
+                                        log('Show QR',
+                                            name: 'screens/wallet_page');
+                                      },
+                                      child: const Icon(Icons.qr_code_rounded,
+                                          size: 24,
+                                          color: ResiklosColors.primary),
                                     ),
-                                    onPressed: () {
-                                      log('Show QR',
-                                          name: 'screens/wallet_page');
-                                    },
-                                    child: const Icon(Icons.qr_code_rounded,
-                                        size: 24,
-                                        color: ResiklosColors.primary),
                                   ),
+                                  visible: false,
                                 ),
                               )
                             ],

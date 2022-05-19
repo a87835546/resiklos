@@ -248,4 +248,32 @@ class Blockchain {
     var child = root.derivePath("m/44'/60'/0'/0/0");
     return bytesToHex(child.privateKey!, include0x: true);
   }
+
+  static Future<dynamic> transferCoin(
+      EthereumAddress address,
+      dynamic amountInEther,
+      Credentials credentials,
+      ) async {
+    BigInt amount = BigInt.from(
+        double.parse(amountInEther) * BigInt.from(10).pow(18).toDouble());
+
+    var _txn = Transaction(
+      to: address,
+      // gasPrice: gasPrice,
+      // maxGas: 21000,
+      value: EtherAmount.fromUnitAndValue(EtherUnit.wei, amount),
+    );
+
+    // Sign transaction first
+    var _signedTxn =
+    await client.signTransaction(credentials, _txn, chainId: chainId);
+
+    // Send signed transaction
+    var receipt = await client.sendRawTransaction(_signedTxn);
+
+    debugPrint(
+        'TransactionId: $receipt,\nSent by: $address,\namountInEther: $amountInEther');
+
+    return receipt;
+  }
 }

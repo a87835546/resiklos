@@ -120,7 +120,7 @@ class _AccountPageState extends State<AccountPage>
                       const TextSpan(text: 'ID: '),
                       TextSpan(
                         text:
-                            '${_model?.userId != 0 ? _model?.userId : _model?.id ?? ""}',
+                            '${(_model?.userId != 0 ? _model?.userId : _model?.id ?? "")}'.padLeft(10,"0"),
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
                         ),

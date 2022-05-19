@@ -121,7 +121,7 @@ void showTransferBottomSheetWidget(BuildContext context) {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         RichText(
-                            text: TextSpan(children: [
+                            text: const TextSpan(children: [
                           TextSpan(
                             text: 'Send via Crypto Network',
                             style: TextStyle(
@@ -135,7 +135,7 @@ void showTransferBottomSheetWidget(BuildContext context) {
                               child: BadgeWidget(text: 'Maintenance')),
                         ])),
                         SizedBox(height: 2),
-                        Text(
+                        const Text(
                           'Send to a known crypto address via crypto network',
                           style: TextStyle(
                             fontSize: 10,
@@ -146,7 +146,7 @@ void showTransferBottomSheetWidget(BuildContext context) {
                       ],
                     ),
                     onTap: () {
-                      log("eeeeeeeeee");
+                      Navigator.pop(context);
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (_) {
                         return HomeTransferPage(
