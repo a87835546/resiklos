@@ -25,10 +25,10 @@ class SettingPage extends BaseStatefulWidget {
 class _SettingPageState extends BaseStatefulState<SettingPage> {
   final ImagePicker _picker = ImagePicker();
   final List<SettingModel> _list = [
-    SettingModel("About", TransferPage()),
-    SettingModel("Version", TransferPage()),
-    SettingModel("Notification", TransferPage()),
-    SettingModel("About", TransferPage()),
+    SettingModel("About", TransferPage(address: "",)),
+    SettingModel("Version", TransferPage(address: "",)),
+    SettingModel("Notification", TransferPage(address: "",)),
+    SettingModel("About", TransferPage(address: "",)),
   ];
 
   @override

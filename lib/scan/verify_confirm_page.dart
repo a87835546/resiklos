@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/scan/transfer_amout_list.dart';
 import 'package:resiklos/scan/transfer_wallet_view.dart';
@@ -10,13 +11,22 @@ import 'package:resiklos/scan/verify_amout_list.dart';
 import 'package:resiklos/scan/verify_successfully_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/color.dart';
+import 'package:resiklos/utils/constants.dart';
+import 'package:resiklos/utils/event_bus_util.dart';
+import 'package:resiklos/utils/http_manager.dart';
 import 'package:resiklos/utils/navigator_util.dart';
+import 'package:resiklos/utils/toast.dart';
 
 class VerifyPage extends BaseStatefulWidget {
   final num weight;
   final num price;
+  final String address;
 
-  const VerifyPage({Key? key, required this.weight, required this.price})
+  const VerifyPage(
+      {Key? key,
+      required this.weight,
+      required this.price,
+      required this.address})
       : super(key: key);
 
   @override
@@ -103,16 +113,35 @@ class _VerifyPageState extends BaseStatefulState<VerifyPage> {
                       Padding(
                           padding: EdgeInsets.only(top: 30),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(60),
+                            // borderRadius: BorderRadius.circular(60),
                             child: Container(
-                              width: 120,
-                              height: 120,
-                              color: const Color(0xffeeeeee),
-                              child: const Icon(
-                                Icons.image,
-                                size: 28,
-                              ),
-                            ),
+                                width: 120,
+                                height: 120,
+                                color: const Color(0xffeeeeee),
+                                child: QrImage(
+                                  data: "${widget.address}",
+                                  version: 4,
+                                  gapless: false,
+                                  eyeStyle: const QrEyeStyle(
+                                      eyeShape: QrEyeShape.square,
+                                      color: ResiklosColors.primary),
+                                  dataModuleStyle: const QrDataModuleStyle(
+                                      dataModuleShape: QrDataModuleShape.circle,
+                                      color: ResiklosColors.primaryDark),
+                                  embeddedImage:
+                                      const AssetImage('images/logo.png'),
+                                  embeddedImageStyle: QrEmbeddedImageStyle(
+                                    size: const Size(65, 65),
+                                  ),
+                                  errorStateBuilder: (cxt, err) {
+                                    return const Center(
+                                      child: Text(
+                                        "Uh oh! Something went wrong...",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    );
+                                  },
+                                )),
                           )),
                       const Padding(
                         padding: EdgeInsets.only(top: 10),
@@ -127,7 +156,7 @@ class _VerifyPageState extends BaseStatefulState<VerifyPage> {
                       Padding(
                         padding: EdgeInsets.only(top: 5),
                         child: Text(
-                          "rp:${AppSingleton.userInfoModel?.rpWalletAddress}",
+                          "${widget.address}",
                           style: TextStyle(
                               color: mainColor(),
                               fontWeight: FontWeight.w400,
@@ -136,7 +165,9 @@ class _VerifyPageState extends BaseStatefulState<VerifyPage> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 10),
-                        child: VerifyConfirmAmountView(weight: widget.weight,),
+                        child: VerifyConfirmAmountView(
+                          weight: widget.weight,
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -181,7 +212,14 @@ class _VerifyPageState extends BaseStatefulState<VerifyPage> {
                     ),
                     onTap: () {
                       log("send rsg");
-                      NavigatorUtil.push(context, VerifySuccessfullyPage(weight: widget.weight,amount: widget.price,));
+                      transferRP();
+                      NavigatorUtil.push(
+                          context,
+                          VerifySuccessfullyPage(
+                            weight: widget.weight,
+                            amount: widget.price,
+                            address: widget.address,
+                          ));
                     },
                   ),
                 )
@@ -193,5 +231,35 @@ class _VerifyPageState extends BaseStatefulState<VerifyPage> {
           Navigator.pop(context, "1");
           return true;
         });
+  }
+
+  void transferRP() async {
+    num amount = widget.price;
+    log("message--->>>${amount}");
+    if (amount == 0) {
+      showErrorText("Please input transfer correct amount");
+      return;
+    }
+    // if (amount > num.parse(_balance)) {
+    //   showErrorText(
+    //       "Please input valid amount,your available balance is $_balance");
+    //   return;
+    // }
+
+    Map<String, dynamic> temp = {
+      "email": AppSingleton.userInfoModel?.email,
+      "amount": widget.price * widget.weight,
+      "address": widget.address,
+      "name": AppSingleton.userInfoModel?.nickName,
+    };
+    var res = await HttpManager.post(url: "wallet/sellerPlastic", params: temp);
+    log("transfer --->>>$res");
+    if (res["code"] == 200) {
+      showText("Transfer RP Success");
+      EventBusUtil.fire(RefreshRpEvent());
+      Navigator.of(context).pop();
+    } else {
+      showText("Transfer RP Fail ${res["message"]}");
+    }
   }
 }

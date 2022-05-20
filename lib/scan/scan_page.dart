@@ -39,7 +39,9 @@ class _ScanPageState extends State<ScanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey,
-      appBar: CustomAppBar(title: '',),
+      appBar: CustomAppBar(
+        title: '',
+      ),
       body: WillPopScope(
         onWillPop: () async {
           return false;
@@ -201,27 +203,29 @@ class _ScanPageState extends State<ScanPage> {
       this.controller = controller;
     });
     controller.scannedDataStream.listen((Barcode scanData) async {
-      setState(() async {
-        result = scanData;
-        log("result ------>>>>${result?.code}");
-        if (result?.code != null && _isCan) {
-          _isCan = false;
-          controller.pauseCamera();
-          var r = await Navigator.push(context,
-              _createRoute(Tween(begin: Offset(1.0, 0), end: Offset.zero)));
-          if (r == true || r == "1") {
+      if (result?.code != null && _isCan) {
+        _isCan = false;
+        controller.pauseCamera();
+        Navigator.push(context,
+                _createRoute(Tween(begin: Offset(1.0, 0), end: Offset.zero)))
+            .then((value) {
+          if (value == true || value == "1") {
             setState(() {
               this.controller = controller;
             });
             controller.resumeCamera();
           }
-          // 500 毫秒内 不能多次点击
-          Future.delayed(const Duration(milliseconds: 500), () {
-            _isCan = true;
-          });
-        } else {
-          controller.resumeCamera();
-        }
+        });
+        // 500 毫秒内 不能多次点击
+        Future.delayed(const Duration(milliseconds: 500), () {
+          _isCan = true;
+        });
+      } else {
+        controller.resumeCamera();
+      }
+      setState(() {
+        result = scanData;
+        log("result ------>>>>${result?.code}");
       });
     });
   }
@@ -230,7 +234,7 @@ class _ScanPageState extends State<ScanPage> {
     return PageRouteBuilder(
         opaque: false,
         pageBuilder: (context, animation, secondaryAnimation) {
-          return _isVerify ? VerifyProceedPage() : TransferPage();
+          return _isVerify ? VerifyProceedPage(address: result?.code??"",) : TransferPage(address: result?.code??"",);
         },
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(

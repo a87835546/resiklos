@@ -1,27 +1,21 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/bottom_navigationbar.dart';
-import 'package:resiklos/home/home_page.dart';
-import 'package:resiklos/home/home_top_container_widget.dart';
-import 'package:resiklos/scan/scan_page.dart';
-import 'package:resiklos/scan/scan_request.dart';
-import 'package:resiklos/scan/verify_amout_list.dart';
-import 'package:resiklos/scan/verify_confirm_page.dart';
 import 'package:resiklos/scan/verify_container_widget.dart';
-import 'package:resiklos/scan/verify_weight_view.dart';
-import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/color.dart';
-import 'package:resiklos/utils/navigator_util.dart';
+import 'package:resiklos/wallet/status_icon_widget.dart';
 
 class VerifySuccessfullyPage extends BaseStatefulWidget {
   final num amount;
   final num weight;
+  final String address;
 
   const VerifySuccessfullyPage(
-      {Key? key, required this.amount, required this.weight})
+      {Key? key,
+      required this.amount,
+      required this.weight,
+      required this.address})
       : super(key: key);
 
   @override
@@ -31,7 +25,6 @@ class VerifySuccessfullyPage extends BaseStatefulWidget {
 
 class _VerifySuccessfullyPageState
     extends BaseStatefulState<VerifySuccessfullyPage> {
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -201,11 +194,7 @@ class _VerifySuccessfullyPageState
                         child: Container(
                           width: 100,
                           height: 100,
-                          child: Icon(
-                            Icons.clear,
-                            size: 80,
-                            color: Colors.red,
-                          ),
+                          child: statusIcon(status: 2)
                         ),
                       ),
                     ))

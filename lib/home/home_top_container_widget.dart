@@ -239,8 +239,6 @@ class _HomeTopContainerViewState extends State<HomeTopContainerView> {
                         } else {
                           showErrorText("Please verify email first");
                         }
-
-                        // showCustomDialog(context);
                       }),
                   SummaryButtonWidget(
                       text: "Transfer",

@@ -4,11 +4,13 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:resiklos/home/kyc/personal_info.dart';
 import 'package:resiklos/home/setting/setting_page.dart';
 import 'package:resiklos/home/transactions/transaction_page.dart';
 import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/utils/app_singleton.dart';
+import 'package:resiklos/utils/constants.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 
 import 'notification/notification_page.dart';
@@ -128,13 +130,12 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                 children: (_debug
                         ? [
                             Icons.history,
+                            Icons.qr_code_rounded,
                             Icons.notifications_active_rounded,
                             Icons.settings
                             // Icons.logout
                           ]
-                        : [
-                            Icons.history,
-                          ])
+                        : [Icons.history, Icons.qr_code_rounded])
                     .map((e) {
                   return GestureDetector(
                     child: Padding(
@@ -172,6 +173,142 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                         }));
                       } else if (e == Icons.logout) {
                         SignRequest.logout(context);
+                      }else if(e == Icons.qr_code_rounded){
+                        showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            backgroundColor: Colors.white,
+                            builder: (context) {
+                              return FractionallySizedBox(
+                                heightFactor: 0.83,
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 30),
+                                    height: double.infinity,
+                                    width: 300,
+                                    child: Column(
+                                      children: [
+                                        const Text(
+                                          'Scan QR Code',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                        Container(
+                                          margin: const EdgeInsets.only(
+                                            top: 20,
+                                            bottom: 20,
+                                          ),
+                                          width: 300,
+                                          child: const Text(
+                                            'Receive RP via QR code. Show this to other Resiklos users and scan to send',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                        QrImage(
+                                          data: "${AppSingleton.userInfoModel?.rpWalletAddress}",
+                                          version: 4,
+                                          size: 300,
+                                          gapless: false,
+                                          eyeStyle: const QrEyeStyle(
+                                              eyeShape: QrEyeShape.square,
+                                              color:
+                                              ResiklosColors.primary),
+                                          dataModuleStyle:
+                                          const QrDataModuleStyle(
+                                              dataModuleShape:
+                                              QrDataModuleShape
+                                                  .circle,
+                                              color: ResiklosColors
+                                                  .primaryDark),
+                                          embeddedImage: const AssetImage(
+                                              'images/logo.png'),
+                                          embeddedImageStyle:
+                                          QrEmbeddedImageStyle(
+                                            size: const Size(65, 65),
+                                          ),
+                                          errorStateBuilder: (cxt, err) {
+                                            return const Center(
+                                              child: Text(
+                                                "Uh oh! Something went wrong...",
+                                                textAlign:
+                                                TextAlign.center,
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        Container(
+                                          margin: const EdgeInsets.only(
+                                            top: 10,
+                                            bottom: 20,
+                                          ),
+                                          width: 300,
+                                          child: const Text(
+                                            'Scan using Resiklos "Scan QR"',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                        Row(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              padding:
+                                              EdgeInsets.symmetric(
+                                                  horizontal: 5,
+                                                  vertical: 10),
+                                              margin: EdgeInsets.only(
+                                                  right: 5),
+                                              decoration: BoxDecoration(
+                                                color:
+                                                ResiklosColors.light,
+                                                borderRadius:
+                                                BorderRadius.circular(
+                                                    5.0),
+                                              ),
+                                              child: Text(
+                                                'RP Wallet Address:',
+                                                style: TextStyle(
+                                                    fontSize: 10),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 0,
+                                              child: Container(
+                                                padding:
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 5,
+                                                    vertical: 10),
+                                                decoration: BoxDecoration(
+                                                  color: ResiklosColors
+                                                      .light,
+                                                  borderRadius:
+                                                  BorderRadius
+                                                      .circular(5.0),
+                                                ),
+                                                child: Text(
+                                                  '${AppSingleton.userInfoModel?.rpWalletAddress}',
+                                                  textAlign:
+                                                  TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w500),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    )),
+                              );
+                            });
                       }
                     },
                   );

@@ -9,7 +9,9 @@ import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 
 class TransferPage extends BaseStatefulWidget {
-  const TransferPage({Key? key}) : super(key: key);
+  final String address;
+
+  const TransferPage({Key? key, required this.address}) : super(key: key);
 
   @override
   BaseStatefulState<BaseStatefulWidget> getState() => _TransferPageState();
@@ -53,7 +55,7 @@ class _TransferPageState extends BaseStatefulState<TransferPage> {
                                     Container(
                                       width: double.maxFinite,
                                       child: const Text(
-                                        "SEND RSG",
+                                        "SEND RP",
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                             color: Color(0xff707070),
@@ -62,7 +64,7 @@ class _TransferPageState extends BaseStatefulState<TransferPage> {
                                       ),
                                     ),
                                     const Text(
-                                      "Send RSG to another RSG wallet. This transaction is not reversible. Enter amount to proceed.",
+                                      "Send RP to another RP wallet. This transaction is not reversible. Enter amount to proceed.",
                                       maxLines: 2,
                                       style: TextStyle(
                                           color: Color(0xffD4D4D4),
@@ -120,7 +122,7 @@ class _TransferPageState extends BaseStatefulState<TransferPage> {
                       Padding(
                         padding: EdgeInsets.only(top: 5),
                         child: Text(
-                          "rsg:sds123jksdfjkhkj",
+                          "${widget.address}",
                           style: TextStyle(
                               color: mainColor(),
                               fontWeight: FontWeight.w400,

@@ -23,7 +23,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  AppSingleton.devMode = DevMode.staging;
+  AppSingleton.devMode = DevMode.local;
   TLSizeFit.initialize();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UserLoginProviderModel()),
@@ -62,28 +62,28 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(
                 primaryColor: ResiklosTypography.dark,
                 fontFamily: 'Montserrat',
-                inputDecorationTheme: const InputDecorationTheme(
-                  fillColor: Colors.white,
-                  filled: true,
-                  contentPadding: EdgeInsets.all(15.0),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: ResiklosColors.primary, width: 1),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: ResiklosColors.muted, width: 1),
-                  ),
-                  border: OutlineInputBorder(
-                    gapPadding: 1.0,
-                    borderSide:
-                        BorderSide(width: 1, color: ResiklosColors.muted),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(6.0),
-                    ),
-                  ),
-                  hintStyle: TextStyle(color: ResiklosColors.muted),
-                ),
+                // inputDecorationTheme: const InputDecorationTheme(
+                //   fillColor: Colors.white,
+                //   filled: true,
+                //   contentPadding: EdgeInsets.all(15.0),
+                //   focusedBorder: OutlineInputBorder(
+                //     borderSide:
+                //         BorderSide(color: ResiklosColors.primary, width: 1),
+                //   ),
+                //   enabledBorder: OutlineInputBorder(
+                //     borderSide:
+                //         BorderSide(color: ResiklosColors.muted, width: 1),
+                //   ),
+                //   border: OutlineInputBorder(
+                //     gapPadding: 1.0,
+                //     borderSide:
+                //         BorderSide(width: 1, color: ResiklosColors.muted),
+                //     borderRadius: BorderRadius.all(
+                //       Radius.circular(6.0),
+                //     ),
+                //   ),
+                //   hintStyle: TextStyle(color: ResiklosColors.muted),
+                // ),
                 textTheme: const TextTheme(
                   bodyText1: TextStyle(
                     color: ResiklosColors.textColor,
