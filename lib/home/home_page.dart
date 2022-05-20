@@ -233,7 +233,8 @@ class _HomePageState extends BaseStatefulState<HomePage>
     if (mounted &&
         r["data"] != null &&
         mounted &&
-        AppSingleton.userInfoModel?.emailVerificationStatus != 1) {
+        (AppSingleton.userInfoModel?.emailVerificationStatus != 1 ||
+            AppSingleton.userInfoModel?.kycVerificationStatus != 2)) {
       setState(() {
         _points = r["data"]["point"] ?? 0;
       });
@@ -263,7 +264,7 @@ class _HomePageState extends BaseStatefulState<HomePage>
       setState(() {
         _rate = num.parse(res["data"]["exchangeRate"] ?? "1");
       });
-      if (mounted && AppSingleton.userInfoModel?.emailVerificationStatus == 1) {
+      if (mounted && AppSingleton.userInfoModel?.emailVerificationStatus == 1 && AppSingleton.userInfoModel?.kycVerificationStatus == 2) {
         setState(() {
           _points = num.parse(res["data"]["rpBalance"] ?? "0");
         });
