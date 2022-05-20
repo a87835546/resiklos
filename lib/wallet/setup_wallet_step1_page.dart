@@ -6,11 +6,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/kyc/kyc_frist_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
+import 'package:resiklos/utils/clip_borad_tool.dart';
 import 'package:resiklos/wallet/import_wallet_page.dart';
 import 'package:resiklos/wallet/setup_wallet_step2_page.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/navigator_util.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SetupWalletStep1Page extends BaseStatefulWidget {
   const SetupWalletStep1Page({Key? key}) : super(key: key);
@@ -35,7 +37,25 @@ class _SetupWalletStep1PageState
       padding: EdgeInsets.only(left: 45, top: kToolbarHeight, right: 45),
       child: AppSingleton.userInfoModel?.kycVerificationStatus != 2
           ? Center(
-              child: Text(title),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(title),
+                  Visibility(
+                    child: GestureDetector(
+                      child: Text(
+                        "support@resiklos.com",
+                        style: TextStyle(color: mainColor()),
+                      ),
+                      onTap: () {
+                        ClipboardTool.setDataToast("support@resiklos.com");
+                      },
+                    ),
+                    visible:
+                        AppSingleton.userInfoModel?.kycVerificationStatus == 1,
+                  )
+                ],
+              ),
             )
           : Container(
               child: ListView(
