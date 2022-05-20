@@ -118,11 +118,11 @@ class _ShopVoucherItemState extends State<ShopVoucherItem> {
                       ),
                     ),
                     onTap: () async {
-                      log("点击获取优惠券");
+                      log("点击获取优惠券 email state --->>>${AppSingleton.userInfoModel!.emailVerificationStatus} kyc state-->>>${AppSingleton.userInfoModel!.kycVerificationStatus}");
                       if (AppSingleton.userInfoModel!.emailVerificationStatus ==
                               1 &&
-                          AppSingleton.userInfoModel!.kycVerificationStatus !=
-                              3) {
+                          AppSingleton.userInfoModel!.kycVerificationStatus ==
+                              2) {
                         var res = await MarketPlaceRequest.claimVoucher(
                             false, widget.model.code.toString());
                         if (res) {
@@ -130,6 +130,14 @@ class _ShopVoucherItemState extends State<ShopVoucherItem> {
                         } else {
                           showText("Claimed fail");
                         }
+                      } else if (AppSingleton
+                                  .userInfoModel!.emailVerificationStatus ==
+                              1 &&
+                          AppSingleton.userInfoModel!.kycVerificationStatus ==
+                              1) {
+                        log("We are currently processing your KYC Verification Details. Please come back again or contact our support team.");
+                        showText("We are currently processing your KYC Verification Details. Please come back again or contact our support team.");
+                        return;
                       } else {
                         ViewDialogs.clickVoucherView(context, () {
                           Navigator.of(context).push(MaterialPageRoute(
