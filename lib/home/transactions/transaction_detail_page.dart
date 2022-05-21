@@ -5,6 +5,7 @@ import 'package:resiklos/home/transactions/transaction_model.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/color.dart';
+import 'package:resiklos/utils/date_util.dart';
 
 class TransactionDetailPage extends StatefulWidget {
   final TransactionModel model;
@@ -74,7 +75,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
             ),
             TransactionDetailItem(
               title: "Transfer Time:",
-              subTitle: "${widget.model.createAt}",
+              subTitle: "${addTimeZone(widget.model.createAt??"")}",
             ),
             Visibility(
               child: TransactionDetailItem(

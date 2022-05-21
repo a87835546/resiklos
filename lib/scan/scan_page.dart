@@ -4,11 +4,14 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:recognition_qrcode/recognition_qrcode.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/scan/transfer_page.dart';
 import 'package:resiklos/scan/verify_proceed_page.dart';
 import 'package:resiklos/utils/color.dart';
+import 'package:resiklos/utils/toast.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({Key? key}) : super(key: key);
@@ -20,7 +23,7 @@ class ScanPage extends StatefulWidget {
 class _ScanPageState extends State<ScanPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
-  Barcode? result;
+  String? code;
   QRViewController? controller;
   bool _isCan = true;
   bool _isVerify = false;
@@ -57,46 +60,49 @@ class _ScanPageState extends State<ScanPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         // crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          GestureDetector(
-                            child: Container(
-                              margin: const EdgeInsets.all(8),
-                              height: 80,
-                              width: 80,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    child: Icon(
-                                      Icons.qr_code_scanner_outlined,
-                                      size: 20,
-                                      color: mainColor(),
+                          Visibility(
+                            child: GestureDetector(
+                              child: Container(
+                                margin: const EdgeInsets.all(8),
+                                height: 80,
+                                width: 80,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      child: Icon(
+                                        Icons.qr_code_scanner_outlined,
+                                        size: 20,
+                                        color: mainColor(),
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    'TRANSFER',
-                                    style: TextStyle(
-                                        color: mainTitleColor(),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
+                                    Text(
+                                      'TRANSFER',
+                                      style: TextStyle(
+                                          color: mainTitleColor(),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
                               ),
+                              onTap: () {
+                                log("点击transfer");
+                                setState(() {
+                                  _isVerify = false;
+                                });
+                                controller?.resumeCamera();
+                              },
                             ),
-                            onTap: () {
-                              log("点击transfer");
-                              setState(() {
-                                _isVerify = false;
-                              });
-                              controller?.resumeCamera();
-                            },
+                            visible: false,
                           ),
                           GestureDetector(
                             child: Container(
@@ -137,32 +143,59 @@ class _ScanPageState extends State<ScanPage> {
                           )
                         ],
                       ),
-                      Container(
-                        alignment: Alignment.center,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border:
-                                Border.all(color: Colors.white70, width: 1)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.image,
-                              size: 16,
-                              color: Colors.white70,
-                            ),
-                            Text(
-                              "IMPORT FROM PHOTOS",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  color: Colors.white70),
-                            )
-                          ],
+                      GestureDetector(
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border:
+                                  Border.all(color: Colors.white70, width: 1)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.image,
+                                size: 16,
+                                color: Colors.white70,
+                              ),
+                              Text(
+                                "IMPORT FROM PHOTOS",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: Colors.white70),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
+                        onTap: () {
+                          final picker = ImagePicker();
+                          picker
+                              .pickImage(source: ImageSource.gallery)
+                              .then((value) {
+                            log(" value path --->>>${value?.path}");
+                            RecognitionQrcode.recognition(value?.path)
+                                .then((result) {
+                              log("RecognitionQrcode: $result");
+                              setState(() {
+                                code = result["value"];
+                                _isVerify = true;
+                              });
+                              Navigator.push(
+                                  context,
+                                  _createRoute(Tween(
+                                      begin: Offset(1.0, 0),
+                                      end: Offset.zero)));
+                            }).catchError((e) {
+                              log("RecognitionQrcode error: $e");
+                              showErrorText("The qr code parsing failed");
+                            });
+                          });
+                        },
+                        behavior: HitTestBehavior.opaque,
+                      )
                     ],
                   ),
                 )),
@@ -203,7 +236,7 @@ class _ScanPageState extends State<ScanPage> {
       this.controller = controller;
     });
     controller.scannedDataStream.listen((Barcode scanData) async {
-      if (result?.code != null && _isCan) {
+      if (code != null && _isCan) {
         _isCan = false;
         controller.pauseCamera();
         Navigator.push(context,
@@ -224,8 +257,8 @@ class _ScanPageState extends State<ScanPage> {
         controller.resumeCamera();
       }
       setState(() {
-        result = scanData;
-        log("result ------>>>>${result?.code}");
+        code = scanData?.code;
+        log("result ------>>>>${code}");
       });
     });
   }
@@ -234,7 +267,13 @@ class _ScanPageState extends State<ScanPage> {
     return PageRouteBuilder(
         opaque: false,
         pageBuilder: (context, animation, secondaryAnimation) {
-          return _isVerify ? VerifyProceedPage(address: result?.code??"",) : TransferPage(address: result?.code??"",);
+          return _isVerify
+              ? VerifyProceedPage(
+                  address: code ?? "",
+                )
+              : TransferPage(
+                  address: code ?? "",
+                );
         },
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(

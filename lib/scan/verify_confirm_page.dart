@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:resiklos/base_class/base_page.dart';
+import 'package:resiklos/home/transactions/transaction_model.dart';
 import 'package:resiklos/scan/transfer_amout_list.dart';
 import 'package:resiklos/scan/transfer_wallet_view.dart';
 import 'package:resiklos/scan/verify_amount_view.dart';
@@ -210,17 +211,12 @@ class _VerifyPageState extends BaseStatefulState<VerifyPage> {
                         ),
                       ],
                     ),
-                    onTap: () {
+                    onTap: () async{
                       log("send rsg");
                       transferRP();
-                      NavigatorUtil.push(
-                          context,
-                          VerifySuccessfullyPage(
-                            weight: widget.weight,
-                            amount: widget.price,
-                            address: widget.address,
-                          ));
+
                     },
+                    behavior: HitTestBehavior.opaque,
                   ),
                 )
               ],
@@ -256,8 +252,17 @@ class _VerifyPageState extends BaseStatefulState<VerifyPage> {
     log("transfer --->>>$res");
     if (res["code"] == 200) {
       showText("Transfer RP Success");
-      EventBusUtil.fire(RefreshRpEvent());
-      Navigator.of(context).pop();
+      // EventBusUtil.fire(RefreshRpEvent());
+      // Navigator.of(context).pop();
+      TransactionModel model = TransactionModel.fromJson(res["data"]);
+      NavigatorUtil.push(
+          context,
+          VerifySuccessfullyPage(
+            weight: widget.weight,
+            amount: widget.price,
+            address: widget.address,
+            data: model,
+          ));
     } else {
       showText("Transfer RP Fail ${res["message"]}");
     }

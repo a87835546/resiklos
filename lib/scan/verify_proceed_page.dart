@@ -220,6 +220,7 @@ class _VerifyProceedPageState extends BaseStatefulState<VerifyProceedPage> {
                           )
                         ],
                       ),
+                      behavior: HitTestBehavior.opaque,
                       onTap: () {
                         log("send rsg");
                         NavigatorUtil.push(
@@ -254,7 +255,8 @@ class _VerifyProceedPageState extends BaseStatefulState<VerifyProceedPage> {
   void getPrice() async {
     var r = await getPlasticPrice();
     setState(() {
-      _price = r;
+      log("price --->>> $r");
+      _price = num.parse(r);
     });
   }
 

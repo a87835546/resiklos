@@ -67,6 +67,7 @@ dependencies:
   bip39: ^1.0.6
   bip32: ^2.0.0
   web_socket_channel: ^2.2.0
+  recognition_qrcode: ^1.0.1+2
 
 dev_dependencies:
   flutter_test:

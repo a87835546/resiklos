@@ -2,19 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/bottom_navigationbar.dart';
+import 'package:resiklos/home/transactions/transaction_model.dart';
 import 'package:resiklos/scan/verify_container_widget.dart';
 import 'package:resiklos/utils/color.dart';
+import 'package:resiklos/utils/date_util.dart';
 import 'package:resiklos/wallet/status_icon_widget.dart';
 
 class VerifySuccessfullyPage extends BaseStatefulWidget {
   final num amount;
   final num weight;
   final String address;
+  final TransactionModel data;
 
   const VerifySuccessfullyPage(
       {Key? key,
       required this.amount,
       required this.weight,
+      required this.data,
       required this.address})
       : super(key: key);
 
@@ -122,7 +126,7 @@ class _VerifySuccessfullyPageState
                             children: [
                               Container(
                                 child: Text(
-                                  "REF.NO. 0123123123",
+                                  "REF.NO. ${widget.data.transactionId}",
                                   style: TextStyle(
                                       color: Colors.black54,
                                       fontSize: 16,
@@ -131,7 +135,7 @@ class _VerifySuccessfullyPageState
                               ),
                               Container(
                                 child: Text(
-                                  "${DateTime.now()}",
+                                  "${addTimeZone(widget.data.createAt ?? "")}",
                                   style: TextStyle(
                                       color: mainTitleColor(), fontSize: 12),
                                 ),
@@ -192,10 +196,9 @@ class _VerifySuccessfullyPageState
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(50),
                         child: Container(
-                          width: 100,
-                          height: 100,
-                          child: statusIcon(status: 2)
-                        ),
+                            width: 100,
+                            height: 100,
+                            child: statusIcon(status: 2)),
                       ),
                     ))
               ],
