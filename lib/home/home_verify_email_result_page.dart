@@ -6,9 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/bottom_navigationbar.dart';
-import 'package:resiklos/home/home_page.dart';
-import 'package:resiklos/rk_app_bar.dart';
-import 'package:resiklos/utils/navigator_util.dart';
+import 'package:resiklos/utils/event_bus_util.dart';
 
 class HomeVerifyEmailResultPage extends BaseStatefulWidget {
   const HomeVerifyEmailResultPage({Key? key}) : super(key: key);
@@ -110,7 +108,9 @@ class _HomeVerifyEmailResultPage
                     )),
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx){
+                  EventBusUtil.fire(RefreshDashboardEvent());
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (ctx) {
                     return CustomBottomNavigationBar();
                   }), (route) => false);
                 },

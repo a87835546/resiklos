@@ -257,7 +257,7 @@ class _ScanPageState extends State<ScanPage> {
         controller.resumeCamera();
       }
       setState(() {
-        code = scanData?.code;
+        code = scanData.code;
         log("result ------>>>>${code}");
       });
     });

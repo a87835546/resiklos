@@ -13,17 +13,17 @@ class UserInfoModel {
   String? available;
   String? mobile;
   String? email;
-  String? token;
+  dynamic token;
   String? inviteCode;
   String? ipAddress;
   String? rpWalletAddress;
   String? walletAddress;
   dynamic createTime;
   dynamic lastLoginTime;
-  num? deviceType;
+  dynamic? deviceType;
   num? gems;
   int emailVerificationStatus;
-  int isFirstLogin;
+  dynamic isFirstLogin;
 
   /// 0 unverified 1.pending 2.verified 3.rejected
   int kycVerificationStatus;

@@ -92,6 +92,23 @@ class AppSingleton {
     }
   }
 
+  static void updateInfoModel(UserInfoModel model) {
+    String? token;
+    if (model.token == null || model.token == "") {
+      token = userInfoModel?.token;
+    } else {
+      token = model.token;
+    }
+    userInfoModel = model;
+    userInfoModel?.token = token;
+    try {
+      String userinfo = json.encode(model.toJson());
+      Cache.getInstance().setString("userinfo", userinfo);
+    } catch (err) {
+      log("update user info model error ${err}");
+    }
+  }
+
   static void clearUserInfo() {
     userInfoModel = null;
     try {

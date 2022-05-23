@@ -381,7 +381,7 @@ class _AccountPageState extends State<AccountPage>
       setState(() {
         _model = object;
       });
-      AppSingleton.setUserInfoModel(object);
+      AppSingleton.updateInfoModel(object);
     }
   }
 }

@@ -32,6 +32,7 @@ class TabBarChangeEvent extends Event {
 }
 
 class RefreshRpEvent extends Event {}
+class RefreshDashboardEvent extends Event {}
 
 class ChangeSegmentIndexEvent extends Event {
   int index;

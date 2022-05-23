@@ -10,6 +10,7 @@ import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/bottom_navigationbar.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/cache.dart';
+import 'package:resiklos/utils/event_bus_util.dart';
 import 'package:resiklos/utils/toast.dart';
 import 'package:resiklos/wallet/abi/contracts.dart';
 import 'package:resiklos/wallet/setup_wallet_progress_widget.dart';
@@ -308,6 +309,7 @@ class _SetupWalletStep4PageState
                           widget.seedPhares.join(" "));
                       var res = await complete(address);
                       if (res) {
+                        EventBusUtil.fire(RefreshDashboardEvent());
                         Navigator.pushAndRemoveUntil(context,
                             MaterialPageRoute(builder: (ctx) {
                           return CustomBottomNavigationBar();

@@ -46,6 +46,8 @@ class _HomePageState extends BaseStatefulState<HomePage>
       log("home page event listen -----------?>>>>>>>>>>> $event");
       if (event is RefreshRpEvent) {
         getAmount();
+      } else if (event is RefreshDashboardEvent) {
+        getData();
       }
     });
   }
@@ -252,7 +254,7 @@ class _HomePageState extends BaseStatefulState<HomePage>
       setState(() {
         _model = object;
       });
-      AppSingleton.setUserInfoModel(object);
+      AppSingleton.updateInfoModel(object);
     }
   }
 
@@ -264,7 +266,9 @@ class _HomePageState extends BaseStatefulState<HomePage>
       setState(() {
         _rate = num.parse(res["data"]["exchangeRate"] ?? "1");
       });
-      if (mounted && AppSingleton.userInfoModel?.emailVerificationStatus == 1 && AppSingleton.userInfoModel?.kycVerificationStatus == 2) {
+      if (mounted &&
+          AppSingleton.userInfoModel?.emailVerificationStatus == 1 &&
+          AppSingleton.userInfoModel?.kycVerificationStatus == 2) {
         setState(() {
           _points = num.parse(res["data"]["rpBalance"] ?? "0");
         });
