@@ -136,8 +136,6 @@ class _ImportWalletPageState extends State<ImportWalletPage> {
                   if (_controller1.text.length < 3) {
                     showErrorText("Please input correct seedphrase");
                   } else {
-                    var res =
-                        await importWalletFromSeedPhrase(_controller1.text);
                     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
                       return const ImportWalletCompletedPage();
                     }));
