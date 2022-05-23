@@ -173,7 +173,7 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                         }));
                       } else if (e == Icons.logout) {
                         SignRequest.logout(context);
-                      }else if(e == Icons.qr_code_rounded){
+                      } else if (e == Icons.qr_code_rounded) {
                         showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
@@ -210,33 +210,31 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                                           ),
                                         ),
                                         QrImage(
-                                          data: "${AppSingleton.userInfoModel?.rpWalletAddress}",
+                                          data:
+                                              "${AppSingleton.userInfoModel?.rpWalletAddress}",
                                           version: 4,
                                           size: 300,
                                           gapless: false,
                                           eyeStyle: const QrEyeStyle(
                                               eyeShape: QrEyeShape.square,
-                                              color:
-                                              ResiklosColors.primary),
+                                              color: ResiklosColors.primary),
                                           dataModuleStyle:
-                                          const QrDataModuleStyle(
-                                              dataModuleShape:
-                                              QrDataModuleShape
-                                                  .circle,
-                                              color: ResiklosColors
-                                                  .primaryDark),
+                                              const QrDataModuleStyle(
+                                                  dataModuleShape:
+                                                      QrDataModuleShape.circle,
+                                                  color: ResiklosColors
+                                                      .primaryDark),
                                           embeddedImage: const AssetImage(
-                                              'images/logo.png'),
+                                              'imgs/logo@2x.png'),
                                           embeddedImageStyle:
-                                          QrEmbeddedImageStyle(
+                                              QrEmbeddedImageStyle(
                                             size: const Size(65, 65),
                                           ),
                                           errorStateBuilder: (cxt, err) {
                                             return const Center(
                                               child: Text(
                                                 "Uh oh! Something went wrong...",
-                                                textAlign:
-                                                TextAlign.center,
+                                                textAlign: TextAlign.center,
                                               ),
                                             );
                                           },
@@ -254,52 +252,42 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                                         ),
                                         Row(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                              CrossAxisAlignment.center,
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
                                             Container(
-                                              padding:
-                                              EdgeInsets.symmetric(
-                                                  horizontal: 5,
-                                                  vertical: 10),
-                                              margin: EdgeInsets.only(
-                                                  right: 5),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 5, vertical: 10),
+                                              margin: EdgeInsets.only(right: 5),
                                               decoration: BoxDecoration(
-                                                color:
-                                                ResiklosColors.light,
+                                                color: ResiklosColors.light,
                                                 borderRadius:
-                                                BorderRadius.circular(
-                                                    5.0),
+                                                    BorderRadius.circular(5.0),
                                               ),
                                               child: Text(
                                                 'RP Wallet Address:',
-                                                style: TextStyle(
-                                                    fontSize: 10),
+                                                style: TextStyle(fontSize: 10),
                                               ),
                                             ),
                                             Expanded(
                                               flex: 0,
                                               child: Container(
-                                                padding:
-                                                EdgeInsets.symmetric(
+                                                padding: EdgeInsets.symmetric(
                                                     horizontal: 5,
                                                     vertical: 10),
                                                 decoration: BoxDecoration(
-                                                  color: ResiklosColors
-                                                      .light,
+                                                  color: ResiklosColors.light,
                                                   borderRadius:
-                                                  BorderRadius
-                                                      .circular(5.0),
+                                                      BorderRadius.circular(
+                                                          5.0),
                                                 ),
                                                 child: Text(
                                                   '${AppSingleton.userInfoModel?.rpWalletAddress}',
-                                                  textAlign:
-                                                  TextAlign.center,
+                                                  textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       fontWeight:
-                                                      FontWeight
-                                                          .w500),
+                                                          FontWeight.w500),
                                                 ),
                                               ),
                                             )
