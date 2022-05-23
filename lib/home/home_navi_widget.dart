@@ -12,6 +12,7 @@ import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/constants.dart';
 import 'package:resiklos/utils/navigator_util.dart';
+import 'package:resiklos/utils/toast.dart';
 
 import 'notification/notification_page.dart';
 
@@ -174,6 +175,12 @@ class _HomeNaviViewState extends State<HomeNaviView> {
                       } else if (e == Icons.logout) {
                         SignRequest.logout(context);
                       } else if (e == Icons.qr_code_rounded) {
+                        if (AppSingleton
+                                .userInfoModel?.emailVerificationStatus !=
+                            1) {
+                          showErrorText("Please verify email first");
+                          return;
+                        }
                         showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
