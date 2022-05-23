@@ -45,23 +45,23 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
               visible: widget.type == WalletTransactionType.bep20,
             ),
             TransactionDetailItem(
-              title: "Received Address:",
+              title: "Recipient Address:",
               subTitle:
                   "${widget.model.receiveAddress ?? AppSingleton.userInfoModel?.rpWalletAddress}",
             ),
             Visibility(
               child: TransactionDetailItem(
-                title: "Received Name:",
+                title: "Recipient Name:",
                 subTitle: "${widget.model.receivedUserName}",
               ),
               visible: widget.type != WalletTransactionType.bep20,
             ),
             TransactionDetailItem(
-              title: "Transfer Address:",
+              title: "Source Address:",
               subTitle: "${widget.model.transferAddress ?? ""}",
             ),
             TransactionDetailItem(
-              title: "Transfer Name:",
+              title: "Source Name:",
               subTitle: "${widget.model.transferUserName ?? "Resiklos"}",
             ),
             TransactionDetailItem(
