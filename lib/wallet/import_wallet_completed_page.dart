@@ -5,7 +5,6 @@ import 'package:resiklos/home/import_wallet_progress_widget.dart';
 import 'package:resiklos/utils/event_bus_util.dart';
 import 'package:resiklos/utils/toast.dart';
 import 'package:resiklos/wallet/abi/contracts.dart';
-import 'package:resiklos/wallet/setup_wallet_progress_widget.dart';
 import 'package:resiklos/rk_app_bar.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/wallet/wallet_request.dart';
@@ -19,6 +18,7 @@ class ImportWalletCompletedPage extends StatefulWidget {
 
 class _ImportWalletCompletedPageState extends State<ImportWalletCompletedPage> {
   final TextEditingController _controller1 = TextEditingController();
+  int count = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -133,19 +133,21 @@ class _ImportWalletCompletedPageState extends State<ImportWalletCompletedPage> {
                   } else {
                     var address =
                         await Blockchain.createNewWallet(_controller1.text);
-                    if (address.isEmpty) {
-                      showErrorText("The seed phrase is invalid");
+                    if (address.isEmpty || address == "") {
+                      showErrorText("The seedphrase is invalid");
                       return;
-                    }
-                    var res = await complete(address);
-                    if (res) {
-                      EventBusUtil.fire(RefreshDashboardEvent());
-                      Navigator.pushAndRemoveUntil(context,
-                          MaterialPageRoute(builder: (ctx) {
-                        return CustomBottomNavigationBar();
-                      }), (route) => false);
                     } else {
-                      showErrorText("Saving wallet fail");
+                      var res = await complete(address);
+                      if (res && count == 0) {
+                        count++;
+                        EventBusUtil.fire(RefreshDashboardEvent());
+                        Navigator.pushAndRemoveUntil(context,
+                            MaterialPageRoute(builder: (ctx) {
+                          return CustomBottomNavigationBar();
+                        }), (route) => false);
+                      } else {
+                        showErrorText("Saving wallet fail");
+                      }
                     }
                   }
                 },
