@@ -459,7 +459,7 @@ class _KycFirstPageState extends BaseStatefulState<KycFirstPage> {
           keyboardType:
               e.type == PersonalType.mobile ? TextInputType.number : null,
           decoration: InputDecoration(
-              hintText: "Entry your ${e.title.toLowerCase()}",
+              hintText: "Enter your ${e.title.toLowerCase()}",
               hintStyle: TextStyle(color: Color(0xffD4D4D4), fontSize: 10),
               contentPadding: EdgeInsets.only(left: 15),
               border: InputBorder.none),
