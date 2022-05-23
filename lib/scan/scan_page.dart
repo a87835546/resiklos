@@ -26,7 +26,7 @@ class _ScanPageState extends State<ScanPage> {
   String? code;
   QRViewController? controller;
   bool _isCan = true;
-  bool _isVerify = false;
+  bool _isVerify = true;
 
   @override
   void reassemble() {
