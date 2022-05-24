@@ -4,32 +4,26 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:proste_indexed_stack/proste_indexed_stack.dart';
-import 'package:resiklos/app_tab_bar.dart';
-import 'package:resiklos/game/game_page.dart';
-import 'package:resiklos/home/setting/setting_page.dart';
+import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/mine/account_page.dart';
-import 'package:resiklos/mine/mine_list.dart';
-import 'package:resiklos/mine/mine_page.dart';
-import 'package:resiklos/scan/scan_page.dart';
 import 'package:resiklos/shop/shop_merchant_page.dart';
-import 'package:resiklos/shop/shop_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/event_bus_util.dart';
 import 'package:resiklos/wallet/my_wallet_page.dart';
-import 'package:resiklos/wallet/setup_wallet_step1_page.dart';
 
 import 'home/home_page.dart';
 
-class CustomBottomNavigationBar extends StatefulWidget {
+class CustomBottomNavigationBar extends BaseStatefulWidget {
   const CustomBottomNavigationBar({Key? key}) : super(key: key);
 
   @override
-  CustomBottomNavigationBarState createState() =>
+  BaseStatefulState<BaseStatefulWidget> getState() =>
       CustomBottomNavigationBarState();
 }
 
-class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
+class CustomBottomNavigationBarState
+    extends BaseStatefulState<CustomBottomNavigationBar>
     with SingleTickerProviderStateMixin {
   StreamSubscription? _streamSubscription;
   int _index = 1;

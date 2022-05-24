@@ -19,6 +19,7 @@ import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/utils/toast.dart';
 import 'package:resiklos/utils/verify_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 GoogleSignIn _googleSignIn = GoogleSignIn(
   // Optional clientId
   // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
@@ -134,35 +135,33 @@ class SignInPageState extends State<SignInPage> {
                       Padding(
                         padding: EdgeInsets.only(
                             top: 40,
-                            left:
-                            (MediaQuery.of(context).size.width - 300) / 2,
-                            right: (MediaQuery.of(context).size.width - 300) /
-                                2),
+                            left: (MediaQuery.of(context).size.width - 300) / 2,
+                            right:
+                                (MediaQuery.of(context).size.width - 300) / 2),
                         child: Container(
                             child: SignUpInputWidget(
-                              topLabel: "Email Address",
-                              placeholder: 'Enter your email',
-                              controller: emailController,
-                            )),
+                          topLabel: "Email Address",
+                          placeholder: 'Enter your email',
+                          controller: emailController,
+                        )),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
                             top: 20,
-                            left:
-                            (MediaQuery.of(context).size.width - 300) / 2,
-                            right: (MediaQuery.of(context).size.width - 300) /
-                                2),
+                            left: (MediaQuery.of(context).size.width - 300) / 2,
+                            right:
+                                (MediaQuery.of(context).size.width - 300) / 2),
                         child: Container(
                             width: 300,
                             alignment: Alignment.centerLeft,
                             child:
-                            // TextField(
-                            //   controller: passwordController,
-                            //   decoration: InputDecoration(
-                            //       hintText: "Password",
-                            //       hintStyle: TextStyle(color: Colors.grey.withOpacity(0.3))),
-                            // ),
-                            SignUpInputWidget(
+                                // TextField(
+                                //   controller: passwordController,
+                                //   decoration: InputDecoration(
+                                //       hintText: "Password",
+                                //       hintStyle: TextStyle(color: Colors.grey.withOpacity(0.3))),
+                                // ),
+                                SignUpInputWidget(
                               isPassword: true,
                               topLabel: "Password",
                               placeholder: 'Enter your password',
@@ -170,8 +169,7 @@ class SignInPageState extends State<SignInPage> {
                             )),
                       ),
                       Padding(
-                        padding:
-                        EdgeInsets.only(left: 40, top: 30, right: 40),
+                        padding: EdgeInsets.only(left: 40, top: 30, right: 40),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -204,9 +202,10 @@ class SignInPageState extends State<SignInPage> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () async{
+                              onTap: () async {
                                 log("forgot password");
-                                NavigatorUtil.push(context,  SignResetPasswordPage());
+                                NavigatorUtil.push(
+                                    context, SignResetPasswordPage());
                                 // var r = await AuthorizeRequest.authenticate();
                               },
                               behavior: HitTestBehavior.translucent,
@@ -242,8 +241,10 @@ class SignInPageState extends State<SignInPage> {
                                   emailController.text,
                                   passwordController.text);
                               if (null != model) {
-                                NavigatorUtil.push(
-                                    context, CustomBottomNavigationBar());
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(builder: (_) {
+                                  return CustomBottomNavigationBar();
+                                }), (route) => false);
                               }
                             }
                           }),
@@ -260,12 +261,10 @@ class SignInPageState extends State<SignInPage> {
                               children: [
                                 const TextSpan(
                                     text: "Don’t have an account? ",
-                                    style:
-                                    TextStyle(color: Color(0xff707070))),
+                                    style: TextStyle(color: Color(0xff707070))),
                                 TextSpan(
                                     text: "Sign Up ",
-                                    style:
-                                    TextStyle(color: Color(0xffFF9D00)),
+                                    style: TextStyle(color: Color(0xffFF9D00)),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
                                         NavigatorUtil.push(
@@ -279,7 +278,6 @@ class SignInPageState extends State<SignInPage> {
                       SizedBox(
                         height: 20,
                       ),
-
                     ],
                   ),
                 ),

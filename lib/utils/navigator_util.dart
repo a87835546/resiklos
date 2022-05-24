@@ -12,7 +12,6 @@ class NavigatorUtil {
       MaterialPageRoute(builder: (_) {
         return widget;
       }),
-
     );
   }
 
@@ -21,10 +20,15 @@ class NavigatorUtil {
     log("log----->>>>>$context");
     if (context != null) {
       try {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) {
           AppSingleton.queue = Queue();
           return SignInPage();
-        }));
+        }), (route) => false);
+        // Navigator.push(context, MaterialPageRoute(builder: (_) {
+        //   AppSingleton.queue = Queue();
+        //   return SignInPage();
+        // }));
       } catch (e) {
         log("push login page has error");
       }
