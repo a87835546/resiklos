@@ -40,7 +40,7 @@ class HttpManager {
 
   static String merchantUrl = _debug
       ? "https://backend.stg.resiklos.app/"
-      : "http://backend.resiklos.app/";
+      : "https://backend.resiklos.app/";
 
   static final Dio _dio = Dio();
 

@@ -85,7 +85,7 @@ class AppSingleton {
     userInfoModel = model;
     try {
       String userinfo = json.encode(model.toJson());
-      // log("user info string value : $userinfo");
+      log("user info st1ring value : $userinfo");
       Cache.getInstance().setString("userinfo", userinfo);
     } catch (err) {
       log("set user info model error ${err}");
