@@ -20,7 +20,6 @@ const double kItemSize = 120;
 class _MarketplacePageState extends State<MarketplacePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  List<VoucherModel> _list = [];
   List<MerchantModel> _list1 = [];
   MerchantModel? _select;
   final TextEditingController _textEditingController = TextEditingController();
@@ -158,54 +157,60 @@ class _MarketplacePageState extends State<MarketplacePage>
                     Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 15.0),
-                      child: GridView.extent(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        mainAxisSpacing: 0,
-                        crossAxisSpacing: 0.0,
-                        maxCrossAxisExtent:
-                            (MediaQuery.of(context).size.width / 2) *
-                                ((MediaQuery.of(context).size.width / 2) /
-                                    kItemSize),
-                        children: _list1.map<Widget>((MerchantModel merchant) {
-                          return GestureDetector(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  height: kItemSize,
-                                  width: kItemSize,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    border: Border.all(
-                                      width: 1.0,
-                                      color: const Color(0xffd4d4d4),
-                                    ),
-                                    image: DecorationImage(
-                                      image:
-                                          NetworkImage(merchant.logoUrl ?? ""),
-                                      fit: BoxFit.cover,
-                                    ),
+                      child: _list1.length == 0
+                          ? Container(
+                              child: Text("no data"),
+                            )
+                          : GridView.extent(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              mainAxisSpacing: 0,
+                              crossAxisSpacing: 0.0,
+                              maxCrossAxisExtent:
+                                  (MediaQuery.of(context).size.width / 2) *
+                                      ((MediaQuery.of(context).size.width / 2) /
+                                          kItemSize),
+                              children:
+                                  _list1.map<Widget>((MerchantModel merchant) {
+                                return GestureDetector(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Container(
+                                        height: kItemSize,
+                                        width: kItemSize,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(5.0),
+                                          border: Border.all(
+                                            width: 1.0,
+                                            color: const Color(0xffd4d4d4),
+                                          ),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                merchant.logoUrl ?? ""),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5.0),
+                                      Text(merchant.name ?? "",
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w600)),
+                                    ],
                                   ),
-                                ),
-                                const SizedBox(height: 5.0),
-                                Text(merchant.name ?? "",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w600)),
-                              ],
+                                  onTap: () {
+                                    setState(() {
+                                      _select = merchant;
+                                    });
+                                    selectVoucher();
+                                  },
+                                  behavior: HitTestBehavior.opaque,
+                                );
+                              }).toList(),
                             ),
-                            onTap: () {
-                              setState(() {
-                                _select = merchant;
-                              });
-                              selectVoucher();
-                            },
-                            behavior: HitTestBehavior.opaque,
-                          );
-                        }).toList(),
-                      ),
                     ),
                   ],
                 ),
