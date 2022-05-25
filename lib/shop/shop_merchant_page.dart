@@ -159,7 +159,10 @@ class _MarketplacePageState extends State<MarketplacePage>
                           vertical: 20.0, horizontal: 15.0),
                       child: _list1.length == 0
                           ? Container(
-                              child: Text("no data"),
+                              child: Text(
+                                "no data",
+                              ),
+                              alignment: Alignment.center,
                             )
                           : GridView.extent(
                               shrinkWrap: true,
