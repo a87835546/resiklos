@@ -174,7 +174,7 @@ class _DepositTransactionListViewState
                                     height: 30,
                                     alignment: Alignment.center,
                                     child: Text(
-                                      "${model.transactionId ?? DateTime.now()}",
+                                      "${model.transactionId == 0 ? model.createAt : model.transactionId}",
                                       style: TextStyle(
                                           color: Color(0xffD4D4D4),
                                           fontSize: 12),

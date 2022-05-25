@@ -99,8 +99,11 @@ class _ImportWalletCompletedPageState extends State<ImportWalletCompletedPage> {
                           borderRadius: BorderRadius.circular(5)),
                       child: TextField(
                         decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.only(left: 5)),
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.only(left: 5),
+                        ),
+                        keyboardType: TextInputType.multiline,
+                        minLines: 2,
                         controller: _controller1,
                       ),
                     )

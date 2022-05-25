@@ -35,7 +35,8 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
             ),
             TransactionDetailItem(
               title: "Transaction ID:",
-              subTitle: "${widget.model.transactionId}",
+              subTitle:
+                  "${widget.model.transactionId == 0 ? widget.model.createAt : widget.model.transactionId}",
             ),
             Visibility(
               child: TransactionDetailItem(
@@ -52,7 +53,8 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
             Visibility(
               child: TransactionDetailItem(
                 title: "Recipient Name:",
-                subTitle: "${widget.model.receivedUserName}",
+                subTitle:
+                    "${widget.model.receivedUserName ?? AppSingleton.userInfoModel?.fullName}",
               ),
               visible: widget.type != WalletTransactionType.bep20,
             ),
@@ -75,7 +77,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
             ),
             TransactionDetailItem(
               title: "Transfer Time:",
-              subTitle: "${addTimeZone(widget.model.createAt??"")}",
+              subTitle: "${addTimeZone(widget.model.createAt ?? "")}",
             ),
             Visibility(
               child: TransactionDetailItem(
