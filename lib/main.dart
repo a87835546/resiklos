@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/sign_up_in/onboarding_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
-import 'package:resiklos/utils/color.dart';
 import 'package:resiklos/utils/constants.dart';
 import 'package:resiklos/utils/size_fit.dart';
 import 'package:resiklos/utils/user_provider.dart';
