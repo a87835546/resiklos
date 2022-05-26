@@ -14,6 +14,7 @@ import 'package:resiklos/sign_up_in/sign_up.dart';
 import 'package:resiklos/sign_up_in/sign_up_input_widget.dart';
 import 'package:resiklos/sign_up_in/sign_social_widget.dart';
 import 'package:resiklos/utils/cache.dart';
+import 'package:resiklos/utils/http_manager.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/utils/toast.dart';
 import 'package:resiklos/utils/verify_util.dart';
@@ -40,10 +41,12 @@ class SignInPageState extends State<SignInPage> {
   TextEditingController passwordController = TextEditingController();
 
   bool _isRemember = true;
+  bool _isShow = true;
 
   @override
   void initState() {
     super.initState();
+    showSocialMedia();
     loadEmail();
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
       log("google sign in accout ----.>>>$account");
@@ -249,7 +252,9 @@ class SignInPageState extends State<SignInPage> {
                           }),
                       Padding(
                         padding: EdgeInsets.only(top: 20),
-                        child: Platform.isIOS ? Container() : SocialSignPage(),
+                        child: Platform.isIOS && !_isShow
+                            ? Container()
+                            : SocialSignPage(),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 30),
@@ -341,6 +346,16 @@ class SignInPageState extends State<SignInPage> {
       }
     } catch (e) {
       log("delete user email is error $e");
+    }
+  }
+
+  Future showSocialMedia() async {
+    var r = await HttpManager.get(url: "user/getShowSocialMedia");
+    log("user info res ------>>>>$r");
+    if (mounted && r["data"] != null) {
+      setState(() {
+        _isShow = num.parse(r["data"] ?? "0") == 1;
+      });
     }
   }
 }
