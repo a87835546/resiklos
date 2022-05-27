@@ -187,11 +187,11 @@ class _KycSecond2PageState extends BaseStatefulState<KycSecond2Page> {
   }
 
   Future uploadImage(type) async {
-    var font = await upload(_path?.name, _path?.path, UploadType.avatar);
-    var back = await upload(_path1?.name, _path1?.path, UploadType.avatar);
+    String? font = await upload(_path?.name, _path?.path, UploadType.avatar);
+    String? back = await upload(_path1?.name, _path1?.path, UploadType.avatar);
 
     log("upload image url --->>>>$font");
-    if (font != null && back != null) {
+    if (font != null && back != null && font != "Failed" && back != "Failed") {
       return await uploadIDImage(font, back, type);
     } else {
       return false;
