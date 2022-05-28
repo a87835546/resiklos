@@ -7,6 +7,7 @@ import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/kyc/kyc_frist_page.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 import 'package:resiklos/utils/clip_borad_tool.dart';
+import 'package:resiklos/wallet/abi/contracts.dart';
 import 'package:resiklos/wallet/import_wallet_page.dart';
 import 'package:resiklos/wallet/setup_wallet_step2_page.dart';
 import 'package:resiklos/rk_app_bar.dart';
@@ -15,7 +16,10 @@ import 'package:resiklos/utils/navigator_util.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SetupWalletStep1Page extends BaseStatefulWidget {
-  const SetupWalletStep1Page({Key? key}) : super(key: key);
+  final bool hasWalletInLocal;
+
+  const SetupWalletStep1Page({Key? key, required this.hasWalletInLocal})
+      : super(key: key);
 
   @override
   BaseStatefulState<BaseStatefulWidget> getState() =>

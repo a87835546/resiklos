@@ -169,6 +169,7 @@ class MyWalletPage extends StatefulWidget {
 class _WalletPageState extends State<MyWalletPage> {
   double progress = 0;
   int selectedIndex = 0;
+  bool _hasWalletInLocal = false;
 
   List assets = [
     // ListItem("RSGT", 'Resiklos Gems', 0, 'imgs/logo@2x.png'),
@@ -181,6 +182,7 @@ class _WalletPageState extends State<MyWalletPage> {
   void initState() {
     super.initState();
     loadBalance();
+    loadWallet();
   }
 
   void loadBalance() {
@@ -218,9 +220,10 @@ class _WalletPageState extends State<MyWalletPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppSingleton.userInfoModel?.walletAddress == null ||
-              AppSingleton.userInfoModel?.walletAddress == ""
-          ? SetupWalletStep1Page()
+      body: (AppSingleton.userInfoModel?.walletAddress == null ||
+                  AppSingleton.userInfoModel?.walletAddress == "") &&
+              _hasWalletInLocal == false
+          ? SetupWalletStep1Page(hasWalletInLocal: _hasWalletInLocal,)
           : SmartRefresher(
               controller: _refreshController,
               onRefresh: () {
@@ -438,6 +441,15 @@ class _WalletPageState extends State<MyWalletPage> {
               ),
             ),
     );
+  }
+
+  void loadWallet() async {
+    var res = await Blockchain.loadWallet();
+    if (res != null) {
+      setState(() {
+        _hasWalletInLocal = true;
+      });
+    }
   }
 }
 
