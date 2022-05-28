@@ -22,7 +22,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  AppSingleton.devMode = DevMode.staging;
+  AppSingleton.devMode = DevMode.product;
   TLSizeFit.initialize();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UserLoginProviderModel()),
@@ -123,8 +123,6 @@ class MyApp extends StatelessWidget {
   }
 
   Future<UserInfoModel> readData() async {
-    log("web ---->>>>> ${Platform.isFuchsia}");
-
     if (Platform.isIOS) {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
@@ -133,6 +131,7 @@ class MyApp extends StatelessWidget {
       if (s != null && s is String) {
         Map<String, dynamic> map = json.decode(s);
         UserInfoModel model = UserInfoModel.fromJson(map);
+        log("ios loading local data res --->>>$model");
         return Future.value(model);
       } else {
         return Future.value(UserInfoModel());

@@ -41,7 +41,7 @@ class SignInPageState extends State<SignInPage> {
   TextEditingController passwordController = TextEditingController();
 
   bool _isRemember = true;
-  bool _isShow = true;
+  bool _isShow = false;
 
   @override
   void initState() {
@@ -351,10 +351,11 @@ class SignInPageState extends State<SignInPage> {
 
   Future showSocialMedia() async {
     var r = await HttpManager.get(url: "user/getShowSocialMedia");
-    log("user info res ------>>>>$r");
+    log("show social media info res ------>>>>$r");
     if (mounted && r["data"] != null) {
       setState(() {
-        _isShow = num.parse(r["data"] ?? "0") == 1;
+        _isShow = num.parse(r["data"]["show"] ?? "0") == 1;
+        log("is shwo --->>>$_isShow");
       });
     }
   }
