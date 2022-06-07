@@ -134,9 +134,9 @@ class _VerifyProceedPageState extends BaseStatefulState<VerifyProceedPage> {
                                       dataModuleShape: QrDataModuleShape.circle,
                                       color: ResiklosColors.primaryDark),
                                   embeddedImage:
-                                      const AssetImage('images/logo.png'),
+                                      const AssetImage('imgs/logo@2x.png'),
                                   embeddedImageStyle: QrEmbeddedImageStyle(
-                                    size: const Size(65, 65),
+                                    size: const Size(25, 25),
                                   ),
                                   errorStateBuilder: (cxt, err) {
                                     return const Center(

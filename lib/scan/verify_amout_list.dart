@@ -21,14 +21,14 @@ class _VerifyAmountListState extends State<VerifyAmountList> {
         children: [
           TransferAmountItem(
             title: "Weight",
-            amount: "${widget.weight} Kilos",
+            amount: "${widget.weight} Grams",
             textStyle:const TextStyle(
               color: Color(0xff707070),
               fontSize: 14,
             ),
           ),
           TransferAmountItem(
-            title: "RP pre kilo",
+            title: "RP pre gram",
             amount: "${widget.price} RP",
             textStyle:const TextStyle(
               color: Color(0xffD4D4D4),

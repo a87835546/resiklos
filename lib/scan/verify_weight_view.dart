@@ -56,7 +56,7 @@ class _VerifyWeightViewState extends State<VerifyWeightView> {
                     children: [
                       Container(
                         child: const Text(
-                          " Kilo ",
+                          " Grams ",
                           style: TextStyle(
                               color: Color(0xff707070),
                               fontWeight: FontWeight.bold,

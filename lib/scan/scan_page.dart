@@ -49,161 +49,166 @@ class _ScanPageState extends State<ScanPage> {
         onWillPop: () async {
           return false;
         },
-        child: Column(
-          children: <Widget>[
-            Expanded(flex: 7, child: _buildQrView(context)),
-            Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 70, right: 70),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        // crossAxisAlignment: CrossAxisAlignment.center,
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Expanded(flex: 7, child: _buildQrView(context)),
+              Expanded(
+                  flex: 2,
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 70, right: 70,top: 0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Visibility(
-                            child: GestureDetector(
-                              child: Container(
-                                margin: const EdgeInsets.all(8),
-                                height: 80,
-                                width: 80,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      child: Icon(
-                                        Icons.qr_code_scanner_outlined,
-                                        size: 20,
-                                        color: mainColor(),
-                                      ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Visibility(
+                                child: GestureDetector(
+                                  child: Container(
+                                    margin: const EdgeInsets.all(8),
+                                    height: 80,
+                                    width: 80,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10)),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          child: Icon(
+                                            Icons.qr_code_scanner_outlined,
+                                            size: 20,
+                                            color: mainColor(),
+                                          ),
+                                        ),
+                                        Text(
+                                          'TRANSFER',
+                                          style: TextStyle(
+                                              color: mainTitleColor(),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      'TRANSFER',
-                                      style: TextStyle(
-                                          color: mainTitleColor(),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
+                                  ),
+                                  onTap: () {
+                                    log("点击transfer");
+                                    setState(() {
+                                      _isVerify = false;
+                                    });
+                                    controller?.resumeCamera();
+                                  },
                                 ),
+                                visible: false,
                               ),
-                              onTap: () {
-                                log("点击transfer");
-                                setState(() {
-                                  _isVerify = false;
-                                });
-                                controller?.resumeCamera();
-                              },
-                            ),
-                            visible: false,
+                              GestureDetector(
+                                child: Container(
+                                  height: 80,
+                                  width: 80,
+                                  margin: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        child: Icon(
+                                          Icons.qr_code_scanner_outlined,
+                                          size: 20,
+                                          color: mainColor(),
+                                        ),
+                                      ),
+                                      Text(
+                                        'VERIFY',
+                                        style: TextStyle(
+                                            color: mainTitleColor(),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                onTap: () {
+                                  log("点击verify");
+                                  setState(() {
+                                    _isVerify = true;
+                                  });
+                                  controller?.resumeCamera();
+                                },
+                              )
+                            ],
                           ),
                           GestureDetector(
                             child: Container(
-                              height: 80,
-                              width: 80,
-                              margin: const EdgeInsets.all(8),
+                              alignment: Alignment.center,
+                              height: 50,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Column(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border:
+                                  Border.all(color: Colors.white70, width: 1)),
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    child: Icon(
-                                      Icons.qr_code_scanner_outlined,
-                                      size: 20,
-                                      color: mainColor(),
-                                    ),
+                                children: const [
+                                  Icon(
+                                    Icons.image,
+                                    size: 16,
+                                    color: Colors.white70,
                                   ),
                                   Text(
-                                    'VERIFY',
+                                    "IMPORT FROM PHOTOS",
                                     style: TextStyle(
-                                        color: mainTitleColor(),
+                                        fontWeight: FontWeight.bold,
                                         fontSize: 14,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                        color: Colors.white70),
+                                  )
                                 ],
                               ),
                             ),
                             onTap: () {
-                              log("点击verify");
-                              setState(() {
-                                _isVerify = true;
+                              final picker = ImagePicker();
+                              picker
+                                  .pickImage(source: ImageSource.gallery)
+                                  .then((value) {
+                                log(" value path --->>>${value?.path}");
+                                RecognitionQrcode.recognition(value?.path)
+                                    .then((result) {
+                                  log("RecognitionQrcode: $result");
+                                  setState(() {
+                                    code = result["value"];
+                                    _isVerify = true;
+                                  });
+                                  Navigator.push(
+                                      context,
+                                      _createRoute(Tween(
+                                          begin: Offset(1.0, 0),
+                                          end: Offset.zero)));
+                                }).catchError((e) {
+                                  log("RecognitionQrcode error: $e");
+                                  showErrorText("The qr code parsing failed");
+                                });
                               });
-                              controller?.resumeCamera();
                             },
+                            behavior: HitTestBehavior.opaque,
                           )
                         ],
                       ),
-                      GestureDetector(
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border:
-                                  Border.all(color: Colors.white70, width: 1)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.image,
-                                size: 16,
-                                color: Colors.white70,
-                              ),
-                              Text(
-                                "IMPORT FROM PHOTOS",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                    color: Colors.white70),
-                              )
-                            ],
-                          ),
-                        ),
-                        onTap: () {
-                          final picker = ImagePicker();
-                          picker
-                              .pickImage(source: ImageSource.gallery)
-                              .then((value) {
-                            log(" value path --->>>${value?.path}");
-                            RecognitionQrcode.recognition(value?.path)
-                                .then((result) {
-                              log("RecognitionQrcode: $result");
-                              setState(() {
-                                code = result["value"];
-                                _isVerify = true;
-                              });
-                              Navigator.push(
-                                  context,
-                                  _createRoute(Tween(
-                                      begin: Offset(1.0, 0),
-                                      end: Offset.zero)));
-                            }).catchError((e) {
-                              log("RecognitionQrcode error: $e");
-                              showErrorText("The qr code parsing failed");
-                            });
-                          });
-                        },
-                        behavior: HitTestBehavior.opaque,
-                      )
-                    ],
-                  ),
-                )),
-            Expanded(
-              flex: 1,
-              child: Container(),
-            )
-          ],
+                    ),
+                  )),
+              Expanded(
+                flex: 1,
+                child: Container(),
+              )
+            ],
+          ),
         ),
       ),
     );

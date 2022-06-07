@@ -45,7 +45,7 @@ class _VerifyConfirmAmountViewState extends State<VerifyConfirmAmountView> {
                     color: mainColor(),
                     alignment: Alignment.center,
                     child: const Text(
-                      "Weight (Kilo)",
+                      "Weight (Gram)",
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w400,

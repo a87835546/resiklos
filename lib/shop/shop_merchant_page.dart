@@ -265,16 +265,19 @@ class _MarketplacePageState extends State<MarketplacePage>
                                       ),
                                       alignment: Alignment.centerLeft,
                                     ),
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-                                        style: TextStyle(
-                                          color: color_d4d4d4(),
-                                          fontSize: 12,
+                                    Visibility(
+                                      child: Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+                                          style: TextStyle(
+                                            color: color_d4d4d4(),
+                                            fontSize: 12,
+                                          ),
+                                          maxLines: 2,
                                         ),
-                                        maxLines: 2,
                                       ),
+                                      visible: false,
                                     )
                                   ],
                                 ),

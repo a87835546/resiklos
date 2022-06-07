@@ -93,7 +93,7 @@ class _VerifySuccessfullyContainerViewState
                       width: 100,
                       alignment: Alignment.centerLeft,
                       child: const Text(
-                        "KILOS",
+                        "Grams",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,

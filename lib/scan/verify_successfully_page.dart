@@ -198,7 +198,7 @@ class _VerifySuccessfullyPageState
                         child: Container(
                             width: 100,
                             height: 100,
-                            child: statusIcon(status: 2)),
+                            child: Image.asset("imgs/verify_success_image.png")),
                       ),
                     ))
               ],
