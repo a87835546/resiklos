@@ -71,7 +71,7 @@ class _KycSecondPageState extends BaseStatefulState<KycSecondPage> {
                 Container(
                   alignment: Alignment.center,
                   child: const Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                    "",
                     style: TextStyle(color: Color(0xffd4d4d4), fontSize: 12),
                     maxLines: 2,
                   ),

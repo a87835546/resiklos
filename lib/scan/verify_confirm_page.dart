@@ -244,9 +244,9 @@ class _VerifyPageState extends BaseStatefulState<VerifyPage> {
 
     Map<String, dynamic> temp = {
       "email": AppSingleton.userInfoModel?.email,
-      "amount": widget.price * widget.weight,
+      "amount": widget.price * widget.weight/1000,
       "address": widget.address,
-      "name": AppSingleton.userInfoModel?.nickName,
+      "name": AppSingleton.userInfoModel?.fullName,
     };
     var res = await HttpManager.post(url: "wallet/sellerPlastic", params: temp);
     log("transfer --->>>$res");

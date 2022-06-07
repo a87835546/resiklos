@@ -29,7 +29,7 @@ class _VerifyAmountListState extends State<VerifyAmountList> {
           ),
           TransferAmountItem(
             title: "RP pre gram",
-            amount: "${widget.price} RP",
+            amount: "${widget.price/1000} RP",
             textStyle:const TextStyle(
               color: Color(0xffD4D4D4),
               fontSize: 14,
@@ -37,7 +37,7 @@ class _VerifyAmountListState extends State<VerifyAmountList> {
           ),
           TransferAmountItem(
             title: "Total",
-            amount: "${(widget.weight * widget.price).toStringAsFixed(2)} RP",
+            amount: "${(widget.weight * widget.price/1000).toStringAsFixed(2)} RP",
             textStyle: TextStyle(
                 color: mainColor(), fontSize: 14, fontWeight: FontWeight.bold),
           ),

@@ -80,7 +80,7 @@ class _KycThirdPageState extends BaseStatefulState<KycThirdPage> {
                 Container(
                   alignment: Alignment.center,
                   child: const Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                    "",
                     style: TextStyle(color: Color(0xffd4d4d4), fontSize: 12),
                     maxLines: 2,
                   ),

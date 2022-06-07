@@ -407,8 +407,8 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
   }
 
   void transferRP() async {
-    int amount =
-        int.parse(_amountController.text == "" ? "0" : _amountController.text);
+    num amount =
+        num.parse(_amountController.text == "" ? "0" : _amountController.text);
     log("message--->>>${amount}");
     if (!VerifyUtil.isEmail(_emailController.text) && _title == "Email") {
       showErrorText("Please input correct email");

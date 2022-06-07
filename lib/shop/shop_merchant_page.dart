@@ -194,7 +194,7 @@ class _MarketplacePageState extends State<MarketplacePage>
                                           image: DecorationImage(
                                             image: NetworkImage(
                                                 merchant.logoUrl ?? ""),
-                                            fit: BoxFit.cover,
+                                            fit: BoxFit.contain,
                                           ),
                                         ),
                                       ),
@@ -269,7 +269,7 @@ class _MarketplacePageState extends State<MarketplacePage>
                                       child: Container(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+                                          "${_select?.industryName} ${_select?.subIndustryName}",
                                           style: TextStyle(
                                             color: color_d4d4d4(),
                                             fontSize: 12,
@@ -277,7 +277,7 @@ class _MarketplacePageState extends State<MarketplacePage>
                                           maxLines: 2,
                                         ),
                                       ),
-                                      visible: false,
+                                      visible: true,
                                     )
                                   ],
                                 ),

@@ -118,7 +118,7 @@ class _VerifySuccessfullyContainerViewState
                       width: 100,
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "${(widget.amount * widget.kilos).toStringAsFixed(2)} RP",
+                        "${(widget.amount * widget.kilos/1000).toStringAsFixed(2)} RP",
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,

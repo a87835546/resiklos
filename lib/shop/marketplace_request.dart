@@ -34,7 +34,7 @@ class MarketPlaceRequest {
         ? "api/public/vouchers?no_pagination=1"
         : "api/public/vouchers?merchant=$id&no_pagination=1";
     var res = await HttpManager.get(url: url, isMerchant: true) as List;
-    // log("voucher list ---->>>>${jsonEncode(res)}");
+    log("voucher list ---->>>>${jsonEncode(res)}");
     List<VoucherModel> _temp = [];
     try {
       for (var element in res) {
