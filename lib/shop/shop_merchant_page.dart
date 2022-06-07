@@ -269,7 +269,7 @@ class _MarketplacePageState extends State<MarketplacePage>
                                       child: Container(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          "${_select?.industryName} ${_select?.subIndustryName}",
+                                          "${_select?.industryName} • ${_select?.subIndustryName}",
                                           style: TextStyle(
                                             color: color_d4d4d4(),
                                             fontSize: 12,
