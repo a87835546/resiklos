@@ -28,7 +28,7 @@ class _VerifyAmountListState extends State<VerifyAmountList> {
             ),
           ),
           TransferAmountItem(
-            title: "RP pre gram",
+            title: "RP per gram",
             amount: "${widget.price/1000} RP",
             textStyle:const TextStyle(
               color: Color(0xffD4D4D4),
