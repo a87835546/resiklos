@@ -22,7 +22,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  AppSingleton.devMode = DevMode.staging;
+  AppSingleton.devMode = DevMode.product;
   TLSizeFit.initialize();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UserLoginProviderModel()),
