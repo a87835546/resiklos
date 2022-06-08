@@ -8,7 +8,7 @@ class VoucherModel {
   num? merchant;
   String? merchantName;
   String? validity;
-  String? image;
+  num? image;
   String? imageUrl;
   String? code;
   num? amount;

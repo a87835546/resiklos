@@ -51,7 +51,7 @@ class _ShopVoucherItemState extends State<ShopVoucherItem> {
                     width: 60,
                     height: 60,
                     child: widget.model.imageUrl != null
-                        ? Image.network(widget.model.imageUrl ?? "")
+                        ? Image.network(widget.model.imageUrl ?? "",fit: BoxFit.fitHeight,)
                         : const Icon(
                             Icons.image,
                             size: 60,
@@ -59,6 +59,7 @@ class _ShopVoucherItemState extends State<ShopVoucherItem> {
                           ),
                   ),
                 ),
+                SizedBox(width: 10,),
                 Expanded(
                   child: Container(
                     alignment: Alignment.centerLeft,
