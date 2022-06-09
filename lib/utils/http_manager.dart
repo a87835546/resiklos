@@ -38,7 +38,7 @@ class HttpManager {
           ? "https://staging.resiklos.app/api/v1/"
           : "https://api.resiklos.app/api/v1/"));
 
-  static String merchantUrl = !_debug
+  static String merchantUrl = _debug
       ? "https://backend.stg.resiklos.app/"
       : "https://backend.resiklos.app/";
 
