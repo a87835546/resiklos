@@ -77,7 +77,7 @@ class _KycStartsPageState extends BaseStatefulState<KycStartsPage> {
             Container(
               padding: EdgeInsets.only(top: 20, bottom: 50),
               child: const Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interdum vitae imperdiet cursus mauris.',
+                '',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Color.fromRGBO(112, 112, 112, 1),
