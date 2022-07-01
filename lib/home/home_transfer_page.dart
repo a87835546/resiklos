@@ -128,6 +128,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
                       click: () {
                         // selectType(context);
                         selectType1();
+                        log("111  type --->>>${widget.type}");
                       },
                     ),
                   ),
@@ -307,7 +308,7 @@ class _HomeTransferPageState extends State<HomeTransferPage> {
   }
 
   void selectType1() {
-    if (widget.type != WalletType.RSG) {
+    if (widget.type == WalletType.RSG) {
       return;
     }
     List title = ["Email", "Id"];

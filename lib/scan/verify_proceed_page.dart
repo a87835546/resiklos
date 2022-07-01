@@ -40,7 +40,7 @@ class _VerifyProceedPageState extends BaseStatefulState<VerifyProceedPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           backgroundColor: Colors.transparent,
           body: GestureDetector(
             child: Container(

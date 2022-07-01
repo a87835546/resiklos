@@ -5,6 +5,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:resiklos/base_class/base_page.dart';
 import 'package:resiklos/home/home_page.dart';
+import 'package:resiklos/scan/verify_proceed_page.dart';
+import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/wallet/import_wallet_page.dart';
 import 'package:resiklos/home/setting/setting_request.dart';
 import 'package:resiklos/rk_app_bar.dart';
@@ -29,6 +31,7 @@ class _SettingPageState extends BaseStatefulState<SettingPage> {
     SettingModel("Version", TransferPage(address: "",)),
     SettingModel("Notification", TransferPage(address: "",)),
     SettingModel("About", TransferPage(address: "",)),
+    SettingModel("转账", VerifyProceedPage(address: "",)),
   ];
 
   @override
@@ -59,7 +62,11 @@ class _SettingPageState extends BaseStatefulState<SettingPage> {
                   ),
                   onTap: () {
                     log("click setting index ---->>>>${e.title}");
-                    insertNotification();
+                    NavigatorUtil.push(context, e.target);
+
+                    if(e.title == "转账"){
+                    }else{
+                    insertNotification();}
                   },
                 );
               }).toList(),

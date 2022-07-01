@@ -90,7 +90,7 @@ class _HomeTransferSendModeWidgetState
                         ),
                       ),
                       onTap: () {
-                        log("message---->?>>");
+                        log("message---->>>");
                         if (null != widget.click) {
                           widget.click!();
                         }
