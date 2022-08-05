@@ -36,8 +36,9 @@ class _HomeReferralsState extends BaseStatefulState<HomeReferrals> {
       backgroundColor: Color(0xffFAFAFA),
       body: Container(
           child: ListView(
-        children: [
-          HomeReferralsShareWidget(),
+            shrinkWrap: true,
+            children: [
+          const HomeReferralsShareWidget(),
           FutureBuilder(
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasError || snapshot.data == null) {
@@ -60,6 +61,7 @@ class _HomeReferralsState extends BaseStatefulState<HomeReferrals> {
                       )
                     : Container(
                         color: Colors.white,
+                        height: MediaQuery.of(context).size.height - 180 - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom - kToolbarHeight - 50,
                         child: ListView(
                           shrinkWrap: true,
                           children: temp.map((e) {
