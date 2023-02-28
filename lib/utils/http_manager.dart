@@ -4,9 +4,7 @@ import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:resiklos/sign_up_in/sign_request.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/utils/toast.dart';
 
@@ -28,11 +26,21 @@ enum HttpManagerErrorType {
 }
 
 class HttpManager {
-  static final bool _debug = kDebugMode;
+  static const bool _debug = kDebugMode;
 
   static String baseUrl = _debug
-      ? "https://192.168.1.13:9001/api/v1/"
-      : "https://api.resiklos.app/api/v1/";
+      ? (AppSingleton.devMode == DevMode.local
+          ? "https://192.168.1.16:9001/api/v1/"
+          : (AppSingleton.devMode == DevMode.staging
+              ? "https://staging.resiklos.app/api/v1/"
+              : "https://api.resiklos.app/api/v1/"))
+      : ((AppSingleton.devMode == DevMode.staging
+          ? "https://staging.resiklos.app/api/v1/"
+          : "https://api.resiklos.app/api/v1/"));
+
+  static String merchantUrl = _debug
+      ? "https://backend.stg.resiklos.app/"
+      : "https://backend.resiklos.app/";
 
   static final Dio _dio = Dio();
 
@@ -41,34 +49,46 @@ class HttpManager {
   static List<CancelToken> _tokens = [];
 
   static _config() async {
-    _dio.interceptors.add(HttpInterceptor());
-    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (client) {
-      client.badCertificateCallback = (cert, host, port) {
-        return true;
+    if (_dio.interceptors.isEmpty) {
+      _dio.interceptors.add(HttpInterceptor());
+      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+          (client) {
+        client.badCertificateCallback = (cert, host, port) {
+          return true;
+        };
       };
-    };
+    }
   }
 
   static get(
       {required String url,
+      bool isMerchant = false,
       Map<String, dynamic>? headers,
       Map<String, String>? params}) async {
     _config();
     Options options = Options(headers: headers, sendTimeout: timeout);
     options.contentType = ContentType.json.toString();
-    Response response = await _dio.get(baseUrl + url,
-        queryParameters: params, options: options);
+    Response response = await _dio.get(
+        (isMerchant ? merchantUrl : baseUrl) + url,
+        queryParameters: params,
+        options: options);
+    // log("get res--->>>> ${response.data}");
     try {
-      // log("$response");
-      if (response.statusCode == 200) {
-        if (response.data['code'] == 200) {
-          return response.data;
-        } else if (response.data['code'] == 500) {
-          return HttpManagerErrorType.internalServerError;
-        } else if (response.data['code'] == 511) {
-          return HttpManagerErrorType.tokenExpired;
+      if (response.data is Map) {
+        if (response.statusCode == 200) {
+          if (response.data['code'] == 200) {
+            return response.data;
+          } else if (response.data['code'] == 500) {
+            log("res ---->>>${response.data}");
+            return HttpManagerErrorType.internalServerError;
+          } else if (response.data['code'] == 511) {
+            return HttpManagerErrorType.tokenExpired;
+          } else {
+            return response.data;
+          }
         }
+      } else {
+        return response.data;
       }
     } catch (error) {
       EasyLoading.dismiss();
@@ -80,23 +100,29 @@ class HttpManager {
 
   static post(
       {required String url,
+      bool isMerchant = false,
       Map<String, dynamic>? headers,
       required Map<String, dynamic> params}) async {
     _config();
     String _token = AppSingleton.userInfoModel?.token ?? "";
-    if (headers == null) {
-      headers = Map();
-    }
+    headers ??= {};
     headers.putIfAbsent("token", () => _token);
     Options options = Options(headers: headers, sendTimeout: timeout);
-    log("post request params $headers");
+    log("post request params $params");
+    log("post request headers $headers");
     CancelToken token = CancelToken();
     _tokens.add(token);
-    Response response = await _dio.post(baseUrl + url,
-        data: params, options: options, cancelToken: token);
+    Response response = await _dio.post(
+        (isMerchant ? merchantUrl : baseUrl) + url,
+        data: params,
+        options: options,
+        cancelToken: token);
 
     try {
+      log("response data---->>>>>${response.data}");
       if (response.statusCode == 200) {
+        return response.data;
+      } else {
         return response.data;
       }
     } catch (error) {
@@ -133,9 +159,9 @@ class HttpManager {
   }
 
   static cancelRequest() {
-    _tokens.forEach((element) {
+    for (var element in _tokens) {
       log('取消网络请求 ----->>>>>> $element');
-    });
+    }
   }
 }
 
@@ -153,14 +179,16 @@ class HttpInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     EasyLoading.dismiss();
     // log("http interceptor request  response : ${response.toString()}");
-    if(response.data["code"] == 511){
-      log("token has expired");
-      // showWarnToast("login has expired");
-      // SignRequest.logout(context);
-      NavigatorUtil.pushLogin();
-      // showWarnToast("token has expired");
-    }else if(response.data["code"] != 200){
-      // showWarnToast("login has expired");
+    if (response.data is Map) {
+      if (response.data["code"] == 511) {
+        log("token has expired");
+        // showWarnToast("login has expired");
+        // SignRequest.logout(context);
+        NavigatorUtil.pushLogin();
+        // showWarnToast("token has expired");
+      } else if (response.data["code"] != 200) {
+        // showWarnToast("login has expired");
+      }
     }
     super.onResponse(response, handler);
   }
@@ -171,8 +199,8 @@ class HttpInterceptor extends Interceptor {
 
     String token = AppSingleton.userInfoModel?.token ?? "";
     options.headers.putIfAbsent("token", () => token);
-    options.receiveTimeout = 10 * 1000;
-    options.connectTimeout = 10 * 1000;
+    options.receiveTimeout = 15 * 1000;
+    options.connectTimeout = 15 * 1000;
 
     if (kIsWeb) {
       options.headers.putIfAbsent("Access-Control-Allow-Origin", () => "*");

@@ -3,8 +3,9 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resiklos/base_class/base_page.dart';
-import 'package:resiklos/transactions/transaction_model.dart';
-import 'package:resiklos/transactions/transaction_request.dart';
+import 'package:resiklos/home/transactions/transaction_model.dart';
+import 'package:resiklos/home/transactions/transaction_request.dart';
+import 'package:resiklos/model/user_info_model.dart';
 import 'package:resiklos/utils/app_singleton.dart';
 
 import '../rk_app_bar.dart';
@@ -30,26 +31,27 @@ class _HomeReferralsState extends BaseStatefulState<HomeReferrals> {
     log("user info ---->>>>>>>${AppSingleton.userInfoModel}");
     return Scaffold(
       appBar: const CustomAppBar(
-        title: "REFERRALS",
+        title: "AFFILIATES",
       ),
       backgroundColor: Color(0xffFAFAFA),
       body: Container(
           child: ListView(
-        children: [
-          HomeReferralsShareWidget(),
+            shrinkWrap: true,
+            children: [
+          const HomeReferralsShareWidget(),
           FutureBuilder(
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasError || snapshot.data == null) {
                 return Text("");
               } else {
-                List temp = snapshot.data[0] as List<TransactionModel>;
+                List temp = snapshot.data[0] as List<UserInfoModel>;
                 return temp.length == 0
                     ? Center(
                         child: Container(
                           height: 200,
                           alignment: Alignment.center,
                           child: const Text(
-                            "No referrals yet",
+                            "No affiliates yet",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -59,6 +61,7 @@ class _HomeReferralsState extends BaseStatefulState<HomeReferrals> {
                       )
                     : Container(
                         color: Colors.white,
+                        height: MediaQuery.of(context).size.height - 180 - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom - kToolbarHeight - 50,
                         child: ListView(
                           shrinkWrap: true,
                           children: temp.map((e) {
@@ -79,7 +82,7 @@ class _HomeReferralsState extends BaseStatefulState<HomeReferrals> {
     return Future.wait([getData()]);
   }
 
-  Future<List<TransactionModel>> getData() async {
+  Future<List<UserInfoModel>> getData() async {
     var result = await TransactionRequest.queryReferral(1);
     return result;
   }

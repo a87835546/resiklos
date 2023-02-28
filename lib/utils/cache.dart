@@ -29,7 +29,6 @@ class Cache {
   }
 
   static Cache getInstance() {
-    log("get instance");
      _instance ??= Cache._();
     return _instance!;
   }
@@ -40,7 +39,7 @@ class Cache {
   }
 
   setString(String key, String _value) {
-    prefs?.setString(key, _value).then((value) => log("save string value is ${value?'success':'fail'}  key is $key value is $_value"));
+    prefs?.setString(key, _value).then((value) => log("save string value is ${value?'success':'fail'}  key is $key value is "));
   }
 
   setDouble(String key, double value) {

@@ -8,7 +8,8 @@ class VerifyUtil {
 
   ///邮箱验证
   static bool isEmail(String str) {
-    return RegExp(r"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")
+    return RegExp(
+            r"^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?")
         .hasMatch(str);
   }
 
@@ -26,4 +27,14 @@ class VerifyUtil {
   static bool isChinese(String value) {
     return RegExp(r"[\u4e00-\u9fa5]").hasMatch(value);
   }
+}
+
+String formatMoney(Object val, {int? toFixed}) {
+  if (toFixed != null) {
+    val = double.parse(val.toString()).toStringAsFixed(toFixed);
+  }
+  List<String> split = val.toString().split('.');
+  String str = split[0].replaceAll(RegExp(r"\B(?=(\d{3})+(?!\d))"), ",");
+  if (split.length > 1) return str + '.' + split[1];
+  return str;
 }

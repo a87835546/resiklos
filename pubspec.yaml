@@ -1,5 +1,5 @@
 name: resiklos
-description: A new Flutter project.
+description: Resiklos Wallet
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.1+4
+version: 2.0.3+15
 
 environment:
   sdk: ">=2.15.1 <3.0.0"
@@ -44,12 +44,30 @@ dependencies:
   flutter_login_facebook: ^1.2.0
   cached_network_image: ^3.2.0
   transparent_image: ^2.0.0
-  qr_flutter: ^4.0.0
-  qr_code_scanner: ^0.6.1
   flutter_easyloading: ^3.0.3
   share_plus: ^3.0.4
   url_launcher: ^6.0.18
   webview_flutter: ^3.0.0
+  local_auth: ^1.1.11
+  image_picker: ^0.8.4+4
+  amazon_s3_cognito: ^0.7.4
+  qr_code_scanner: ^0.7.0
+  qr_flutter: ^4.0.0
+  badges: ^2.0.2
+  adobe_xd: ^2.0.1
+  flutter_svg: ^1.0.3
+  country_picker: ^2.0.12
+  flutter_datetime_picker: ^1.5.1
+  dotted_border: ^2.0.0+2
+  package_info_plus: ^1.4.0
+  card_swiper: ^2.0.3
+  proste_indexed_stack: ^0.2.4
+  event_bus: ^2.0.0
+  web3dart: ^2.3.5
+  bip39: ^1.0.6
+  bip32: ^2.0.0
+  web_socket_channel: ^2.2.0
+  recognition_qrcode: ^1.0.1+2
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +81,25 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat/Montserrat-Regular.ttf
+        - asset: fonts/Montserrat/Montserrat-Italic.ttf
+          style: italic
+        - asset: fonts/Montserrat/Montserrat-MediumItalic.ttf
+          style: italic
+          weight: 500
+        - asset: fonts/Montserrat/Montserrat-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Montserrat/Montserrat-Medium.ttf
+          weight: 500
+        - asset: fonts/Montserrat/Montserrat-Light.ttf
+          weight: 100
+        - asset: fonts/Montserrat/Montserrat-ExtraBold.ttf
+          weight: 900
+        - asset: fonts/Montserrat/Montserrat-Bold.ttf
+          weight: 700
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -96,3 +133,30 @@ flutter:
     - imgs/what-is-resiklos.png
     - imgs/importance-of-resiklos.png
     - imgs/placeholder_avatar.png
+    - imgs/verification_bg_image.png
+    - imgs/verify_email_image.png
+    - imgs/verify_success_image.png
+    - imgs/verify_kyc_person.png
+    - imgs/verfiy_id.png
+    - imgs/verify_person.png
+    - imgs/verify_face_id.png
+    - imgs/img.png
+    - imgs/merchant_top_cover.png
+    - imgs/rp_bg.png
+    - imgs/camera.png
+    - imgs/wallet-header.png
+    - imgs/wallet/bnb_logo.svg
+    - imgs/wallet/tether_usdt_logo.svg
+    - imgs/svg/bnb.svg
+    - imgs/svg/usdt.svg
+    - imgs/svg/wallet_bg.svg
+    - imgs/svg/gem.svg
+    - imgs/svg/summary_bg.svg
+    - imgs/svg/verify_email.svg
+    - imgs/svg/wallet_header.svg
+    - imgs/svg/external_link.svg
+    - imgs/svg/vouchers_icon.svg
+    - imgs/svg/rp_icon.svg
+    - imgs/svg/affiliates_icon.svg
+    - imgs/svg/scan_icon.svg
+    - imgs/svg/transfer_icon.svg

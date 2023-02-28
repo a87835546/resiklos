@@ -17,7 +17,6 @@ import 'package:resiklos/utils/toast.dart';
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: <String>[
     'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
   ],
 );
 
@@ -38,7 +37,7 @@ class SignRequest {
     UserInfoModel? model;
     try {
       if (result["data"] != null && result["code"] == 200) {
-        model = UserInfoModel.jsonToObject(result["data"]);
+        model = UserInfoModel.fromJson(result["data"]);
         AppSingleton.setUserInfoModel(model);
       } else {
         showWarnToast(result["message"] ?? "Sign In Fail");
@@ -53,21 +52,23 @@ class SignRequest {
    * use name to register
    */
   static Future<UserInfoModel?> registerByName(
-      name, email, password, inviteCode) async {
+      name, lastName, firstName, email, password, inviteCode) async {
     var params = {
-      "deviceType": Platform.isIOS ? 1 : 0,
+      "deviceType": Platform.isIOS ? 0 : 1,
       "inviteCode": inviteCode,
       "loginType": 2,
       "email": email,
       "password": password,
       "userName": name,
+      "lastName": lastName,
+      "firstName": firstName,
     };
     var result = await HttpManager.post(url: "user/register", params: params);
     log("login result $result");
     UserInfoModel? model;
     try {
       if (result["data"] != null && result["code"] == 200) {
-        model = UserInfoModel.jsonToObject(result["data"]);
+        model = UserInfoModel.fromJson(result["data"]);
         AppSingleton.setUserInfoModel(model);
       } else {
         EasyLoading.showError(result["message"] ?? "Register User Error");
@@ -78,6 +79,47 @@ class SignRequest {
       EasyLoading.dismiss();
     }
     return Future.value(model);
+  }
+
+  static Future<bool> getOtp(email) async {
+    var result =
+        await HttpManager.get(url: "user/sendPasswordOtp?email=${email}");
+    log("get reset password otp result $result");
+    try {
+      if (result["code"] == 200) {
+        showSuccessLoading(title: "Send OTP Success");
+        return Future.value(true);
+      } else {
+        EasyLoading.showError(result["message"] ?? "Get Otp Error");
+        return Future.value(false);
+      }
+    } catch (err) {
+      log("parser reset password ot fail ${err.toString()}");
+    } finally {
+      EasyLoading.dismiss();
+    }
+    return Future.value(false);
+  }
+
+  static Future resetPassword(email, otp, password) async {
+    var result = await HttpManager.post(
+        url: "user/resetPasswd?email=${email}&otp=$otp&newPassword=$password",
+        params: {});
+    log("get reset password otp result $result");
+    try {
+      if (result["code"] == 200) {
+        EasyLoading.showSuccess("Reset Password Successful");
+        return Future.value(true);
+      } else {
+        EasyLoading.showError(result["message"] ?? "Reset Password Error");
+        return Future.value(false);
+      }
+    } catch (err) {
+      log("parser reset password ot fail ${err.toString()}");
+      return Future.value(false);
+    } finally {
+      EasyLoading.dismiss();
+    }
   }
 
   // google disconnect
@@ -115,7 +157,7 @@ class SignRequest {
       if (res?.displayName != null && res?.id != null && res?.email != null) {
         success = await loginBySocialMedia(
             res?.id, res?.displayName, res?.email, 1, res?.photoUrl);
-        handleGetContact(res!);
+        // handleGetContact(res!);
       }
     } catch (error) {
       log("google login error : ${error}");
@@ -208,7 +250,7 @@ class SignRequest {
   static Future<bool> loginBySocialMedia(
       userId, username, _email, _loginType, _imageUrl) async {
     var params = {
-      "deviceType": Platform.isIOS ? 1 : 0,
+      "deviceType": Platform.isIOS ? 0 : 1,
       "email": _email,
       "inviteCode": "",
       "loginType": _loginType, // fb 0 google 1
@@ -221,7 +263,7 @@ class SignRequest {
         await HttpManager.post(url: "user/registerBySocial", params: params);
     try {
       var temp = result["data"];
-      UserInfoModel object = UserInfoModel.jsonToObject(temp);
+      UserInfoModel object = UserInfoModel.fromJson(temp);
       AppSingleton.setUserInfoModel(object);
       log("user model $object");
       if (null != object) {
@@ -238,17 +280,16 @@ class SignRequest {
 
   static void logout(context) async {
     Map<String, dynamic> map = {};
-    log("logout");
-    HttpManager.post(url: "user/logout", params: map).then((result) {
-      log("logout result --- >>>> ${result}");
-      try {
-        AppSingleton.clearUserInfo();
-        NavigatorUtil.push(context, SignInPage());
-        handleSignOut();
-        onPressedLogOutButton();
-      } catch (err) {
-        log("parser user info error ${err}");
-      }
-    });
+    // var res = await HttpManager.post(url: "user/logout", params: map);
+    // log("logout ---->>>> $res");
+
+    try {
+      AppSingleton.clearUserInfo();
+      NavigatorUtil.push(context, SignInPage());
+      handleSignOut();
+      onPressedLogOutButton();
+    } catch (err) {
+      log("parser user info error ${err}");
+    }
   }
 }

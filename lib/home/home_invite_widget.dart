@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:resiklos/home/referral_share_page.dart';
 import 'package:resiklos/utils/navigator_util.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'home_referrals_page.dart';
 
@@ -12,6 +15,7 @@ class HomeInviteView extends StatefulWidget {
 }
 
 class _HomeInviteViewState extends State<HomeInviteView> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -109,7 +113,7 @@ class _HomeInviteViewState extends State<HomeInviteView> {
                         )),
                     SizedBox(width: 10,),
                     Container(
-                      child: Icon(Icons.arrow_forward_ios,color: Colors.white,size: 16,),
+                      child:const Icon(Icons.arrow_forward_ios,color: Colors.white,size: 16,),
                     )
                   ],
                 ),

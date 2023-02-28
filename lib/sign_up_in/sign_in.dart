@@ -9,14 +9,17 @@ import 'package:resiklos/bottom_navigationbar.dart';
 import 'package:resiklos/sign_up_in/sign_button.dart';
 import 'package:resiklos/sign_up_in/sign_logo_page.dart';
 import 'package:resiklos/sign_up_in/sign_request.dart';
+import 'package:resiklos/sign_up_in/sign_reset_password_page.dart';
 import 'package:resiklos/sign_up_in/sign_up.dart';
 import 'package:resiklos/sign_up_in/sign_up_input_widget.dart';
 import 'package:resiklos/sign_up_in/sign_social_widget.dart';
 import 'package:resiklos/utils/cache.dart';
+import 'package:resiklos/utils/http_manager.dart';
 import 'package:resiklos/utils/navigator_util.dart';
 import 'package:resiklos/utils/toast.dart';
 import 'package:resiklos/utils/verify_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 GoogleSignIn _googleSignIn = GoogleSignIn(
   // Optional clientId
   // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
@@ -38,10 +41,12 @@ class SignInPageState extends State<SignInPage> {
   TextEditingController passwordController = TextEditingController();
 
   bool _isRemember = true;
+  bool _isShow = false;
 
   @override
   void initState() {
     super.initState();
+    showSocialMedia();
     loadEmail();
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
       log("google sign in accout ----.>>>$account");
@@ -132,35 +137,33 @@ class SignInPageState extends State<SignInPage> {
                       Padding(
                         padding: EdgeInsets.only(
                             top: 40,
-                            left:
-                            (MediaQuery.of(context).size.width - 300) / 2,
-                            right: (MediaQuery.of(context).size.width - 300) /
-                                2),
+                            left: (MediaQuery.of(context).size.width - 300) / 2,
+                            right:
+                                (MediaQuery.of(context).size.width - 300) / 2),
                         child: Container(
                             child: SignUpInputWidget(
-                              topLabel: "Email Address",
-                              placeholder: 'Enter your email',
-                              controller: emailController,
-                            )),
+                          topLabel: "Email Address",
+                          placeholder: 'Enter your email',
+                          controller: emailController,
+                        )),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
                             top: 20,
-                            left:
-                            (MediaQuery.of(context).size.width - 300) / 2,
-                            right: (MediaQuery.of(context).size.width - 300) /
-                                2),
+                            left: (MediaQuery.of(context).size.width - 300) / 2,
+                            right:
+                                (MediaQuery.of(context).size.width - 300) / 2),
                         child: Container(
                             width: 300,
                             alignment: Alignment.centerLeft,
                             child:
-                            // TextField(
-                            //   controller: passwordController,
-                            //   decoration: InputDecoration(
-                            //       hintText: "Password",
-                            //       hintStyle: TextStyle(color: Colors.grey.withOpacity(0.3))),
-                            // ),
-                            SignUpInputWidget(
+                                // TextField(
+                                //   controller: passwordController,
+                                //   decoration: InputDecoration(
+                                //       hintText: "Password",
+                                //       hintStyle: TextStyle(color: Colors.grey.withOpacity(0.3))),
+                                // ),
+                                SignUpInputWidget(
                               isPassword: true,
                               topLabel: "Password",
                               placeholder: 'Enter your password',
@@ -168,8 +171,7 @@ class SignInPageState extends State<SignInPage> {
                             )),
                       ),
                       Padding(
-                        padding:
-                        EdgeInsets.only(left: 40, top: 30, right: 40),
+                        padding: EdgeInsets.only(left: 40, top: 30, right: 40),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -202,9 +204,11 @@ class SignInPageState extends State<SignInPage> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {
+                              onTap: () async {
                                 log("forgot password");
-                                showToast("forgot password");
+                                NavigatorUtil.push(
+                                    context, SignResetPasswordPage());
+                                // var r = await AuthorizeRequest.authenticate();
                               },
                               behavior: HitTestBehavior.translucent,
                               child: Container(
@@ -239,15 +243,19 @@ class SignInPageState extends State<SignInPage> {
                                   emailController.text,
                                   passwordController.text);
                               if (null != model) {
-                                NavigatorUtil.push(
-                                    context, CustomBottomNavigationBar());
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(builder: (_) {
+                                  return CustomBottomNavigationBar();
+                                }), (route) => false);
                               }
                             }
                           }),
-                      // const Padding(
-                      //   padding: EdgeInsets.only(top: 20),
-                      //   child: SocialSignPage(),
-                      // ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Platform.isIOS && !_isShow
+                            ? Container()
+                            : SocialSignPage(),
+                      ),
                       Padding(
                         padding: EdgeInsets.only(top: 30),
                         child: Container(
@@ -257,12 +265,10 @@ class SignInPageState extends State<SignInPage> {
                               children: [
                                 const TextSpan(
                                     text: "Don’t have an account? ",
-                                    style:
-                                    TextStyle(color: Color(0xff707070))),
+                                    style: TextStyle(color: Color(0xff707070))),
                                 TextSpan(
                                     text: "Sign Up ",
-                                    style:
-                                    TextStyle(color: Color(0xffFF9D00)),
+                                    style: TextStyle(color: Color(0xffFF9D00)),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
                                         NavigatorUtil.push(
@@ -276,7 +282,6 @@ class SignInPageState extends State<SignInPage> {
                       SizedBox(
                         height: 20,
                       ),
-
                     ],
                   ),
                 ),
@@ -341,6 +346,17 @@ class SignInPageState extends State<SignInPage> {
       }
     } catch (e) {
       log("delete user email is error $e");
+    }
+  }
+
+  Future showSocialMedia() async {
+    var r = await HttpManager.get(url: "user/getShowSocialMedia");
+    log("show social media info res ------>>>>$r");
+    if (mounted && r["data"] != null) {
+      setState(() {
+        _isShow = num.parse(r["data"]["show"] ?? "0") == 1;
+        log("is shwo --->>>$_isShow");
+      });
     }
   }
 }

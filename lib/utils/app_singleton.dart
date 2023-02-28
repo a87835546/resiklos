@@ -5,19 +5,30 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:resiklos/model/user_info_model.dart';
+import 'package:resiklos/wallet/wallet_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../bottom_navigationbar.dart';
 import 'cache.dart';
+
+enum DevMode { local, staging, product }
 
 class AppSingleton {
   // static _instance，_instance会在编译期被初始化，保证了只被创建一次
   static AppSingleton get instance => AppSingleton.getInstance();
   static final AppSingleton _instance = AppSingleton.getInstance();
   static UserInfoModel? userInfoModel;
+  static WalletModel? walletModel;
+
+  // bottom navigation bar controller
+  static PageController? controller;
+  static PageController? navigatorKey;
+  static CustomBottomNavigationBarState? state;
   static Queue? queue = Queue();
   static dynamic currentPage;
   static RememberMeModel? rememberMeModel;
   static SharedPreferences? _preference;
+  static DevMode? devMode;
 
   //提供了一个工厂方法来获取该类的实例
   factory AppSingleton() => getInstance();
@@ -40,7 +51,6 @@ class AppSingleton {
 
   static Brightness? brightness;
 
-
   static Future test1() async {
     dynamic s = await Cache.getInstance().get("userinfo");
     log("reading ---->>>>>> $s");
@@ -55,7 +65,7 @@ class AppSingleton {
         if (s.isNotEmpty) {
           Map<String, dynamic> map = json.decode(s);
           // log("string result $map");
-          model = UserInfoModel.jsonToObject1(map);
+          model = UserInfoModel.fromJson(map);
         } else {
           log("reading data is null");
         }
@@ -75,10 +85,27 @@ class AppSingleton {
     userInfoModel = model;
     try {
       String userinfo = json.encode(model.toJson());
-      // log("user info string value : $userinfo");
+      log("user info st1ring value : $userinfo");
       Cache.getInstance().setString("userinfo", userinfo);
     } catch (err) {
       log("set user info model error ${err}");
+    }
+  }
+
+  static void updateInfoModel(UserInfoModel model) {
+    String? token;
+    if (model.token == null || model.token == "") {
+      token = userInfoModel?.token;
+    } else {
+      token = model.token;
+    }
+    userInfoModel = model;
+    userInfoModel?.token = token;
+    try {
+      String userinfo = json.encode(model.toJson());
+      Cache.getInstance().setString("userinfo", userinfo);
+    } catch (err) {
+      log("update user info model error ${err}");
     }
   }
 
@@ -92,7 +119,7 @@ class AppSingleton {
   }
 
   static Future<RememberMeModel> getRememberMeModel() async {
-    if(rememberMeModel == null) {
+    if (rememberMeModel == null) {
       rememberMeModel = RememberMeModel();
       try {
         bool s1 = Cache.getInstance().get("isRemember");
@@ -101,7 +128,6 @@ class AppSingleton {
         rememberMeModel?.isRemember = s1;
         rememberMeModel?.email = s2;
         rememberMeModel?.password = s3;
-
       } catch (err) {
         log("get remember me model cache parse error ${err}");
       }

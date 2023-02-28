@@ -1,107 +1,101 @@
-
 import 'dart:developer';
 
 class UserInfoModel {
-  late bool? gender;
-   String? avatar;
-   num? userId;
-   num? id;
-   String? nickName;
-   String? realName;
-   dynamic registerTime;
-   String? available;
-   String? mobile;
-   String? email;
-   String? token;
-   String? inviteCode;
-   String? ipAddress;
-   dynamic createTime;
-   dynamic lastLoginTime;
-   num? deviceType;
-   num? gems;
-   num? verifyTime;
+  String? gender;
+  String? avatar;
+  num? userId;
+  num? id;
+  String? nickName;
+  String? fullName;
+  String? lastName;
+  String? firstName;
+  dynamic registerTime;
+  String? available;
+  String? mobile;
+  String? email;
+  dynamic token;
+  String? inviteCode;
+  String? ipAddress;
+  String? rpWalletAddress;
+  String? walletAddress;
+  dynamic createTime;
+  dynamic lastLoginTime;
+  dynamic? deviceType;
+  num? gems;
+  int emailVerificationStatus;
+  dynamic isFirstLogin;
 
+  /// 0 unverified 1.pending 2.verified 3.rejected
+  int kycVerificationStatus;
+  int verificationStatus;
 
+  UserInfoModel(
+      {this.id = 0,
+      this.avatar,
+      this.gender = "M",
+      this.userId,
+      this.nickName = "R",
+      this.fullName = "R",
+      this.lastName,
+      this.firstName,
+      this.registerTime = '',
+      this.available,
+      this.mobile,
+      this.email,
+      this.deviceType,
+      this.gems,
+      this.token,
+      this.ipAddress,
+      this.inviteCode,
+      this.createTime,
+      this.lastLoginTime,
+      this.rpWalletAddress,
+      this.walletAddress = '',
+      this.emailVerificationStatus = 0,
+      this.kycVerificationStatus = 0,
+      this.isFirstLogin = 0,
+      this.verificationStatus = 0});
 
-  UserInfoModel({
-    this.id,
-     this.avatar,
-     this.gender,
-     this.userId,
-     this.nickName,
-     this.realName,
-     this.registerTime,
-     this.available,
-     this.mobile,
-     this.email,
-     this.deviceType,
-     this.gems,
-     this.verifyTime,
-    this.token,
-    this.ipAddress,
-    this.inviteCode,
-    this.createTime,
-    this.lastLoginTime,
-  });
+  factory UserInfoModel.fromJson(Map<String, dynamic> json) {
+    // log("map -- >>> $json", name: 'models/User');
 
-  static UserInfoModel jsonToObject(Map<String, dynamic> map) {
-    log("map -- >>> $map");
     UserInfoModel model = UserInfoModel(
-      gender: map['gender'],
-      id: map['id'],
-      userId: map['socialUserID'],
-      nickName: map['userName'],
-      realName: map['fullName'],
-      createTime: map['createTime'],
-      registerTime: map['registerTime'],
-      available: map['available'],
-      mobile: map['mobile'],
-      email: map['email'],
-      token: map['token'],
-      avatar: map['avatar'],
-      deviceType: map['deviceType'],
-      gems: map['gems'],
-      verifyTime: map['verifyTime'],
-      inviteCode: map['inviteCode'],
-      ipAddress: map['ipAddress'],
-      lastLoginTime: map['lastLoginTime'],
-    );
-    log("model --- >>> $model");
-    return model;
-  }
-
-
-  static UserInfoModel jsonToObject1(Map<String, dynamic> map) {
-    log("map -- >>> $map");
-    UserInfoModel model = UserInfoModel(
-      gender: map['gender'],
-      id: map['id'],
-      userId: map['socialUserID'],
-      nickName: map['nickName'],
-      realName: map['fullName'],
-      createTime: map['createTime'],
-      registerTime: map['registerTime'],
-      available: map['available'],
-      mobile: map['mobile'],
-      email: map['email'],
-      token: map['token'],
-      avatar: map['avatar'],
-      deviceType: map['deviceType'],
-      gems: map['gems'],
-      verifyTime: map['verifyTime'],
-      inviteCode: map['inviteCode'],
-      ipAddress: map['ipAddress'],
-      lastLoginTime: map['lastLoginTime'],
-    );
+        id: json['id'],
+        userId: json['userId'],
+        email: json['email'],
+        token: json['token'],
+        inviteCode: json['inviteCode'],
+        nickName: json['nickName'],
+        fullName: json['userName'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
+        avatar: json['avatar'],
+        gender: json['gender'],
+        createTime: json['createTime'],
+        registerTime: json['registerTime'],
+        available: json['available'],
+        mobile: json['mobile'],
+        gems: json['gems'],
+        isFirstLogin: json['isFirstLogin'],
+        ipAddress: json['ipAddress'],
+        lastLoginTime: json['lastLoginTime'],
+        rpWalletAddress: json['rpWalletAddress'],
+        walletAddress: json['rsgWalletAddress'],
+        emailVerificationStatus: json['verifiedEmail'] == false ? 0 : 1,
+        kycVerificationStatus: json['kycState'] ?? 0,
+        verificationStatus: _getVerificationStatus(
+            json['verifiedEmail'] == false ? 0 : 1, json['kycState'] ?? 0));
     return model;
   }
 
   Map<String, dynamic> toJson() {
-     Map<String, dynamic> data = Map<String, dynamic>();
+    Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = id;
     data['gender'] = gender;
     data['available'] = available;
-    data['realName'] = realName;
+    data['realName'] = fullName;
+    data['lastName'] = lastName;
+    data['firstName'] = firstName;
     data['createTime'] = createTime;
     data['mobile'] = mobile;
     data['available'] = available;
@@ -110,15 +104,47 @@ class UserInfoModel {
     data['nickName'] = nickName;
     data['deviceType'] = deviceType;
     data['gems'] = gems;
-    data['verifyTime'] = verifyTime;
     data['ipAddress'] = ipAddress;
     data['inviteCode'] = inviteCode;
     data['lastLoginTime'] = lastLoginTime;
+    data['kycState'] = verificationStatus;
+    data['verifiedEmail'] = emailVerificationStatus;
+    data['walletAddress'] = walletAddress;
+    data['rpWalletAddress'] = rpWalletAddress;
+    data['isFirstLogin'] = isFirstLogin;
+    data['verifiedEmail'] = emailVerificationStatus;
+    data['kycState'] = kycVerificationStatus;
+    data['verifiedEmail'] = verificationStatus;
     return data;
+  }
+
+  static int _getVerificationStatus(
+      int emailVerification, int kycVerification) {
+    int status = 0;
+
+    if (emailVerification == 1) {
+      status++;
+    }
+
+    if (kycVerification >= 1) {
+      status++;
+    }
+
+    if (kycVerification == 2) {
+      status++;
+    }
+
+    if (kycVerification == 3) {
+      status--;
+    }
+
+    log('status $status kyc:$kycVerification');
+
+    return status;
   }
 
   @override
   String toString() {
-    return 'UserInfoModel{gender: $gender, avatar: $avatar, userId: $userId, id: $id, nickName: $nickName, realName: $realName, registerTime: $registerTime, available: $available, mobile: $mobile, email: $email, token: $token, inviteCode: $inviteCode, ipAddress: $ipAddress, createTime: $createTime, lastLoginTime: $lastLoginTime, deviceType: $deviceType, gems: $gems, verifyTime: $verifyTime}';
+    return 'UserInfoModel{gender: $gender, avatar: $avatar, userId: $userId, id: $id, nickName: $nickName, fullName: $fullName, registerTime: $registerTime, available: $available, mobile: $mobile, email: $email, token: $token, inviteCode: $inviteCode, ipAddress: $ipAddress, rpWalletAddress: $rpWalletAddress, walletAddress: $walletAddress, createTime: $createTime, lastLoginTime: $lastLoginTime, deviceType: $deviceType, gems: $gems, emailVerificationStatus: $emailVerificationStatus, isFirstLogin: $isFirstLogin, kycVerificationStatus: $kycVerificationStatus, verificationStatus: $verificationStatus}';
   }
 }
